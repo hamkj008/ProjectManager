@@ -1,0 +1,108 @@
+QLabel {
+    font-size: 15pt;
+    background-color #fcfcfc;
+    color: white;
+    padding: 10px;
+}
+
+
+QFrame {
+    border-radius: 10px;
+    border-style: outset; 
+}
+
+
+QLineEdit {
+    border-radius: 10px;
+    border-style: outset;
+    border: 2px solid black;	
+    font: 15pt "Arial";
+	color: white;
+    min-height: 40px;
+    background-color: #4b4a4c;
+}
+
+
+QPushButton {
+    background-color: #4b4a4c;
+    font: 10pt "Arial";
+    font-weight: bold;
+	color: black;
+    border: 2px solid black;	
+    border-radius: 10px;
+    border-style: outset;
+    padding: 8px;
+    min-width: 60px;
+    min-height: 20px;
+}
+
+
+QPushButton:hover {
+    background-color: #024087;
+}
+
+
+#ProjectFrame, #ProjectGridFrame {
+    background-color: black;
+}
+
+
+#TitleLabel {
+    font: 20pt "Papyrus";
+    color: white;
+    padding: 5px;
+}
+
+
+#MainFrame {
+    background-color: #4b4a4c;
+    border-radius: 0px;
+}
+
+
+#BottomFrame{
+     border: 2px solid white;
+     background-color: black;
+     min-height: 200px;
+}
+
+
+
+#DescriptionTextScrollAreaContents {
+    background-color: #4b4a4c;
+}
+
+
+
+#DescriptionTextLabel {
+    font-size: 18pt;
+    color: white;
+}
+
+
+
+#header {
+    font-size: 12pt;
+    color: white;
+    padding: 6px;
+}
+
+
+#removeBtn {
+    background-color: red;
+    color: black;
+    border: 3px solid black;
+    padding: 5px;
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+}
+
+#removeBtn:hover {
+    background-color: blue;
+}
+
+#removeBtn:pressed {
+    background-color: green;
+}

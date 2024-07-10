@@ -1,0 +1,21 @@
+QLabel {
+    font-size: 12pt;
+    color: #fcfcfc;
+    padding: 8px;
+    background-color: purple;
+}
+
+
+#scrollAreaWidgetContents {
+    background-color: black;
+}
+
+
+
+
+
+/* --------------------------------------------------- */
+
+
+
+

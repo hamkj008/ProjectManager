@@ -1,0 +1,41 @@
+
+
+#ProjectFrame, #ProjectGridFrame {
+    background-color: black;
+}
+
+#ProjectFrame {
+     border: 2px solid white;
+}
+
+
+#ProjectFrame {
+     border-radius: 0px;
+}
+
+
+#projectRow {
+    background-color: #4b4a4c;
+}
+
+
+
+#AddNewProjectBtn {
+    background-color: #4b4a4c;
+    font: 15pt "Arial";
+    font-weight: bold;
+    color: black;
+    padding: 5px;
+    min-width: 30px;
+    min-height: 30px;
+    width: 30px;
+    height: 30px;
+    border: 3px solid black;
+    border-radius: 15px;
+    border-style: inset;  
+}
+
+
+#AddNewProjectBtn:hover {
+    background-color: #024087;
+}
