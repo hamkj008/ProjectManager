@@ -6,17 +6,19 @@ from PySide6.QtGui import QDrag, QPixmap, QPainter
 
 
 class DragDropLabel(QLabel):
-    def __init__(self, text, parentView, task):
+    def __init__(self, text, parentView, data, objectName=None):
         super().__init__(text)    
         
         self.parentView = parentView
-        self.task = task
+        self.data = data
+        if objectName:
+            self.setObjectName(objectName)
            
         
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.dragStartPosition = event.position()
-            self.parentView.rowClicked(self.task["taskDescription"], event)
+            self.parentView.rowClicked(self.data["taskDescription"], event)
 
 
     def mouseMoveEvent(self, event):
@@ -37,9 +39,9 @@ class DragDropLabel(QLabel):
         byteArray = QByteArray()
         dataStream = QDataStream(byteArray, QDataStream.WriteOnly)
         
-        dataStream.writeInt32(self.task["projectId"])
-        dataStream.writeInt32(self.task["taskId"])
-        dataStream.writeString(self.task["taskStatus"])
+        dataStream.writeInt32(self.data["projectId"])
+        dataStream.writeInt32(self.data["taskId"])
+        dataStream.writeString(self.data["taskStatus"])
         dataStream.writeString(self.text())
         
         mimedata.setData('application/x-taskData', byteArray)
@@ -56,7 +58,7 @@ class DragDropLabel(QLabel):
         
 
 
-    # """Creates a composite pixmap for the entire row."""
+    # Creates a composite pixmap for the entire row.
     def createRowPixmap(self):
         
         gridLayout = self.parentWidget().layout()

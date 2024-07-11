@@ -6,12 +6,14 @@ from icecream import ic
 
 
 class DropGridWithId(QWidget):
-    def __init__(self, viewController, model, id=0):
+    def __init__(self, viewController, model, id=0, objectName=None):
         super().__init__()
         
         self.viewController = viewController
         self.model = model
         self.id = id
+        if objectName:
+            self.setObjectName(objectName)
         
         self.setAcceptDrops(True)
         
@@ -22,16 +24,20 @@ class DropGridWithId(QWidget):
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
 
-
+           
+    # ----------------------------------------------------------------------------------------
+    
     def getId(self):
         return self.id
     
-
+    # ----------------------------------------------------------------------------------------
+    
     def dragEnterEvent(self, event):
         ic("gridDrag") 
         event.acceptProposedAction()
 
-
+    # ----------------------------------------------------------------------------------------
+    
     def dropEvent(self, event):
         ic("gridDrop")       
 

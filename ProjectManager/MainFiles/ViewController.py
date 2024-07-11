@@ -13,6 +13,7 @@ from Views.AddNewTaskView import AddNewTaskView
 from Views.AddNewIssueView import AddNewIssueView
 
 
+
 class ViewController(QMainWindow):
 
     

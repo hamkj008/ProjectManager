@@ -3,7 +3,6 @@ import sqlite3
 
 
 
-
 class ProjectModel:
    
     def __init__(self):
@@ -25,7 +24,6 @@ class ProjectModel:
             
         else:  
             self.firstTimeDatabaseInstall()
-           
 
 
     # ----------------------------------------------------------------------------------------
@@ -237,13 +235,13 @@ class ProjectModel:
     # ----------------------------------------------------------------------------------------   
 
 
-    def getFeatures(self, search=None):
+    def getFeatures(self, projectId, search=None):
         ic("getProjects")
         
-        query = "SELECT projectId, featureId, featureName, featureDescription, dateFeatureCreated, priority FROM projectFeatures"
+        query = f"SELECT projectId, featureId, featureName, featureDescription, dateFeatureCreated, priority FROM projectFeatures WHERE projectId = '{projectId}'"
         
         if search:
-            query += f" WHERE featureName LIKE %{search}%"            
+            query += f" AND featureName LIKE %{search}%"            
             
         query += f" ORDER BY priority" 
         
@@ -259,13 +257,13 @@ class ProjectModel:
     # ----------------------------------------------------------------------------------------
 
 
-    def getTasks(self, search=None):
+    def getTasks(self, projectId, search=None):
         ic("getTasks")
         
-        query = "SELECT projectId, taskId, taskName, taskDescription, dateTaskCreated, taskStatus, priority, isComplete FROM projectTasks"
+        query = f"SELECT projectId, taskId, taskName, taskDescription, dateTaskCreated, taskStatus, priority, isComplete FROM projectTasks WHERE projectId = '{projectId}'"
         
         if search:
-            query += f" WHERE taskName LIKE %{search}%"            
+            query += f" AND taskName LIKE %{search}%"            
             
         query += f" ORDER BY priority" 
             
@@ -281,13 +279,13 @@ class ProjectModel:
     # ----------------------------------------------------------------------------------------
 
 
-    def getIssues(self, search=None):
+    def getIssues(self, projectId, search=None):
         ic("getIssues")
         
-        query = "SELECT projectId, issueId, issueName, issueDescription, dateIssueCreated, isComplete, priority FROM projectIssues"
+        query = f"SELECT projectId, issueId, issueName, issueDescription, dateIssueCreated, isComplete, priority FROM projectIssues WHERE projectId = '{projectId}'"
         
         if search:
-            query += f" WHERE issueName LIKE %{search}%"
+            query += f" AND issueName LIKE %{search}%"
         
         query += f" ORDER BY priority"
         

@@ -6,17 +6,19 @@ from PySide6.QtGui import QDrag, QPixmap, QPainter
 
 
 class IssueDragDropLabel(QLabel):
-    def __init__(self, text, parentView, issue):
+    def __init__(self, text, parentView, data, objectName=None):
         super().__init__(text)    
         
         self.parentView = parentView
-        self.issue = issue
+        self.data = data
+        if objectName:
+            self.setObjectName(objectName)
            
         
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.dragStartPosition = event.position()
-            self.parentView.rowClicked(self.issue["issueDescription"], event)
+            self.parentView.rowClicked(self.data["issueDescription"], event)
 
 
     def mouseMoveEvent(self, event):
@@ -37,9 +39,9 @@ class IssueDragDropLabel(QLabel):
         byteArray = QByteArray()
         dataStream = QDataStream(byteArray, QDataStream.WriteOnly)
         
-        dataStream.writeInt32(self.issue["projectId"])
-        dataStream.writeInt32(self.issue["issueId"])
-        dataStream.writeString(self.issue["isComplete"])
+        dataStream.writeInt32(self.data["projectId"])
+        dataStream.writeInt32(self.data["issueId"])
+        dataStream.writeString(self.data["isComplete"])
         dataStream.writeString(self.text())
         
         mimedata.setData('application/x-issueData', byteArray)

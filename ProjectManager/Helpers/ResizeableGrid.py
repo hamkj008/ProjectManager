@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import QWidget, QGridLayout
-from PySide6.QtCore import Qt, QRect
+from PySide6.QtCore import Qt
 from icecream import ic
 from functools import partial
-from PySide6.QtGui import QPainter
+
 
 
 class ResizeableGrid(QWidget):
@@ -46,7 +46,6 @@ class ResizeableGrid(QWidget):
     def enableMouseTrackingRecursive(self):
         def enableMouseTracking(widget):
             if isinstance(widget, QWidget):
-                ic(widget.objectName())
                 widget.setMouseTracking(True)
                 for child in widget.findChildren(QWidget):
                     enableMouseTracking(child)
@@ -129,15 +128,4 @@ class ResizeableGrid(QWidget):
     
 
     # ---------------------------------------------------------------------
-    
-
-    # def paintEvent(self, event):
-    #     painter = QPainter(self)
-        
-    #     painter.setRenderHint(QPainter.Antialiasing)  # Optional: Improve rendering quality
-    #     painter.setPen(Qt.red)
-
-    #     for frame in self.frames:
-    #         rect = QRect(frame.geometry().right() - 20, 0, 20, self.height())
-    #         painter.drawRect(rect)
            

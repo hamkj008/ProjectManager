@@ -76,6 +76,8 @@ class LogController(QMainWindow):
 
 
 
+    # ----------------------------------------------------------------------------------------
+    
 
     def checkTypes(self, dataPoint):
         
@@ -92,9 +94,7 @@ class LogController(QMainWindow):
 
 
 
-
-
-
+    # ----------------------------------------------------------------------------------------
 
 
     def display(self, logRow):

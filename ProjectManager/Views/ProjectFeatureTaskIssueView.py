@@ -1,6 +1,6 @@
 from icecream import ic
 from UiViews.UiProjectFeatureTaskIssueWindow import Ui_ProjectFeatureTaskIssueWindow
-from PySide6.QtWidgets import QWidget, QMenu
+from PySide6.QtWidgets import QWidget, QMenu, QPushButton, QSizePolicy
 from PySide6.QtGui import QAction
 from Views.FeatureTabView import FeatureTabView
 from Views.TaskTabView import TaskTabView
@@ -22,83 +22,77 @@ class ProjectFeatureTaskIssueView(QWidget):
         self.window = Ui_ProjectFeatureTaskIssueWindow()
         self.window.setupUi(self)
         
+            
+
         with open('QSS\ProjectFeatureTaskIssueStyle.qss', 'r') as file:
             stylesheet = file.read()
 
         self.setStyleSheet(stylesheet)
-
-
-        # -------- FEATURES TAB ----------------------------
-        self.featureView = FeatureTabView(self, self.window, self.viewController, self.projectId, self.model)
-        self.window.FeaturesTab.layout().addWidget(self.featureView) 
-
-
-        # -------- TASKS TAB ----------------------------
-        self.taskView = TaskTabView(self, self.window, self.viewController, self.projectId, self.model)
-        self.window.TasksTab.layout().addWidget(self.taskView) 
-       
-
-        # -------- ISSUES TAB ----------------------------
-        self.issueView = IssueTabView(self, self.window, self.viewController, self.projectId, self.model)
-        self.window.IssuesTab.layout().addWidget(self.issueView) 
-       
+        
 
         # -- Signals ----
         self.window.tabWidget.setCurrentIndex(self.currentIndex)
         self.window.tabWidget.currentChanged.connect(self.tabChanged)
         self.window.BackBtn.clicked.connect(self.goBack) 
         self.window.AddNewBtn.clicked.connect(self.addNew)
+        
+
+        self.featureView = None
+        self.taskView = None
+        self.issueView = None
 
 
         self.getProjectName()
-        # -- Get models --
-        self.getModels()
+        
+        self.createFeatureTabView()
+        self.createTaskTabView()
+        self.createIssueTabView()
         
                 
         self.tabChanged(self.currentIndex)
         
-        # -- Load Grid --
-        self.loadGrids() 
-        
+
 
     # ----------------------------------------------------------------------------------------
      
-
-    def getProjectName(self):
-        projectName = self.model.getProjectName(self.projectId)
+    # -------- FEATURES TAB ----------------------------
+    def createFeatureTabView(self, editing=False):
         
+        self.featureView = FeatureTabView(self, self.viewController, self.projectId, editing)
+        self.featureModelResults = self.model.getFeatures(self.projectId, self.searchText)
+        self.populateFeatureData()
+        self.window.FeaturesTab.layout().addWidget(self.featureView) 
+
+
+    # -------- TASKS TAB ----------------------------
+    def createTaskTabView(self):
+        
+        self.taskView = TaskTabView(self, self.viewController, self.projectId)
+        self.taskModelResults = self.model.getTasks(self.projectId, self.searchText)
+        self.populateTaskData()
+        self.window.TasksTab.layout().addWidget(self.taskView) 
+
+
+    # -------- ISSUES TAB ----------------------------
+    def createIssueTabView(self):
+        
+        self.issueView = IssueTabView(self, self.viewController, self.projectId)
+        self.issueModelResults = self.model.getIssues(self.projectId, self.searchText)
+        self.populateIssueData()
+        self.window.IssuesTab.layout().addWidget(self.issueView) 
+        
+
+    # ----------------------------------------------------------------------------------------
+    
+    
+    def getProjectName(self):
+        
+        projectName = self.model.getProjectName(self.projectId)
         self.window.TitleLabel.setText(projectName)
      
 
     # ----------------------------------------------------------------------------------------
-    
-    
-    def getModels(self):
-        ic("getModels")
-
-        self.featureModelResults = self.model.getFeatures(self.searchText)
-        self.taskModelResults = self.model.getTasks(self.searchText)
-        self.issueModelResults = self.model.getIssues(self.searchText)
-
-
-    # ----------------------------------------------------------------------------------------
         
-
-    def loadGrids(self):
-        ic("loadGrids")
-        
-        self.featureView.loadGrids()
-        self.taskView.loadGrids()
-        self.issueView.loadGrids()
-        
-
-        self.populateFeatureData()
-        self.populateTaskData()
-        self.populateIssueData()
-        
-
-    # ----------------------------------------------------------------------------------------
-            
 
     def populateFeatureData(self):
         ic("populateFeatureData")
@@ -122,7 +116,6 @@ class ProjectFeatureTaskIssueView(QWidget):
             
             # Add a rowId column
             task["rowId"] = rowIndex + 1
-                
 
             self.taskView.addTaskToDisplay(task)            
      
@@ -202,13 +195,12 @@ class ProjectFeatureTaskIssueView(QWidget):
         
         self.currentIndex = index
 
+
     # ---------------------------------------------------------------------------------------- 
 
 
     def addNew(self):
         ic("addNew")
-        
-        ic(self.currentIndex)
         
         if self.currentIndex == 0:
             self.viewController.displayAddNewFeatureView(self, self.projectId)
@@ -222,6 +214,13 @@ class ProjectFeatureTaskIssueView(QWidget):
          
     # ----------------------------------------------------------------------------------------
     
+    
+
+    def featureEdit(self, rowId):
+        self.createFeatureTabView(editing=True)
+        
+
+
     
     # def contextMenuEvent(self, event):
     #     ic("contextMenu")

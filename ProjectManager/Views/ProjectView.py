@@ -1,9 +1,12 @@
 from icecream import ic
 
-from UiViews.UiProjectWindow import Ui_ProjectWindow
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QMessageBox, QPushButton
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QMessageBox, QPushButton, QMenu
+from PySide6.QtCore import Qt, QEvent
+from PySide6.QtGui import QAction
 from functools import partial
+
+from UiViews.UiProjectWindow import Ui_ProjectWindow
+from Helpers.DataLabel import DataLabel
 
 
 
@@ -17,6 +20,7 @@ class ProjectView(QWidget):
         self.viewController = viewController
         self.model = model
 
+        # ---- SETUP UI -----
         self.window = Ui_ProjectWindow()
         self.window.setupUi(self)
         
@@ -26,7 +30,7 @@ class ProjectView(QWidget):
         self.setStyleSheet(stylesheet)
 
 
-        # -- Init --
+        # ------- Init --------
         self.searchText = None
         
         self.window.ProjectGridFrame.layout().setAlignment(Qt.AlignTop)
@@ -83,16 +87,14 @@ class ProjectView(QWidget):
 
         self.projectHeaderColumnId = {}
         self.projectViewHeaders = {"projectName"    : "Project Name", 
-                                    "dateCreated"   : "Date Created",
-                                    "delete"        : ""}
+                                    "dateCreated"   : "Date Created"}
 
         for index, (key, value) in enumerate(self.projectViewHeaders.items()):
-            columnTitle = QLabel(value)
-            columnTitle.setObjectName("header")
+            columnTitle = QLabel(value, objectName="header")
+            
             if key == "projectName":
                 columnTitle.setSizePolicy(QSizePolicy.Expanding, columnTitle.sizePolicy().verticalPolicy())
              
-                            
             self.window.ProjectGridFrame.layout().addWidget(columnTitle, 0, index)
             
             self.projectHeaderColumnId[key] = index
@@ -128,24 +130,16 @@ class ProjectView(QWidget):
             for header in self.projectViewHeaders:
                 
                 if key in self.projectViewHeaders:
-                    label = QLabel(f'{value}')
-                    label.setObjectName("projectRow")
+                    label = DataLabel(f'{value}', project, objectName="projectRow")
                 
                     if header == "projectName":
                         label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
                     
                     label.mousePressEvent = (partial(self.rowClicked, project["projectId"]))
-                    self.window.ProjectGridFrame.layout().addWidget(label, project["rowId"], self.projectHeaderColumnId[key])
-                    labelRowList.append(label)
+                    label.installEventFilter(self)
                     
-                else:
-                    # -- Remove Project --
-                    if header == "delete":
-                        removeBtn = QPushButton("x")    
-                        removeBtn.setObjectName("removeBtn")
-                        removeBtn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                        removeBtn.clicked.connect(partial(self.removeProject, project["projectId"]))
-                        self.window.ProjectGridFrame.layout().addWidget(removeBtn, project["rowId"], self.projectHeaderColumnId[header])                   
+                    self.window.ProjectGridFrame.layout().addWidget(label, project["rowId"], self.projectHeaderColumnId[key])
+                    labelRowList.append(label)             
           
 
         for label in labelRowList:
@@ -226,3 +220,45 @@ class ProjectView(QWidget):
             self.model.deleteProject(projectId)  
             
             self.viewController.displayProjectView()
+            
+
+    # ---------------------------------------------------------------------------------------- 
+ 
+ 
+    def eventFilter(self, obj, event):
+
+        if event.type() == QEvent.ContextMenu:
+            ic("contextMenu")
+        
+            rightMenu = QMenu(self)
+
+            # Adding actions to the context menu
+            
+            # -- Edit Menu --
+            edit = QAction("Edit", self)
+            edit.triggered.connect(partial(self.rightMenuEdit, obj.data))
+            rightMenu.addAction(edit)
+            
+            rightMenu.addSeparator()
+
+            #---------------
+            
+            # -- Delete Menu --
+            delete = QAction("Delete", self)
+            delete.triggered.connect(partial(self.removeProject, obj.data["projectId"]))
+            rightMenu.addAction(delete)
+
+
+            # Show context menu
+            rightMenu.exec(event.globalPos())
+            
+            return True
+        
+        return super().eventFilter(obj, event)
+    
+    
+    # ---------------------------------------------------------------------------------------- 
+ 
+
+    def rightMenuEdit(self, project):
+        ic("right click")

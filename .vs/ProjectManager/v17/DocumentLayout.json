@@ -3,8 +3,68 @@
   "WorkspaceRootPath": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\Main.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\MainFiles\\Main.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\FeatureTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\FeatureTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectFeatureTaskIssueView.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\ProjectFeatureTaskIssueView.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\TaskTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\TaskTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\IssueDragDropLabel.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\IssueDragDropLabel.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DragDropLabel.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\DragDropLabel.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Models\\ProjectModel.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Models\\ProjectModel.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\IssueTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\IssueTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\IssueDropGridWithId.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\IssueDropGridWithId.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\LogController.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\MainFiles\\LogController.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\ResizeableGrid.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DataLabel.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\DataLabel.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\ProjectView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DropGridWithId.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\DropGridWithId.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\ViewController.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\MainFiles\\ViewController.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AddNewTaskView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\AddNewTaskView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AddNewProjectView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\AddNewProjectView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,21 +74,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 539,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 22,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Main.py",
-              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\Main.py",
-              "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\Main.py",
-              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\Main.py",
-              "RelativeToolTip": "ProjectManager\\MainFiles\\Main.py",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-10T21:07:40.296Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -64,6 +111,214 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IssueDragDropLabel.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\IssueDragDropLabel.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\IssueDragDropLabel.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\IssueDragDropLabel.py",
+              "RelativeToolTip": "ProjectManager\\Helpers\\IssueDragDropLabel.py",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAAEAAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T20:25:27.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AddNewProjectView.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AddNewProjectView.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Views\\AddNewProjectView.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AddNewProjectView.py",
+              "RelativeToolTip": "ProjectManager\\Views\\AddNewProjectView.py",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T19:55:03.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IssueDropGridWithId.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\IssueDropGridWithId.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\IssueDropGridWithId.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\IssueDropGridWithId.py",
+              "RelativeToolTip": "ProjectManager\\Helpers\\IssueDropGridWithId.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T16:03:31.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProjectModel.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Models\\ProjectModel.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Models\\ProjectModel.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Models\\ProjectModel.py",
+              "RelativeToolTip": "ProjectManager\\Models\\ProjectModel.py",
+              "ViewState": "AQIAAG4BAAAAAAAAAAAAABoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T15:47:38.881Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DropGridWithId.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DropGridWithId.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\DropGridWithId.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DropGridWithId.py",
+              "RelativeToolTip": "ProjectManager\\Helpers\\DropGridWithId.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T14:40:02.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ViewController.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\ViewController.py",
+              "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\ViewController.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\ViewController.py",
+              "RelativeToolTip": "ProjectManager\\MainFiles\\ViewController.py",
+              "ViewState": "AQIAADkAAAAAAAAAAAAAAE8AAABeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T09:49:11.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LogController.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\LogController.py",
+              "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\LogController.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\LogController.py",
+              "RelativeToolTip": "ProjectManager\\MainFiles\\LogController.py",
+              "ViewState": "AQIAAEYAAAAAAAAAAAAIwE4AAABVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T08:50:49.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ResizeableGrid.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\ResizeableGrid.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py",
+              "RelativeToolTip": "ProjectManager\\Helpers\\ResizeableGrid.py",
+              "ViewState": "AQIAACAAAAAAAAAAAAAIwC8AAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T08:47:20.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AddNewTaskView.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AddNewTaskView.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Views\\AddNewTaskView.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AddNewTaskView.py",
+              "RelativeToolTip": "ProjectManager\\Views\\AddNewTaskView.py",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAAA8AAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T08:13:07.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DataLabel.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DataLabel.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\DataLabel.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DataLabel.py",
+              "RelativeToolTip": "ProjectManager\\Helpers\\DataLabel.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T07:15:40.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DragDropLabel.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DragDropLabel.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\DragDropLabel.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DragDropLabel.py",
+              "RelativeToolTip": "ProjectManager\\Helpers\\DragDropLabel.py",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T07:13:03.452Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IssueTabView.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\IssueTabView.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Views\\IssueTabView.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\IssueTabView.py",
+              "RelativeToolTip": "ProjectManager\\Views\\IssueTabView.py",
+              "ViewState": "AQIAAOkAAAAAAAAAAAAIwPoAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T14:36:41.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TaskTabView.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\TaskTabView.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Views\\TaskTabView.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\TaskTabView.py",
+              "RelativeToolTip": "ProjectManager\\Views\\TaskTabView.py",
+              "ViewState": "AQIAAAcBAAAAAAAAAAAIwJcAAABSAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T07:12:38.799Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FeatureTabView.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\FeatureTabView.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Views\\FeatureTabView.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\FeatureTabView.py",
+              "RelativeToolTip": "ProjectManager\\Views\\FeatureTabView.py",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T06:56:25.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProjectFeatureTaskIssueView.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectFeatureTaskIssueView.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Views\\ProjectFeatureTaskIssueView.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectFeatureTaskIssueView.py",
+              "RelativeToolTip": "ProjectManager\\Views\\ProjectFeatureTaskIssueView.py",
+              "ViewState": "AQIAAIIAAAAAAAAAAAAmwEYAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T07:04:01.465Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ProjectView.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectView.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Views\\ProjectView.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectView.py",
+              "RelativeToolTip": "ProjectManager\\Views\\ProjectView.py",
+              "ViewState": "AQIAAHQAAAAAAAAAAAAIwIQAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T06:54:15.62Z",
+              "EditorCaption": ""
             }
           ]
         }
