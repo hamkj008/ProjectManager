@@ -87,22 +87,3 @@ QPushButton:hover {
     padding: 6px;
 }
 
-
-#removeBtn {
-    background-color: red;
-    color: black;
-    border: 3px solid black;
-    padding: 5px;
-    width: 10px;
-    height: 10px;
-    min-width: 10px;
-    min-height: 10px;
-}
-
-#removeBtn:hover {
-    background-color: blue;
-}
-
-#removeBtn:pressed {
-    background-color: green;
-}

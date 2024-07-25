@@ -61,7 +61,7 @@ class IssueDropGridWithId(QWidget):
                     elif targetGridId == 1:
                         isComplete = "True"
 
-                    self.model.setIssueStatus(projectId, issueId, isComplete)
+                    self.model.updateCompleteIssue(projectId, issueId, isComplete)
                     self.viewController.displayProjectFeatureTaskIssueView(projectId, currentIndex=2)
                     event.acceptProposedAction()
                     

@@ -11,12 +11,12 @@ from functools import partial
 
 class IssueTabView(QWidget):
 
-    def __init__(self, parentView, viewController, projectId):
+    def __init__(self, parentView, tabId, editDict=None):
         super().__init__()
         
         self.parentView = parentView
-        self.viewController = viewController
-        self.projectId = projectId
+        self.tabId = tabId
+        self.editDict = editDict
 
         layout = QHBoxLayout(self)
         self.setLayout(layout)
@@ -36,48 +36,32 @@ class IssueTabView(QWidget):
                                   self.parentView.window.IssueCompletedLabelFrame, self.parentView.window.IssueRightFrame])
 
 
-        issueGrid = IssueDropGridWithId(self.viewController, self.parentView.model, objectName="issueGrid")
+        issueGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.model, objectName="issueGrid")
         self.parentView.window.IssueScrollAreaContents.layout().addWidget(issueGrid)
         
-        issueCompleteGrid = IssueDropGridWithId(self.viewController, self.parentView.model, 1, objectName="IssueCompleteGridFrame")
+        issueCompleteGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.model, 1, objectName="IssueCompleteGridFrame")
         self.parentView.window.IssueCompleteScrollAreaContents.layout().addWidget(issueCompleteGrid)
         
         issueResizeableGrid.enableMouseTrackingRecursive()
         
         self.issueGrids = {"issueGrid"          :   issueGrid, 
                           "issueCompleteGrid"   :   issueCompleteGrid}
-
-        
-        self.loadGrids()
-
-    # ----------------------------------------------------------------------------------------
         
 
-    def loadGrids(self):
-        ic("loadGrids")
+        self.priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
 
-        self.clearGrids()
+        # If an entry is being edited, add the finish button to the display
+        if self.editDict and self.editDict["isEditing"]:
+            finishEditBtn = QPushButton("Finish Editing", objectName="finishEditBtn")
+            finishEditBtn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+            self.parentView.window.FinishEditFrame.layout().addWidget(finishEditBtn)
+            finishEditBtn.clicked.connect(self.editFinished)
+
+        
         self.setUpIssueGrids()
 
-        # self.populateIssueData()
-        
-
     # ----------------------------------------------------------------------------------------
-        
 
-    def clearGrids(self):
-        ic("clearGrids")
-        
-        for grid in self.issueGrids.values():
-            layout = grid.layout()
-            while layout.count():
-                item = layout.takeAt(0)
-                if item.widget():
-                    item.widget().deleteLater()      
-                
-
-    # ----------------------------------------------------------------------------------------
-    
 
     def setUpIssueGrids(self):
         ic("setUpIssueGrids")
@@ -87,9 +71,7 @@ class IssueTabView(QWidget):
                                 "dateIssueCreated"  :   "Date Created",
                                 "priority"          :   "Priority"}
 
-        for gridKey, gridValue in self.issueGrids.items():
-            if gridKey == "issueCompleteGrid":
-                self.issueViewHeaders["delete"] = ""
+        for gridValue in self.issueGrids.values():
                 
             for index, (key, value) in enumerate(self.issueViewHeaders.items()):
                 columnTitle = QLabel(value, objectName="header")
@@ -191,7 +173,7 @@ class IssueTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText(issueDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.hoverEnterStyle)
+            label.setStyleSheet(self.parentView.viewController.hoverEnterStyle)
 
 
     # ----------------------------------------------------------------------------------------
@@ -202,7 +184,7 @@ class IssueTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.backgroundNormalStyle)
+            label.setStyleSheet(self.parentView.viewController.backgroundNormalStyle)
 
 
     # ----------------------------------------------------------------------------------------
@@ -212,12 +194,6 @@ class IssueTabView(QWidget):
         
         # If the task has been marked for completion, a strikethrough will be marked on the text
         if issue["isComplete"] == "True":
-            
-            # # -- Remove Task --
-            # removeBtn = QPushButton("x", objectName="removeBtn")    
-            # removeBtn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            # removeBtn.clicked.connect(partial(self.removeIssue, issue["issueId"]))
-            # self.issueGrids["issueCompleteGrid"].layout().addWidget(removeBtn, issue["rowId"], self.issueHeaderColumnId["delete"])
             
             # Add the strike through
             for label in labelList:
@@ -246,10 +222,10 @@ class IssueTabView(QWidget):
         
         if ret == QMessageBox.Ok:
             # Remove issue from the database
-            self.parentView.model.deleteIssue(self.projectId, issueId)  
+            self.parentView.model.deleteIssue(self.parentView.projectId, issueId)  
 
             # Clear and redisplay issues in grid
-            self.viewController.displayProjectFeatureTaskIssueView(self.projectId, currentIndex=self.parentView.currentIndex)
+            self.parentView.viewController.displayProjectFeatureTaskIssueView(self.parentView.projectId, currentIndex=self.parentView.currentIndex)
             
 
     # ----------------------------------------------------------------------------------------
@@ -289,5 +265,35 @@ class IssueTabView(QWidget):
     # ----------------------------------------------------------------------------------------
     
 
-    def editIssue(self):
+    def editIssue(self, issue):
         ic("edit Issue")
+
+        self.editDict = {"issueId": issue["issueId"], "rowId": issue["rowId"], "tabId": self.tabId, "isEditing": True}
+
+        self.parentView.createIssueTabView(self.editDict)
+
+
+    # ----------------------------------------------------------------------------------------
+
+
+    def editFinished(self):
+        ic("editFinished")
+        
+        selection = 0
+
+        for key, value in self.priorityDict.items():
+            if self.prioritySelectionMenu.currentText() == value["Priority"]:
+                selection = key
+                break
+            
+        self.parentView.model.updateIssue(self.parentView.projectId, self.editDict["issueId"], self.issueNameInput.text(), selection)
+        self.editDict["isEditing"] = False
+
+        # Clear the finish edit button from the display
+        self.parentView.clearLayout(self.parentView.window.FinishEditFrame.layout())
+        
+        # Clear and redisplay tasks in grid
+        self.parentView.createIssueTabView(self.editDict)
+      
+        
+    # ----------------------------------------------------------------------------------------

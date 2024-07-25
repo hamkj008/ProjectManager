@@ -40,6 +40,8 @@ class ProjectFeatureTaskIssueView(QWidget):
         self.featureView = None
         self.taskView = None
         self.issueView = None
+        
+        self.editing = False
 
 
         self.getProjectName()
@@ -56,27 +58,27 @@ class ProjectFeatureTaskIssueView(QWidget):
     # ----------------------------------------------------------------------------------------
      
     # -------- FEATURES TAB ----------------------------
-    def createFeatureTabView(self, editing=False):
+    def createFeatureTabView(self, editDict=None):
         
-        self.featureView = FeatureTabView(self, self.viewController, self.projectId, editing)
+        self.featureView = FeatureTabView(self, 0, editDict)
         self.featureModelResults = self.model.getFeatures(self.projectId, self.searchText)
         self.populateFeatureData()
         self.window.FeaturesTab.layout().addWidget(self.featureView) 
 
 
     # -------- TASKS TAB ----------------------------
-    def createTaskTabView(self):
+    def createTaskTabView(self, editDict=None):
         
-        self.taskView = TaskTabView(self, self.viewController, self.projectId)
+        self.taskView = TaskTabView(self, 1, editDict)
         self.taskModelResults = self.model.getTasks(self.projectId, self.searchText)
         self.populateTaskData()
         self.window.TasksTab.layout().addWidget(self.taskView) 
 
 
     # -------- ISSUES TAB ----------------------------
-    def createIssueTabView(self):
+    def createIssueTabView(self, editDict=None):
         
-        self.issueView = IssueTabView(self, self.viewController, self.projectId)
+        self.issueView = IssueTabView(self, 2, editDict)
         self.issueModelResults = self.model.getIssues(self.projectId, self.searchText)
         self.populateIssueData()
         self.window.IssuesTab.layout().addWidget(self.issueView) 
@@ -92,8 +94,19 @@ class ProjectFeatureTaskIssueView(QWidget):
      
 
     # ----------------------------------------------------------------------------------------
-        
+    
 
+    def clearLayout(self, layout):
+        ic("clearGrids")
+        
+        while layout.count():
+            item = layout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()     
+    
+                
+    # ----------------------------------------------------------------------------------------
+    
     def populateFeatureData(self):
         ic("populateFeatureData")
 
@@ -175,21 +188,18 @@ class ProjectFeatureTaskIssueView(QWidget):
     def tabChanged(self, index):
         
         self.currentIndex = index
-
+        
         if index == 0:
             self.statusBarMessage = "Features: " + str(len(self.featureModelResults))
             self.viewController.statusBar().showMessage(self.statusBarMessage)
-            # self.window.AddNewBtn.setText("+ New Feature")
             
         elif index == 1:
             self.statusBarMessage = "Tasks: " + str(len(self.taskModelResults))
             self.viewController.statusBar().showMessage(self.statusBarMessage)
-            # self.window.AddNewBtn.setText("+ New Task")
             
         elif index == 2:
             self.statusBarMessage = "Issues: " + str(len(self.issueModelResults))
             self.viewController.statusBar().showMessage(self.statusBarMessage)
-            # self.window.AddNewBtn.setText("+ New Issue")
             
         self.window.DescriptionTextLabel.setText("")
         
@@ -214,32 +224,6 @@ class ProjectFeatureTaskIssueView(QWidget):
          
     # ----------------------------------------------------------------------------------------
     
-    
-
-    def featureEdit(self, rowId):
-        self.createFeatureTabView(editing=True)
-        
 
 
     
-    # def contextMenuEvent(self, event):
-    #     ic("contextMenu")
-    #     context_menu = QMenu(self)
-
-    #     # Adding actions to the context menu
-    #     action1 = QAction("Action 1", self)
-    #     action1.triggered.connect(self.on_action1_triggered)
-    #     context_menu.addAction(action1)
-
-    #     action2 = QAction("Action 2", self)
-    #     action2.triggered.connect(self.on_action2_triggered)
-    #     context_menu.addAction(action2)
-
-    #     # Show context menu
-    #     context_menu.exec_(event.globalPos())
-
-    # def on_action1_triggered(self):
-    #     print("Action 1 triggered")
-
-    # def on_action2_triggered(self):
-    #     print("Action 2 triggered")

@@ -328,15 +328,14 @@ class ProjectModel:
         
     # ----------------------------------------------------------------------------------------
     
-    
-    def setIssueStatus(self, projectId, issueId, issueStatus):
+
+    def updateFeature(self, projectId, featureId, featureName, priority):
         
-        self.cursor.execute(f"UPDATE projectIssues SET isComplete = '{issueStatus}' WHERE projectId = '{projectId}' AND issueId = '{issueId}'")
+        self.cursor.execute(f"UPDATE projectFeatures SET featureName = '{featureName}', priority = '{priority}' WHERE projectId = '{projectId}' AND featureId = '{featureId}'")
         self.connection.commit()
-
-
+        
+        
     # ----------------------------------------------------------------------------------------
-    
     
     def updateCompleteTask(self, projectId, taskId, isComplete):
         

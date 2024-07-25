@@ -1,6 +1,6 @@
 from icecream import ic
 
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QFrame, QPushButton, QMessageBox, QMenu, QComboBox
+from PySide6.QtWidgets import QLineEdit, QWidget, QLabel, QSizePolicy, QHBoxLayout, QFrame, QPushButton, QMessageBox, QMenu, QComboBox
 from PySide6.QtCore import Qt, QEvent
 from PySide6.QtGui import QAction
 from functools import partial
@@ -9,13 +9,12 @@ from Helpers.DataLabel import DataLabel
 
 class FeatureTabView(QWidget):
 
-    def __init__(self, parentView, viewController, projectId, editing=False):
+    def __init__(self, parentView, tabId, editDict=None):
         super().__init__()
         
         self.parentView = parentView
-        self.viewController = viewController
-        self.projectId = projectId
-        self.editing = editing
+        self.tabId = tabId
+        self.editDict = editDict
 
         layout = QHBoxLayout(self)
         self.setLayout(layout)
@@ -24,39 +23,19 @@ class FeatureTabView(QWidget):
         self.featureGrid = self.parentView.window.FeatureTabGridFrame.layout()
         self.parentView.window.FeatureTabGridFrame.layout().setAlignment(Qt.AlignTop)
         
-        if self.editing:
+        self.priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
+        
+
+        # If an entry is being edited, add the finish button to the display
+        if self.editDict and self.editDict["isEditing"]:
             finishEditBtn = QPushButton("Finish Editing", objectName="finishEditBtn")
             finishEditBtn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
             self.parentView.window.FinishEditFrame.layout().addWidget(finishEditBtn)
             finishEditBtn.clicked.connect(self.editFinished)
         
         
-        self.loadGrids()
-        
-
-    # ----------------------------------------------------------------------------------------
-        
-
-    def loadGrids(self):
-        ic("loadGrids")
-
-        self.clearGrids()
         self.setUpFeatureGrid()
-
-        # self.populateIssueData()
         
-
-    # ----------------------------------------------------------------------------------------
-        
-
-    def clearGrids(self):
-        ic("clearGrids")
-        
-        while self.featureGrid.count():
-            item = self.featureGrid.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()      
-                
 
     # ----------------------------------------------------------------------------------------
 
@@ -85,69 +64,81 @@ class FeatureTabView(QWidget):
         rowList = []
         
         for key, value in feature.items():           
-            for header in self.featureViewHeaders:
-                if key in self.featureViewHeaders:
-
-                    if key == "priority":
-                        priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
-                        priority, color = priorityDict[value]["Priority"], priorityDict[value]["Color"]
+            if key in self.featureViewHeaders:
                     
-                        # Display the priority along with a representative color
-                        priorityLayout = QHBoxLayout()
-                        priorityLayout.setContentsMargins(0,0,0,0)
-                        priorityLayout.setSpacing(0)
-                        taskObjectLabel = QFrame()
-                        taskObjectLabel.setLayout(priorityLayout)
-                    
-                        # Used to control the size of the color frame
-                        colorMasterFrame = QFrame()
-                        colorMasterFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                        colorMasterLayout = QHBoxLayout()
-                        colorMasterLayout.setContentsMargins(0,0,0,0)
-                        colorMasterFrame.setLayout(colorMasterLayout)
-                    
-                        # A frame, layout and placeholderlabel form the structure to hold the representative color 
-                        colorFrame = QFrame() # The frame that holds the actual color
-                        colorFrame.setStyleSheet(f"background-color: {color};") # Color changes based on priority 
-                        colorFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)                   
-                        colorFrameLayout = QHBoxLayout()
-                        colorFrameLayout.setContentsMargins(0,0,0,0)
-                        colorFrame.setLayout(colorFrameLayout)
-                        placeholder = QLabel("", objectName="placeholder") # A placeholder to give the frame substance
-                        placeholder.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                        colorFrameLayout.addWidget(placeholder)
-                    
-                        colorMasterLayout.addWidget(colorFrame)
-
-                        # The priority label
-                        if self.editing:
-                            priorityLabel = QComboBox()
-                            # -- Drop Down Menu --
-                            self.priorityDict = self.parentView.getPriorityDict() 
-         
-                            for priorityValue in self.priorityDict.values():
-                                priorityLabel.addItem(priorityValue["Priority"])
-            
-                            priorityLabel.setCurrentIndex(2)
-                            
-                        else:
-                            priorityLabel = DataLabel(f'{priority}', feature, objectName="priorityLabel")
-                            priorityLabel.installEventFilter(self)
+                if key == "priority":
+                    priority, color = self.priorityDict[value]["Priority"], self.priorityDict[value]["Color"]
                         
-                        priorityLayout.addWidget(priorityLabel)
+                    # Display the priority along with a representative color
+                    priorityLayout = QHBoxLayout()
+                    priorityLayout.setContentsMargins(0,0,0,0)
+                    priorityLayout.setSpacing(0)
+                    taskObjectLabel = QFrame(objectName="taskObjectLabel")  # taskObjectLabel is used to treat the frame like the other labels
+                    taskObjectLabel.setLayout(priorityLayout)
+                        
+                    # Used to control the size of the color frame
+                    colorMasterFrame = QFrame()
+                    colorMasterFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+                    colorMasterLayout = QHBoxLayout()
+                    colorMasterLayout.setContentsMargins(0,0,0,0)
+                    colorMasterFrame.setLayout(colorMasterLayout)
+                    
+                    # A frame, layout and placeholderlabel form the structure to hold the representative color 
+                    colorFrame = QFrame() # The frame that holds the actual color
+                    colorFrame.setStyleSheet(f"background-color: {color};") # Color changes based on priority 
+                    colorFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)                   
+                    colorFrameLayout = QHBoxLayout()
+                    colorFrameLayout.setContentsMargins(0,0,0,0)
+                    colorFrame.setLayout(colorFrameLayout)
+                    placeholder = QLabel("", objectName="placeholder") # A placeholder to give the frame substance
+                    placeholder.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+                    colorFrameLayout.addWidget(placeholder)
+                    
+                    colorMasterLayout.addWidget(colorFrame)
+                    
+                    # -- Editing --
+                    if self.editDict and self.editDict["isEditing"] and feature["rowId"] == self.editDict["rowId"]:
+                            
+                        # -- Drop Down Menu --
+                        self.prioritySelectionMenu = QComboBox()
+
+                        for priorityValue in self.priorityDict.values():
+                            self.prioritySelectionMenu.addItem(priorityValue["Priority"])
+            
+                        self.prioritySelectionMenu.setCurrentIndex(2) # Set a default selection
+                        priorityLayout.addWidget(self.prioritySelectionMenu)
+                            
+                    # -- Not editing --
+                    else:
+                        priorityLabel = DataLabel(f'{priority}', feature, objectName="priorityLabel")
+                        priorityLabel.installEventFilter(self) # Apply right click menu to labels
+                        priorityLayout.addWidget(priorityLabel)                            
                         priorityLayout.addWidget(colorMasterFrame)
                         
-                    else:
-                        taskObjectLabel = DataLabel(f'{value}', feature)
-                        taskObjectLabel.installEventFilter(self)
-                    
-                    taskObjectLabel.setObjectName("taskObjectLabel")
-                                
+                        rowList.append(taskObjectLabel)
+                            
                     taskObjectLabel.mousePressEvent = (partial(self.rowClicked, feature["featureDescription"]))
                     self.featureGrid.addWidget(taskObjectLabel, feature["rowId"], self.featureHeaderColumnId[key])
                
-                    rowList.append(taskObjectLabel)                                
-                
+
+                # Labels other than the priority
+                else:
+                    # -- Editing --
+                    if self.editDict and self.editDict["isEditing"] and feature["rowId"] == self.editDict["rowId"] and key == "featureName":
+                        self.featureNameInput = QLineEdit(f'{value}')  
+                        self.featureGrid.addWidget(self.featureNameInput, feature["rowId"], self.featureHeaderColumnId[key])
+                            
+                    # -- Not editing --
+                    else:
+                        taskObjectLabel = DataLabel(f'{value}', feature, objectName="taskObjectLabel")
+                        taskObjectLabel.installEventFilter(self)
+                                
+                        taskObjectLabel.mousePressEvent = (partial(self.rowClicked, feature["featureDescription"]))
+                        self.featureGrid.addWidget(taskObjectLabel, feature["rowId"], self.featureHeaderColumnId[key])
+               
+                        rowList.append(taskObjectLabel)
+
+
         # If hovering for one label, all of them will highlight
         for widget in rowList:
             widget.enterEvent = (partial(self.hoverEnter, rowList, feature["featureDescription"]))
@@ -160,7 +151,7 @@ class FeatureTabView(QWidget):
     def addNewFeature(self):
         ic("addNewFeature")
         
-        self.viewController.displayAddNewFeatureView(self.projectId)
+        self.parentView.viewController.displayAddNewFeatureView(self.parentView.projectId)
 
          
     # ----------------------------------------------------------------------------------------
@@ -179,7 +170,7 @@ class FeatureTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText(featureDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.hoverEnterStyle)
+            label.setStyleSheet(self.parentView.viewController.hoverEnterStyle)
 
 
     # ----------------------------------------------------------------------------------------
@@ -190,7 +181,7 @@ class FeatureTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.backgroundNormalStyle)
+            label.setStyleSheet(self.parentView.viewController.backgroundNormalStyle)
 
 
     # ----------------------------------------------------------------------------------------
@@ -209,24 +200,23 @@ class FeatureTabView(QWidget):
         
         if ret == QMessageBox.Ok:
             # Remove task from the database
-            self.parentView.model.deleteFeature(self.projectId, featureId)  
+            self.parentView.model.deleteFeature(self.parentView.projectId, featureId)  
 
             # Clear and redisplay tasks in grid
-            self.viewController.displayProjectFeatureTaskIssueView(self.projectId, currentIndex=self.parentView.currentIndex)
+            self.parentView.createFeatureTabView()
             
 
     # ----------------------------------------------------------------------------------------
             
-
+    # Sets up the right click context menu
     def eventFilter(self, obj, event):
 
         if event.type() == QEvent.ContextMenu:
-
             ic("contextMenu")
+            
             rightMenu = QMenu(self)
 
             # Adding actions to the context menu
-            
             # -- Edit Menu --
             edit = QAction("Edit", self)
             edit.triggered.connect(partial(self.editFeature, obj.data))
@@ -254,8 +244,10 @@ class FeatureTabView(QWidget):
     
     def editFeature(self, feature):
         ic("right click")
+        
+        self.editDict = {"featureId": feature["featureId"], "rowId": feature["rowId"], "tabId": self.tabId, "isEditing": True}
 
-        self.parentView.featureEdit(feature["rowId"])
+        self.parentView.createFeatureTabView(self.editDict)
 
 
     # ----------------------------------------------------------------------------------------
@@ -263,8 +255,34 @@ class FeatureTabView(QWidget):
 
     def editFinished(self):
         ic("editFinished")
+        
+        selection = 0
+
+        for key, value in self.priorityDict.items():
+            if self.prioritySelectionMenu.currentText() == value["Priority"]:
+                selection = key
+                break
+            
+        self.parentView.model.updateFeature(self.parentView.projectId, self.editDict["featureId"], self.featureNameInput.text(), selection)
+        self.editDict["isEditing"] = False
+
+        # Clear the finish edit button from the display
+        self.parentView.clearLayout(self.parentView.window.FinishEditFrame.layout())
+        
+        # Clear and redisplay tasks in grid
+        self.parentView.createFeatureTabView(self.editDict)
+      
+        
+    # ----------------------------------------------------------------------------------------
 
 
+
+
+
+
+    # ----------------------------------------------------------------------------------------
+    
+    
     def get_widgets_in_row(self, layout, row):
         widgets = []
         for col in range(layout.columnCount()):
