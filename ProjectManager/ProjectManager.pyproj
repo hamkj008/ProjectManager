@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>821d24b9-0ce6-4d8c-a9db-849730f689c7</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MainFiles\Main.py</StartupFile>
+    <StartupFile>Main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,22 +22,30 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DebugTest\DebugTestPlayground.py" />
+    <Compile Include="DebugTest\DebugTestSetup.py" />
     <Compile Include="Helpers\DragDropLabel.py" />
     <Compile Include="Helpers\DropGridWithId.py" />
     <Compile Include="Helpers\IssueDragDropLabel.py" />
     <Compile Include="Helpers\IssueDropGridWithId.py" />
-    <Compile Include="Helpers\DataLabel.py" />
     <Compile Include="Helpers\ResizeableGrid.py" />
     <Compile Include="MainFiles\LogController.py" />
-    <Compile Include="MainFiles\Main.py" />
+    <Compile Include="Main.py" />
+    <Compile Include="MainFiles\MenuController.py" />
+    <Compile Include="MainFiles\QSSController.py" />
+    <Compile Include="MainFiles\StateController.py" />
     <Compile Include="MainFiles\ViewController.py" />
+    <Compile Include="Models\ModelCreator.py" />
     <Compile Include="Models\ProjectModel.py" />
     <Compile Include="Models\__init__.py" />
-    <Compile Include="Testing\test_TestModule1.py" />
-    <Compile Include="Views\AddNewFeatureView.py" />
-    <Compile Include="Views\AddNewIssueView.py" />
+    <Compile Include="tests\conftest.py" />
+    <Compile Include="tests\fixtures\fixture_databaseInit.py" />
+    <Compile Include="tests\fixtures\test_fixtures.py" />
+    <Compile Include="tests\models\test_projectModel.py" />
+    <Compile Include="tests\views\test_aboutView.py" />
+    <Compile Include="Views\AboutView.py" />
+    <Compile Include="Views\AddNewView.py" />
     <Compile Include="Views\AddNewProjectView.py" />
-    <Compile Include="Views\AddNewTaskView.py" />
     <Compile Include="Views\FeatureTabView.py" />
     <Compile Include="Views\IssueTabView.py" />
     <Compile Include="Views\LogView.py" />
@@ -53,8 +61,12 @@
     <Folder Include="MainFiles\__pycache__\" />
     <Folder Include="Models\" />
     <Folder Include="Models\__pycache__\" />
-    <Folder Include="Testing\" />
+    <Folder Include="DebugTest\" />
+    <Folder Include="tests\" />
     <Folder Include="QSS\" />
+    <Folder Include="tests\models\" />
+    <Folder Include="tests\fixtures\" />
+    <Folder Include="tests\views\" />
     <Folder Include="Views\" />
     <Folder Include="Views\__pycache__\" />
   </ItemGroup>

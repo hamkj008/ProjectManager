@@ -5,6 +5,9 @@ from PySide6.QtCore import Qt, QMimeData, QDataStream, QByteArray
 from PySide6.QtGui import QDrag, QPixmap, QPainter
 
 
+# ========================================================================================
+  
+
 class IssueDragDropLabel(QLabel):
     def __init__(self, text, parentView, data, objectName=None):
         super().__init__(text)    
@@ -13,13 +16,18 @@ class IssueDragDropLabel(QLabel):
         self.data = data
         if objectName:
             self.setObjectName(objectName)
-           
-        
+      
+            
+    # ========================================================================================
+    
+     
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.dragStartPosition = event.position()
             self.parentView.rowClicked(self.data["issueDescription"], event)
 
+    # ========================================================================================
+    
 
     def mouseMoveEvent(self, event):
         # If the left mouse button is not held, exit the event
@@ -52,8 +60,10 @@ class IssueDragDropLabel(QLabel):
         drag.exec(Qt.CopyAction | Qt.MoveAction)
         
 
-
-    # """Creates a composite pixmap for the entire row."""
+    # ========================================================================================
+    
+    
+    # Creates a composite pixmap for the entire row.
     def createRowPixmap(self):
         
         gridLayout = self.parentWidget().layout()
@@ -74,3 +84,6 @@ class IssueDragDropLabel(QLabel):
         painter.end()
         
         return rowPixmap
+    
+
+# ========================================================================================

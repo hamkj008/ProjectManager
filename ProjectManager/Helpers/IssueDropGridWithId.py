@@ -4,6 +4,8 @@ from Helpers.IssueDragDropLabel import IssueDragDropLabel
 from icecream import ic
 
 
+# ========================================================================================
+      
 
 class IssueDropGridWithId(QWidget):
     def __init__(self, viewController, model, id=0, objectName=None):
@@ -24,18 +26,18 @@ class IssueDropGridWithId(QWidget):
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     def getId(self):
         return self.id
     
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     def dragEnterEvent(self, event):
         ic("gridDrag") 
         event.acceptProposedAction()
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     def dropEvent(self, event):
         ic("gridDrop")       
@@ -61,10 +63,10 @@ class IssueDropGridWithId(QWidget):
                     elif targetGridId == 1:
                         isComplete = "True"
 
-                    self.model.updateCompleteIssue(projectId, issueId, isComplete)
-                    self.viewController.displayProjectFeatureTaskIssueView(projectId, currentIndex=2)
+                    self.model.updateCompleteIssue(issueId, isComplete)
+                    self.viewController.displayView("ProjectFeatureTaskIssueView", currentIndex=2)
                     event.acceptProposedAction()
                     
             else:
                 # The task is being reordered in the same column. TaskId's will need reordering
-                self.viewController.displayProjectFeatureTaskIssueView(projectId, currentIndex=2)
+                self.viewController.displayView("ProjectFeatureTaskIssueView", currentIndex=2)

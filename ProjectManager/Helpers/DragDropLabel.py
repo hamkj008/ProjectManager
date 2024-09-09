@@ -29,11 +29,9 @@ class DragDropLabel(QLabel):
         if (event.position() - self.dragStartPosition).manhattanLength() < QApplication.startDragDistance():
             return
         
-        
         rowPixmap = self.createRowPixmap()
         drag = QDrag(self)
         mimedata = QMimeData()
-        
 
         # Serialize data into a QByteArray
         byteArray = QByteArray()

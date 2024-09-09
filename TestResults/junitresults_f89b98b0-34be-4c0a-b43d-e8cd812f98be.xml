@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="12" failures="0" skipped="0" tests="14" time="1.803" timestamp="2024-09-09T16:40:52.500773" hostname="DESKTOP-HP3M6LC"><testcase classname="tests.fixtures.test_fixtures" name="test_addFeature" file="tests\fixtures\test_fixtures.py" line="32" time="0.235"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D6092FD60&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.fixtures.test_fixtures" name="test_addIssue" file="tests\fixtures\test_fixtures.py" line="47" time="0.107"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BDA020&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.fixtures.test_fixtures" name="test_addProject" file="tests\fixtures\test_fixtures.py" line="7" time="0.094"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BDA500&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_deleteFeature" file="tests\models\test_projectModel.py" line="31" time="0.086"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60B42E30&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_deleteIssue" file="tests\models\test_projectModel.py" line="55" time="0.101"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60B42DD0&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_deleteProject" file="tests\models\test_projectModel.py" line="19" time="0.101"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BD4160&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_deleteTask" file="tests\models\test_projectModel.py" line="43" time="0.115"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BEF550&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_getProjectName" file="tests\models\test_projectModel.py" line="6" time="0.113"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BE1030&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_updateFeature" file="tests\models\test_projectModel.py" line="25" time="0.104"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BE0E20&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_updateIssue" file="tests\models\test_projectModel.py" line="49" time="0.126"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BEF3D0&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_updateProject" file="tests\models\test_projectModel.py" line="13" time="0.135"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D60BD9CC0&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.models.test_projectModel" name="test_updateTask" file="tests\models\test_projectModel.py" line="37" time="0.304"><error message="failed on setup with &quot;AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?&quot;">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x0000028D61CF2950&gt;
+addProject = {'projectId': None}, addFeature = {'featureId': None}
+addTask = {'taskId': None}, addIssue = {'issueId': None}
+
+    @pytest.fixture
+    def populateDatabase(projectModel, addProject, addFeature, addTask, addIssue):
+    
+&gt;       project = projectModel.getProject(addProject["projectId"])
+E       AttributeError: 'ProjectModel' object has no attribute 'getProject'. Did you mean: 'getProjects'?
+
+tests\fixtures\fixture_databaseInit.py:134: AttributeError</error><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewProject: {e}": 'An error occurred addNewProject: 4 values for 3 columns'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+
+</system-err></testcase><testcase classname="tests.views.test_aboutView" name="test_init" file="tests\views\test_aboutView.py" line="21" time="0.032"><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+
+</system-err></testcase><testcase classname="tests.views.test_aboutView" name="test_signals" file="tests\views\test_aboutView.py" line="40" time="0.004"><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+
+</system-err></testcase></testsuite></testsuites>

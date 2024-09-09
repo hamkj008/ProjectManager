@@ -1,359 +1,440 @@
 from icecream import ic
 import sqlite3
+from MyHelperLibrary.Helpers.HelperMethods import createDictionary, createSingleRecordDictionary
 
 
+# ========================================================================================
+      
 
 class ProjectModel:
-   
-    def __init__(self):
-        ic("Model init")
+
+    def __init__(self, connection=None):
+        ic("ProjectModel init")
         
-        self.connection = sqlite3.connect('projectManager.db')
-        self.connection.execute("PRAGMA foreign_keys = ON")
+        self.connection = connection
         self.cursor = self.connection.cursor()
-        
-
-        # Check if the database has any data.
-        self.cursor.execute("PRAGMA table_info({})".format("projects"))
-        query = self.cursor.fetchall()
-        
-
-        # If the database does not exist, initialize first time install of the database
-        if len(query) > 0:
-            ic("database populated")
-            
-        else:  
-            self.firstTimeDatabaseInstall()
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
-    def firstTimeDatabaseInstall(self):
-        ic("firstTimeDatabaseInstall")
-
-        self.dropTables()
-        self.createTables()
-
-
-    # ----------------------------------------------------------------------------------------
-        
-
-    def dropTables(self):
-        ic("dropTables")
-        
-        self.cursor.execute("DROP TABLE IF EXISTS projectIssues")
-        self.cursor.execute("DROP TABLE IF EXISTS projectTasks")
-        self.cursor.execute("DROP TABLE IF EXISTS projectFeatures")
-        self.cursor.execute("DROP TABLE IF EXISTS projects")
-        self.connection.commit()
-
-
-    # ----------------------------------------------------------------------------------------
-
-
-    def createTables(self):
-        ic("createTables")
-
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS 
-                        projects( 
-                            projectId INTEGER PRIMARY KEY,
-                            projectName TEXT NOT NULL,
-                            projectDescription TEXT,
-                            dateCreated TEXT NOT NULL
-                        )""")
-        
-
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS 
-                        projectFeatures(   
-                            featureId INTEGER PRIMARY KEY,
-                            projectId INTEGER NOT NULL,
-                            dateFeatureCreated TEXT NOT NULL,
-                            featureName TEXT,
-                            featureDescription TEXT,
-                            priority INTEGER DEFAULT 3 CHECK(priority IN(1, 2, 3, 4, 5)),
-                            FOREIGN KEY(projectId) REFERENCES projects(projectId)
-                        )""")
-        
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS 
-                        projectTasks(   
-                            taskId INTEGER PRIMARY KEY,
-                            projectId INTEGER NOT NULL,
-                            dateTaskCreated TEXT NOT NULL,
-                            dateTaskStarted TEXT,
-                            dateTaskFinished TEXT,
-                            taskName TEXT,
-                            taskDescription TEXT,
-                            taskStatus TEXT DEFAULT 'Waiting' CHECK(taskStatus IN('Waiting', 'InProgress', 'Complete')),
-                            isComplete TEXT DEFAULT 'False' CHECK(isComplete IN('True', 'False')),
-                            priority INTEGER DEFAULT 3 CHECK(priority IN(1, 2, 3, 4, 5)),
-                            FOREIGN KEY(projectId) REFERENCES projects(projectId)
-                        )""")
-        
-
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS 
-                        projectIssues(   
-                            issueId INTEGER PRIMARY KEY,
-                            projectId INTEGER NOT NULL,
-                            dateIssueCreated TEXT NOT NULL,
-                            issueName TEXT,
-                            issueDescription TEXT,
-                            isComplete TEXT DEFAULT 'False' CHECK(isComplete IN('True', 'False')),
-                            priority INTEGER DEFAULT 3 CHECK(priority IN(1, 2, 3, 4, 5)),
-                            FOREIGN KEY(projectId) REFERENCES projects(projectId)
-                        )""")
-        
-        self.connection.commit()
-
-
-    # ----------------------------------------------------------------------------------------
-     
-    
     def getProjectName(self, projectId):
         
-        self.cursor.execute(f"SELECT projectName FROM projects WHERE projectId = '{projectId}'")
-        project = self.cursor.fetchone()[0]
-
-        return project
+        query = "SELECT projectName FROM projects WHERE projectId = (?)"
+        params = [projectId]
+        self.cursor.execute(query, params)
+        
+        return self.cursor.fetchone()[0]
     
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
+
     def getProjects(self, search=None):
         ic("getProjects")
         
         query = "SELECT projectId, projectName, projectDescription, dateCreated FROM projects"
         
         if search:
-            query += " WHERE (projectName LIKE ?)"
+            query += " WHERE projectName LIKE (?)"
             
             # The comma , in the search indicates that it is part of a tuple. Without it there is an error.
-            queryParams = (f"%{search}%",)
-            self.cursor.execute(query, queryParams)
+            params = (f"%{search}%",)
+            self.cursor.execute(query, params)
             
         else:
             self.cursor.execute(query)
                       
         rows = self.cursor.fetchall()
-        
-
-        # -- Create dictionary --
-        columnNames = [description[0] for description in self.cursor.description]
-
-        resultsDictList = []
-
-        # Zip the column names and results together into a dictionary list
-        for row in rows:
-            rowDict = {}
-            for columnName, value in zip(columnNames, row):
-                rowDict[columnName] = value
-            resultsDictList.append(rowDict)
+        resultsDictList = createDictionary(rows, self.cursor.description)
 
         return resultsDictList
     
 
-    # ----------------------------------------------------------------------------------------      
+    # ========================================================================================      
     
 
+    def getProject(self, projectId):
+        ic("getProject")
+        
+        query = """SELECT projectId, projectName, projectDescription, dateCreated 
+                        FROM projects WHERE projectId = (?)"""
+                        
+        params = [projectId]
+         
+        self.cursor.execute(query, params)
+        
+        record = self.cursor.fetchone()  
+        return createSingleRecordDictionary(record, self.cursor.description)
+    
+
+    # ========================================================================================      
+    
     def addNewProject(self, projectInfo):
         
-        projectName = projectInfo["projectName"]
-        projectDescription = projectInfo["projectDescription"]
-        dateCreated = projectInfo["dateCreated"]
+        params = [projectInfo["projectName"],
+                    projectInfo["projectDescription"],
+                    projectInfo["dateCreated"]]
         
-        self.cursor.execute(f"""INSERT INTO projects (projectName, projectDescription, dateCreated) VALUES (
-                            '{projectName}', 
-                            '{projectDescription}', 
-                            '{dateCreated}')""")
+        query = "INSERT INTO projects (projectName, projectDescription, dateCreated) VALUES (?,?,?)"
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+            self.cursor.execute("SELECT projectId FROM projects WHERE projectId = LAST_INSERT_ROWID()")
+            return self.cursor.fetchone()[0]
 
-        self.connection.commit()
-       
+        except sqlite3.Error as e:
+            ic(f"An error occurred addNewProject: {e}")
+            self.connection.rollback()
 
-    # ----------------------------------------------------------------------------------------   
+
+    # ========================================================================================   
     
 
-    def addNewFeature(self, featureInfo):
-        
-        projectId = featureInfo["projectId"]
-        featureName = featureInfo["featureName"]
-        featureDescription = featureInfo["featureDescription"]
-        dateFeatureCreated = featureInfo["dateFeatureCreated"]
-        priority = featureInfo["priority"]
-        
-        self.cursor.execute(f"""INSERT INTO projectFeatures (projectId, featureName, featureDescription, dateFeatureCreated, priority) VALUES (
-                            '{projectId}', 
-                            '{featureName}', 
-                            '{featureDescription}', 
-                            '{dateFeatureCreated}',
-                            '{priority}')""")
+    def updateProject(self, projectDict):
 
-        self.connection.commit()
+        query = "UPDATE projects SET projectName = ?, projectDescription = ? WHERE projectId = ?"
+        params = [projectDict["projectName"], 
+                projectDict["projectDescription"], 
+                projectDict["projectId"]]
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred updateProject: {e}")
+            self.connection.rollback()
        
-
-    # ----------------------------------------------------------------------------------------   
+            
+    # ========================================================================================   
     
-
-    def addNewTask(self, taskInfo):
-        
-        projectId = taskInfo["projectId"]
-        taskName = taskInfo["taskName"]
-        taskDescription = taskInfo["taskDescription"]
-        dateTaskCreated = taskInfo["dateTaskCreated"]
-        priority = taskInfo["priority"]
-        
-        self.cursor.execute(f"""INSERT INTO projectTasks (projectId, taskName, taskDescription, dateTaskCreated, priority) VALUES (
-                            '{projectId}',
-                            '{taskName}', 
-                            '{taskDescription}', 
-                            '{dateTaskCreated}',
-                            '{priority}')""")
-
-        self.connection.commit()
-       
-
-    # ----------------------------------------------------------------------------------------   
-    
-
-    def addNewIssue(self, issueInfo):
-        
-        projectId = issueInfo["projectId"]
-        issueName = issueInfo["issueName"]
-        issueDescription = issueInfo["issueDescription"]
-        dateIssueCreated = issueInfo["dateIssueCreated"]
-        priority = issueInfo["priority"]
-        
-        self.cursor.execute(f"""INSERT INTO projectIssues (projectId, issueName, issueDescription, dateIssueCreated, priority) VALUES (
-                            '{projectId}',
-                            '{issueName}', 
-                            '{issueDescription}', 
-                            '{dateIssueCreated}',
-                            '{priority}')""")
-
-        self.connection.commit()
-       
-
-    # ----------------------------------------------------------------------------------------   
-
 
     def getFeatures(self, projectId, search=None):
         ic("getProjects")
         
-        query = f"SELECT projectId, featureId, featureName, featureDescription, dateFeatureCreated, priority FROM projectFeatures WHERE projectId = '{projectId}'"
+        query = """SELECT projectId, featureId, featureName, featureDescription, 
+                        dateFeatureCreated, priority 
+                        FROM projectFeatures WHERE projectId = (?)"""
+        
+        params = [projectId]
         
         if search:
-            query += f" AND featureName LIKE %{search}%"            
+            query += f" AND featureName LIKE ?"        
+            params.append(f"%{search}%")
             
         query += f" ORDER BY priority" 
         
-        self.cursor.execute(query)
+        self.cursor.execute(query, params)
                       
         rows = self.cursor.fetchall()
-        
-        resultsDictList = self.createDictionary(rows)
+        resultsDictList = createDictionary(rows, self.cursor.description)
 
         return resultsDictList
     
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
+    
 
+    def getFeature(self, featureId):
+        ic("getProjects")
+        
+        query = """SELECT projectId, featureId, featureName, featureDescription, 
+                            dateFeatureCreated, priority 
+                            FROM projectFeatures WHERE featureId = (?)"""
+        
+        params = [featureId]
+        
+        self.cursor.execute(query, params)
+                      
+        record = self.cursor.fetchone()  
+        return createSingleRecordDictionary(record, self.cursor.description)
+    
+
+    # ========================================================================================
+    
+
+    def addNewFeature(self, featureInfo):
+        
+        query = """INSERT INTO projectFeatures (projectId, featureName, featureDescription, 
+                                            dateFeatureCreated, priority) 
+                                            VALUES (?,?,?,?,?)"""
+                                            
+        params = [featureInfo["projectId"],
+                    featureInfo["featureName"],
+                    featureInfo["featureDescription"],
+                    featureInfo["dateFeatureCreated"],
+                    featureInfo["priority"]]
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+            self.cursor.execute("SELECT featureId FROM projectFeatures WHERE featureId = LAST_INSERT_ROWID()")
+            return self.cursor.fetchone()[0]
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred addNewFeature: {e}")
+            self.connection.rollback()
+
+
+    # ========================================================================================   
+    
 
     def getTasks(self, projectId, search=None):
         ic("getTasks")
         
-        query = f"SELECT projectId, taskId, taskName, taskDescription, dateTaskCreated, taskStatus, priority, isComplete FROM projectTasks WHERE projectId = '{projectId}'"
+        query = """SELECT projectId, taskId, taskName, taskDescription, dateTaskCreated, 
+                    taskStatus, priority, isComplete 
+                    FROM projectTasks WHERE projectId = (?)"""
+                    
+        params = [projectId]
         
         if search:
-            query += f" AND taskName LIKE %{search}%"            
+            query += f" AND taskName LIKE ?"            
+            params.append(f"%{search}%")
             
         query += f" ORDER BY priority" 
             
-        self.cursor.execute(query)
+        self.cursor.execute(query, params)
                       
         rows = self.cursor.fetchall()
-
-        resultsDictList = self.createDictionary(rows)
+        resultsDictList = createDictionary(rows, self.cursor.description)
 
         return resultsDictList
     
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
+    
 
+    def getTask(self, taskId):
+        ic("getTasks")
+        
+        query = """SELECT projectId, taskId, taskName, taskDescription, dateTaskCreated, 
+                    taskStatus, priority, isComplete 
+                    FROM projectTasks WHERE taskId = (?)"""
+                    
+        params = [taskId]
+
+        self.cursor.execute(query, params)
+                      
+        record = self.cursor.fetchone()  
+        return createSingleRecordDictionary(record, self.cursor.description)
+    
+
+    # ========================================================================================
+    
+
+    def addNewTask(self, taskInfo):
+
+        query = """INSERT INTO projectTasks (projectId, taskName, taskDescription, 
+                                            dateTaskCreated, priority) 
+                                            VALUES (?,?,?,?,?)"""
+                                            
+        params = [taskInfo["projectId"],
+                taskInfo["taskName"],
+                taskInfo["taskDescription"],
+                taskInfo["dateTaskCreated"],
+                taskInfo["priority"]]    
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+            self.cursor.execute("SELECT taskId FROM projectTasks WHERE taskId = LAST_INSERT_ROWID()")
+            return self.cursor.fetchone()[0]
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred addNewTask: {e}")
+            self.connection.rollback()
+
+
+    # ========================================================================================   
+    
 
     def getIssues(self, projectId, search=None):
         ic("getIssues")
         
-        query = f"SELECT projectId, issueId, issueName, issueDescription, dateIssueCreated, isComplete, priority FROM projectIssues WHERE projectId = '{projectId}'"
+        query = """SELECT projectId, issueId, issueName, issueDescription, 
+                    dateIssueCreated, isComplete, priority 
+                    FROM projectIssues WHERE projectId = (?)"""
+                    
+        params = [projectId]
         
         if search:
-            query += f" AND issueName LIKE %{search}%"
+            query += f" AND issueName LIKE ?"
+            params.append(f"%{search}%")
         
         query += f" ORDER BY priority"
         
-        self.cursor.execute(query)
+        self.cursor.execute(query, params)
                       
         rows = self.cursor.fetchall()
-
-        resultsDictList = self.createDictionary(rows)
-
-        return resultsDictList
-    
-    
-    # ----------------------------------------------------------------------------------------
-    
-
-    def createDictionary(self, rows):
-        
-         # -- Create dictionary --
-        columnNames = [description[0] for description in self.cursor.description]
-
-        resultsDictList = []
-
-        # Zip the column names and results together into a dictionary list
-        for row in rows:
-            rowDict = {}
-            for columnName, value in zip(columnNames, row):
-                rowDict[columnName] = value
-            resultsDictList.append(rowDict)
+        resultsDictList = createDictionary(rows, self.cursor.description)
 
         return resultsDictList
-     
+    
+    
+    # ========================================================================================
+    
+    def getIssue(self, issueId):
+        ic("getIssues")
+        
+        query = """SELECT projectId, issueId, issueName, issueDescription, 
+                            dateIssueCreated, isComplete, priority 
+                            FROM projectIssues WHERE issueId = (?)"""
+                            
+        params = [issueId]
 
-    # ----------------------------------------------------------------------------------------
-
-
-    def setTaskStatus(self, projectId, taskId, taskStatus):
-        
-        self.cursor.execute(f"UPDATE projectTasks SET taskStatus = '{taskStatus}' WHERE projectId = '{projectId}' AND taskId = '{taskId}'")
-        self.connection.commit()
-        
-    # ----------------------------------------------------------------------------------------
+        self.cursor.execute(query, params)
+           
+        record = self.cursor.fetchone()  
+        return createSingleRecordDictionary(record, self.cursor.description)
+    
+    
+    # ========================================================================================
     
 
-    def updateFeature(self, projectId, featureId, featureName, priority):
+    def addNewIssue(self, issueInfo):
         
-        self.cursor.execute(f"UPDATE projectFeatures SET featureName = '{featureName}', priority = '{priority}' WHERE projectId = '{projectId}' AND featureId = '{featureId}'")
-        self.connection.commit()
+        query = """INSERT INTO projectIssues (projectId, issueName, issueDescription, 
+                                                dateIssueCreated, priority) 
+                                                VALUES (?,?,?,?,?)"""
+                                                
+        params = [issueInfo["projectId"],
+                  issueInfo["issueName"],
+                  issueInfo["issueDescription"],
+                  issueInfo["dateIssueCreated"],
+                  issueInfo["priority"]]
         
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+            self.cursor.execute("SELECT issueId FROM projectIssues WHERE issueId = LAST_INSERT_ROWID()")
+            return self.cursor.fetchone()[0]
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred addNewTask: {e}")
+            self.connection.rollback()
+
+
+    # ========================================================================================   
+
+
+    def setTaskStatus(self, taskId, taskStatus):
         
-    # ----------------------------------------------------------------------------------------
+        query = "UPDATE projectTasks SET taskStatus = ? WHERE taskId = ?"
+        params = [taskStatus, taskId]
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred setTaskStatus: {e}")
+            self.connection.rollback()
+
+
+    # ========================================================================================
     
-    def updateCompleteTask(self, projectId, taskId, isComplete):
+
+    def updateFeature(self, featureDict):
+
+        query = "UPDATE projectFeatures SET featureName = ?, featureDescription = ?, priority = ? WHERE featureId = ?"
+        params = [featureDict["featureName"], 
+                featureDict["featureDescription"],                   
+                featureDict["priority"], 
+                featureDict["featureId"]]
         
-        self.cursor.execute(f"UPDATE projectTasks SET isComplete = '{isComplete}' WHERE projectId = '{projectId}' AND taskId = '{taskId}'")
-        self.connection.commit()
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred updateFeature: {e}")
+            self.connection.rollback()
         
-        
-    # ----------------------------------------------------------------------------------------
+
+    # ========================================================================================
     
+
+    def updateTask(self, taskDict):
+
+        query = "UPDATE projectTasks SET taskName = ?, taskDescription = ?, priority = ? WHERE taskId = ?"
+        params = [taskDict["taskName"], 
+                  taskDict["taskDescription"], 
+                  taskDict["priority"], 
+                  taskDict["taskId"]]
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred updateFeature: {e}")
+            self.connection.rollback()
+        
+
+    # ========================================================================================
+            
+
+    def updateCompleteTask(self, taskId, isComplete):
+        
+        query = f"UPDATE projectTasks SET isComplete = '{isComplete}' WHERE taskId = ?"   # the boolean is text
+        params = [taskId]
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred updateCompleteTask: {e}")
+            self.connection.rollback()
+        
+
+    # ========================================================================================
     
-    def updateCompleteIssue(self, projectId, issueId, isComplete):
+
+    def updateIssue(self, issueDict):
+
+        query = "UPDATE projectIssues SET issueName = ?, issueDescription = ?, priority = ? WHERE issueId = ?"
+        params = [issueDict["issueName"],
+                  issueDict["issueDescription"],
+                  issueDict["priority"], 
+                  issueDict["issueId"]]
         
-        self.cursor.execute(f"UPDATE projectIssues SET isComplete = '{isComplete}' WHERE projectId = '{projectId}' AND issueId = '{issueId}'")
-        self.connection.commit()
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred updateIssue: {e}")
+            self.connection.rollback()
         
-        
-    # ----------------------------------------------------------------------------------------
+
+    # ========================================================================================
     
+
+    def updateCompleteIssue(self, issueId, isComplete):
+        
+        query = f"UPDATE projectIssues SET isComplete = '{isComplete}' WHERE issueId = ?"
+        params = [issueId]
+
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred updateCompleteIssue: {e}")
+            self.connection.rollback()
+        
+        
+    # ========================================================================================
+    
+
     def deleteProject(self, projectId):
         
         self.cursor.execute(f"DELETE FROM projectIssues WHERE projectId = '{projectId}'")
@@ -363,28 +444,56 @@ class ProjectModel:
         self.connection.commit()
         
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
         
-    def deleteFeature(self, projectId, featureId):
+    def deleteFeature(self, featureId):
+
+        query = "DELETE FROM projectFeatures WHERE featureId = (?)"
+        params = [featureId]
         
-        self.cursor.execute(f"DELETE FROM projectFeatures WHERE projectId = '{projectId}' AND featureId = '{featureId}'")
-        self.connection.commit()
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred deleteTask: {e}")
+            self.connection.rollback()
+
+
+    # ========================================================================================
         
 
-    # ----------------------------------------------------------------------------------------
+    def deleteTask(self, taskId):
         
+        query = "DELETE FROM projectTasks WHERE taskId = (?)"
+        params = [taskId]
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred deleteTask: {e}")
+            self.connection.rollback()
 
-    def deleteTask(self, projectId, taskId):
-        
-        self.cursor.execute(f"DELETE FROM projectTasks WHERE projectId = '{projectId}' AND taskId = '{taskId}'")
-        self.connection.commit()
-        
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     
-    def deleteIssue(self, projectId, issueId):
+    def deleteIssue(self, issueId):
+
+        query = "DELETE FROM projectIssues WHERE issueId = (?)"
+        params = [issueId]
         
-        self.cursor.execute(f"DELETE FROM projectIssues WHERE projectId = '{projectId}' AND issueId = '{issueId}'")
-        self.connection.commit()
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred deleteIssue: {e}")
+            self.connection.rollback()
+            
+
+    # ========================================================================================
+    

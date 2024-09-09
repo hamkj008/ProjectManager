@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="4" time="0.697" timestamp="2024-09-09T17:13:08.636636" hostname="DESKTOP-HP3M6LC"><testcase classname="tests.fixtures.test_fixtures" name="test_addFeature" file="tests\fixtures\test_fixtures.py" line="19" time="0.290"><failure message="TypeError: 'NoneType' object is not subscriptable">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x000001FCF6766D10&gt;
+populateDatabase = {'feature': None, 'issue': None, 'project': {'dateCreated': '01-01-2014', 'projectDescription': 'A test description', 'projectId': 1, 'projectName': 'Test Project'}, 'task': None}
+
+    def test_addFeature(projectModel, populateDatabase):
+    
+&gt;       feature = projectModel.getFeature(populateDatabase["feature"]["featureId"])
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests\fixtures\test_fixtures.py:22: TypeError</failure><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| 'getProject'
+ic| 'getProjects'
+ic| 'getTasks'
+ic| 'getIssues'
+
+</system-err></testcase><testcase classname="tests.fixtures.test_fixtures" name="test_addIssue" file="tests\fixtures\test_fixtures.py" line="47" time="0.117"><failure message="TypeError: 'NoneType' object is not subscriptable">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x000001FCF69EF9A0&gt;
+populateDatabase = {'feature': None, 'issue': None, 'project': {'dateCreated': '01-01-2014', 'projectDescription': 'A test description', 'projectId': 1, 'projectName': 'Test Project'}, 'task': None}
+
+    def test_addIssue(projectModel, populateDatabase):
+    
+&gt;       issue = projectModel.getIssue(populateDatabase["issue"]["issueId"])
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests\fixtures\test_fixtures.py:50: TypeError</failure><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| 'getProject'
+ic| 'getProjects'
+ic| 'getTasks'
+ic| 'getIssues'
+
+</system-err></testcase><testcase classname="tests.fixtures.test_fixtures" name="test_addProject" file="tests\fixtures\test_fixtures.py" line="7" time="0.130"><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| 'getProject'
+ic| 'getProjects'
+ic| 'getTasks'
+ic| 'getIssues'
+ic| 'getProject'
+
+</system-err></testcase><testcase classname="tests.fixtures.test_fixtures" name="test_addTask" file="tests\fixtures\test_fixtures.py" line="32" time="0.118"><failure message="TypeError: 'NoneType' object is not subscriptable">projectModel = &lt;Models.ProjectModel.ProjectModel object at 0x000001FCF69E4130&gt;
+populateDatabase = {'feature': None, 'issue': None, 'project': {'dateCreated': '01-01-2014', 'projectDescription': 'A test description', 'projectId': 1, 'projectName': 'Test Project'}, 'task': None}
+
+    def test_addTask(projectModel, populateDatabase):
+    
+&gt;       task = projectModel.getTask(populateDatabase["task"]["taskId"])
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests\fixtures\test_fixtures.py:35: TypeError</failure><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+ic| f"PRAGMA foreign_keys setting during test: {setting}": 'PRAGMA foreign_keys setting during test: 0'
+ic| 'ProjectModel init'
+ic| f"An error occurred addNewFeature: {e}": ('An error occurred addNewFeature: CHECK constraint failed: priority IN(1, 2, '
+                                              '3, 4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| f"An error occurred addNewTask: {e}": ('An error occurred addNewTask: CHECK constraint failed: priority IN(1, 2, 3, '
+                                           '4, 5)')
+ic| 'getProject'
+ic| 'getProjects'
+ic| 'getTasks'
+ic| 'getIssues'
+
+</system-err></testcase></testsuite></testsuites>

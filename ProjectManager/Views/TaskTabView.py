@@ -1,23 +1,24 @@
 from icecream import ic
 
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QFrame, QHBoxLayout, QMessageBox, QPushButton, QMenu
+from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QHBoxLayout, QMessageBox, QMenu
 from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QAction
+from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
 from Helpers.ResizeableGrid import ResizeableGrid
 from Helpers.DragDropLabel import DragDropLabel
 from Helpers.DropGridWithId import DropGridWithId
 from functools import partial
 
 
+# ========================================================================================
+      
 
 class TaskTabView(QWidget):
     
-    def __init__(self, parentView, tabId, editDict=None):
+    def __init__(self, parentView, tabId):
         super().__init__()
         
         self.parentView = parentView
         self.tabId = tabId
-        self.editDict = editDict
 
         layout = QHBoxLayout(self)
         self.setLayout(layout)
@@ -37,18 +38,14 @@ class TaskTabView(QWidget):
         # Implement resizing event listeners
         taskResizeableGrid.setFrames([self.parentView.window.TasksLabelFrame, self.parentView.window.TaskLeftFrame, self.parentView.window.TaskInProgressLabelFrame, 
                                   self.parentView.window.TaskCentralFrame, self.parentView.window.TaskCompletedLabelFrame, self.parentView.window.TaskRightFrame])
-
-        # DropGridWithId allows the dragdrop labels to be dropped
-        taskGrid = DropGridWithId(self.parentView.viewController, self.parentView.model, objectName="TaskGrid")
-        self.parentView.window.TaskScrollAreaContents.layout().addWidget(taskGrid)
-        
-        taskInProgressGrid = DropGridWithId(self.parentView.viewController, self.parentView.model, 1, objectName="TaskInProgressGridFrame")
-        self.parentView.window.TaskInProgressScrollAreaContents.layout().addWidget(taskInProgressGrid)
-        
-        taskCompleteGrid = DropGridWithId(self.parentView.viewController, self.parentView.model, 2, objectName="TaskCompleteGridFrame")
-        self.parentView.window.TaskCompleteScrollAreaContents.layout().addWidget(taskCompleteGrid)
         
         taskResizeableGrid.enableMouseTrackingRecursive()
+
+        # DropGridWithId allows the dragdrop labels to be dropped
+        taskGrid            = DropGridWithId(self.parentView.viewController, self.parentView.viewController.model, objectName="TaskGrid")
+        taskInProgressGrid  = DropGridWithId(self.parentView.viewController, self.parentView.viewController.model, 1, objectName="TaskInProgressGridFrame")
+        taskCompleteGrid    = DropGridWithId(self.parentView.viewController, self.parentView.viewController.model, 2, objectName="TaskCompleteGridFrame")
+        
         
         self.taskGrids = {"taskGrid"            :   taskGrid, 
                           "taskInProgressGrid"  :   taskInProgressGrid, 
@@ -56,21 +53,42 @@ class TaskTabView(QWidget):
         
         
         self.priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
-
-        # If an entry is being edited, add the finish button to the display
-        if self.editDict and self.editDict["isEditing"]:
-            finishEditBtn = QPushButton("Finish Editing", objectName="finishEditBtn")
-            finishEditBtn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            self.parentView.window.FinishEditFrame.layout().addWidget(finishEditBtn)
-            finishEditBtn.clicked.connect(self.editFinished)
-            
-
-        self.setUpTaskGrids()
-
-    # ----------------------------------------------------------------------------------------
+        self.searchText = None
+        
+        # -- Start --
+        self.loadSelf()
+        
+    # ========================================================================================
     
 
-    def setUpTaskGrids(self):
+    def loadSelf(self):
+        
+        self.getModel()
+        
+        # Clear the grid panels
+        clearLayout(self.parentView.window.TaskScrollAreaContents.layout())
+        clearLayout(self.parentView.window.TaskInProgressScrollAreaContents.layout())
+        clearLayout(self.parentView.window.TaskCompleteScrollAreaContents.layout())
+        # Re-Add
+        self.parentView.window.TaskScrollAreaContents.layout().addWidget(self.taskGrids["taskGrid"])
+        self.parentView.window.TaskInProgressScrollAreaContents.layout().addWidget(self.taskGrids["taskInProgressGrid"])
+        self.parentView.window.TaskCompleteScrollAreaContents.layout().addWidget(self.taskGrids["taskCompleteGrid"])
+        
+        self.setupGrids()
+        self.populateTaskData()
+    
+    # ========================================================================================
+    
+
+    def getModel(self):
+        
+        self.taskModelResults = self.parentView.viewController.model.getTasks(self.parentView.viewController.stateController.projectId, self.searchText)
+
+
+    # ========================================================================================
+    
+
+    def setupGrids(self):
         ic("setUpTaskGrids")
 
         self.taskHeaderColumnId = {}
@@ -87,18 +105,35 @@ class TaskTabView(QWidget):
                     columnTitle.setSizePolicy(QSizePolicy.Expanding, columnTitle.sizePolicy().verticalPolicy())
              
                 gridValue.layout().addWidget(columnTitle, 0, index)
-            
                 self.taskHeaderColumnId[key] = index
     
             
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
+    
+    def populateTaskData(self):
+        ic("populateTaskData")
+
+        # -- Populate Data --
+        for rowIndex, task in enumerate(self.taskModelResults):
+            
+            # Add a rowId column
+            task["rowId"] = rowIndex + 1
+
+            self.addTaskToDisplay(task)            
+     
+        statusBarMessage = "Tasks: " + str(len(self.taskModelResults))
+        self.parentView.viewController.statusBar().showMessage(statusBarMessage)
+        
+
+    # ========================================================================================
+    
     
     def addTaskToDisplay(self, task):
         ic("addTaskToDisplay")
 
-        rowList = []
-        labelList = []
+        rowList = []    # The list of labels that will respond to hover events
+        labelList = []  # The list of labels that will have the strikethrough applied on completion
         
         for key, value in task.items():
             if key in self.taskViewHeaders:
@@ -108,56 +143,29 @@ class TaskTabView(QWidget):
                     priority, color = priorityDict[value]["Priority"], priorityDict[value]["Color"]
                     
                     # Display the priority along with a representative color
-                    layout = QHBoxLayout()
-                    layout.setContentsMargins(0,0,0,0)
-                    layout.setSpacing(0)
-                    taskObjectLabel = QFrame()
-                    taskObjectLabel.setLayout(layout)
-                    
-                    # Used to control the size of the color frame
-                    colorMasterFrame = QFrame()
-                    colorMasterFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                    colorMasterLayout = QHBoxLayout()
-                    colorMasterLayout.setContentsMargins(0,0,0,0)
-                    colorMasterFrame.setLayout(colorMasterLayout)
-                    
+                    taskLabel = createLayoutFrame(objectName="taskLabel", margins=(0,0,0,0))
+                    taskLabel.layout().setSpacing(0)
+
                     # A frame, layout and placeholderlabel form the structure to hold the representative color 
-                    colorFrame = QFrame()
+                    colorFrame = createLayoutFrame(sizePolicy=("fixed", "fixed"), margins=(0,0,0,0))
                     colorFrame.setStyleSheet(f"background-color: {color};") # Color changes based on priority 
-                    colorFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                    
-                    colorFrameLayout = QHBoxLayout()
-                    colorFrameLayout.setContentsMargins(0,0,0,0)
-                    colorFrame.setLayout(colorFrameLayout)
-                    placeholder = QLabel("", objectName = "placeholder")
-                    placeholder.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                    colorFrameLayout.addWidget(placeholder)
-                    
-                    colorMasterLayout.addWidget(colorFrame)
+                    colorFrame.setFixedSize(20, 20)                    
 
                     # The priority label
-                    priorityLabel = DragDropLabel(priority, self, task, objectName = "taskObjectLabel")
+                    priorityLabel = DragDropLabel(priority, self, task, objectName="taskLabel")
+                    taskLabel.layout().addWidget(priorityLabel)
+                    taskLabel.layout().addWidget(colorFrame)
+
                     labelList.append(priorityLabel)
-                    layout.addWidget(priorityLabel)
-                    layout.addWidget(colorMasterFrame)
 
-                else:                       
-                    taskObjectLabel = DragDropLabel(value, self, task)
-                    labelList.append(taskObjectLabel)
-                    
-                taskObjectLabel.setObjectName("taskObjectLabel")
-
-                if task["taskStatus"] == "Waiting":
-                    self.taskGrids["taskGrid"].layout().addWidget(taskObjectLabel, task["rowId"], self.taskHeaderColumnId[key])
-                    
-                elif task["taskStatus"] == "InProgress":
-                    self.taskGrids["taskInProgressGrid"].layout().addWidget(taskObjectLabel, task["rowId"], self.taskHeaderColumnId[key])
-                    
-                elif task["taskStatus"] == "Complete":
-                    self.taskGrids["taskCompleteGrid"].layout().addWidget(taskObjectLabel, task["rowId"], self.taskHeaderColumnId[key])
-
-                # Add it to the row list
-                rowList.append(taskObjectLabel)
+                # Other keys
+                else:
+                    taskLabel = DragDropLabel(value, self, task, objectName="taskLabel")
+                    labelList.append(taskLabel)                   
+                
+                taskLabel.installEventFilter(self)
+                self.addToGrid(taskLabel, task, key)
+                rowList.append(taskLabel)
           
         self.taskComplete(labelList, task)
         
@@ -167,15 +175,30 @@ class TaskTabView(QWidget):
             widget.leaveEvent = (partial(self.hoverLeave, rowList))  
             
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
+    def addToGrid(self, label, task, key):
+        
+        if task["taskStatus"] == "Waiting":
+            self.taskGrids["taskGrid"].layout().addWidget(label, task["rowId"], self.taskHeaderColumnId[key])
+                    
+        elif task["taskStatus"] == "InProgress":
+            self.taskGrids["taskInProgressGrid"].layout().addWidget(label, task["rowId"], self.taskHeaderColumnId[key])
+                    
+        elif task["taskStatus"] == "Complete":
+            self.taskGrids["taskCompleteGrid"].layout().addWidget(label, task["rowId"], self.taskHeaderColumnId[key])
     
+
+    # ========================================================================================
+    
+
     def rowClicked(self, taskDescription, event):   
         ic("rowClicked")
+        
         self.parentView.window.DescriptionTextLabel.setText(taskDescription)
         
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
     def hoverEnter(self, labelRowList, taskDescription, event):
@@ -183,10 +206,10 @@ class TaskTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText(taskDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.hoverEnterStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverEnterStyle)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
        
 
     def hoverLeave(self, labelRowList, event): 
@@ -194,10 +217,10 @@ class TaskTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.backgroundNormalStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverLeaveStyle)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     
     def taskComplete(self, labelList, task):
@@ -205,7 +228,7 @@ class TaskTabView(QWidget):
         # If the task has been marked for completion, a strikethrough will be marked on the text
         if task["taskStatus"] == "Complete":
             
-            self.parentView.model.updateCompleteTask(self.parentView.projectId, task["taskId"], True)
+            self.parentView.viewController.model.updateCompleteTask(task["taskId"], True)
             task["isComplete"] = 'True'
             
             # Add the strike through
@@ -214,7 +237,7 @@ class TaskTabView(QWidget):
                 label.installEventFilter(self)
         
         else:
-            self.parentView.model.updateCompleteTask(self.parentView.projectId, task["taskId"], True)
+            self.parentView.viewController.model.updateCompleteTask(task["taskId"], True)
             task["isComplete"] = 'False'
             
             # remove the strikethrough
@@ -222,11 +245,11 @@ class TaskTabView(QWidget):
                 label.setText(f"{label.text()}")
          
                         
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
     def removeTask(self, taskId):
-        
+
         messageBox = QMessageBox()
         messageBox.setMinimumSize(200, 200)
         messageBox.setWindowTitle("Delete Task?")
@@ -238,37 +261,32 @@ class TaskTabView(QWidget):
         
         if ret == QMessageBox.Ok:
             # Remove task from the database
-            self.parentView.model.deleteTask(self.parentView.projectId, taskId)  
+            self.parentView.viewController.model.deleteTask(taskId)  
 
             # Clear and redisplay tasks in grid
-            self.parentView.viewController.displayProjectFeatureTaskIssueView(self.parentView.projectId, currentIndex=self.parentView.currentIndex)
+            self.parentView.setActiveWindow(self.tabId)
      
             
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
-    
+    # Adding actions to the right-click context menu
     def eventFilter(self, obj, event):
 
         if event.type() == QEvent.ContextMenu:
             ic("contextMenu")
             
             rightMenu = QMenu(self)
-
-            # Adding actions to the context menu
             
             # -- Edit Menu --
-            edit = QAction("Edit", self)
-            edit.triggered.connect(partial(self.editTask, obj.data))
-            rightMenu.addAction(edit)
-            
-            rightMenu.addSeparator()
-
-            #---------------
+            editAction = createActionDictionary("Edit", trigger=partial(self.editTask, obj.data))
             
             # -- Delete Menu --
-            delete = QAction("Delete", self)
-            delete.triggered.connect(partial(self.removeTask, obj.data["taskId"]))
-            rightMenu.addAction(delete)
+            deleteAction = createActionDictionary("Delete", trigger=partial(self.removeTask, obj.data["taskId"]))
+            
+            actionList = [editAction, "separator", deleteAction]
+            addActionToMenu(rightMenu, actionList)
+
+            #---------------
 
             # Show context menu
             rightMenu.exec(event.globalPos())
@@ -278,38 +296,13 @@ class TaskTabView(QWidget):
         return super().eventFilter(obj, event)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
 
     def editTask(self, task):
         ic("right click")
 
-        self.editDict = {"taskId": task["taskId"], "rowId": task["rowId"], "tabId": self.tabId, "isEditing": True}
-
-        self.parentView.createTaskTabView(self.editDict)
+        self.parentView.viewController.displayView("AddNewView", self.parentView, self.tabId, task, editing=True, newWindow=True)
 
 
-    # ----------------------------------------------------------------------------------------
-
-
-    def editFinished(self):
-        ic("editFinished")
-        
-        selection = 0
-
-        for key, value in self.priorityDict.items():
-            if self.prioritySelectionMenu.currentText() == value["Priority"]:
-                selection = key
-                break
-            
-        self.parentView.model.updateTask(self.parentView.projectId, self.editDict["taskId"], self.taskNameInput.text(), selection)
-        self.editDict["isEditing"] = False
-
-        # Clear the finish edit button from the display
-        self.parentView.clearLayout(self.parentView.window.FinishEditFrame.layout())
-        
-        # Clear and redisplay tasks in grid
-        self.parentView.createTaskTabView(self.editDict)
-      
-        
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================

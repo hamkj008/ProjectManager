@@ -25,19 +25,23 @@ class DropGridWithId(QWidget):
 
 
            
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
+
     def getId(self):
         return self.id
     
-    # ----------------------------------------------------------------------------------------
+
+    # ========================================================================================
     
+
     def dragEnterEvent(self, event):
         ic("gridDrag") 
         event.acceptProposedAction()
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
+
     def dropEvent(self, event):
         ic("gridDrop")       
 
@@ -65,10 +69,13 @@ class DropGridWithId(QWidget):
                     elif targetGridId == 2:
                         taskStatus = "Complete"
 
-                    self.model.setTaskStatus(projectId, taskId, taskStatus)
-                    self.viewController.displayProjectFeatureTaskIssueView(projectId, currentIndex=1)
+                    self.model.setTaskStatus(taskId, taskStatus)
+                    self.viewController.displayView("ProjectFeatureTaskIssueView", currentIndex=1)
                     event.acceptProposedAction()
                     
             else:
                 # The task is being reordered in the same column. TaskId's will need reordering
-                self.viewController.displayProjectFeatureTaskIssueView(projectId, currentIndex=1)
+                self.viewController.displayView("ProjectFeatureTaskIssueView", currentIndex=1)
+
+                
+# ========================================================================================

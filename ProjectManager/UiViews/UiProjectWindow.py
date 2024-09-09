@@ -93,15 +93,15 @@ class Ui_ProjectWindow(object):
 
         self.horizontalLayout_12.addItem(self.horizontalSpacer_2)
 
-        self.AddNewProjectBtn = QPushButton(self.HorizontalFrame_2)
-        self.AddNewProjectBtn.setObjectName(u"AddNewProjectBtn")
+        self.AddNewBtn = QPushButton(self.HorizontalFrame_2)
+        self.AddNewBtn.setObjectName(u"AddNewBtn")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.AddNewProjectBtn.sizePolicy().hasHeightForWidth())
-        self.AddNewProjectBtn.setSizePolicy(sizePolicy2)
+        sizePolicy2.setHeightForWidth(self.AddNewBtn.sizePolicy().hasHeightForWidth())
+        self.AddNewBtn.setSizePolicy(sizePolicy2)
 
-        self.horizontalLayout_12.addWidget(self.AddNewProjectBtn)
+        self.horizontalLayout_12.addWidget(self.AddNewBtn)
 
 
         self.horizontalLayout_11.addWidget(self.HorizontalFrame_2)
@@ -131,7 +131,7 @@ class Ui_ProjectWindow(object):
         self.ProjectScrollArea.setWidgetResizable(True)
         self.ProjectScrollAreaContents = QWidget()
         self.ProjectScrollAreaContents.setObjectName(u"ProjectScrollAreaContents")
-        self.ProjectScrollAreaContents.setGeometry(QRect(0, 0, 1229, 446))
+        self.ProjectScrollAreaContents.setGeometry(QRect(0, 0, 1229, 466))
         self.verticalLayout_4 = QVBoxLayout(self.ProjectScrollAreaContents)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -163,7 +163,7 @@ class Ui_ProjectWindow(object):
         self.BottomFrame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_6 = QVBoxLayout(self.BottomFrame)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.verticalLayout_6.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.DescriptionLabel = QLabel(self.BottomFrame)
         self.DescriptionLabel.setObjectName(u"DescriptionLabel")
 
@@ -173,18 +173,29 @@ class Ui_ProjectWindow(object):
         self.DescriptionScrollArea.setObjectName(u"DescriptionScrollArea")
         self.DescriptionScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.DescriptionScrollArea.setWidgetResizable(True)
-        self.DescriptionTextScrollAreaContents = QWidget()
-        self.DescriptionTextScrollAreaContents.setObjectName(u"DescriptionTextScrollAreaContents")
-        self.DescriptionTextScrollAreaContents.setGeometry(QRect(0, 0, 1209, 69))
-        self.verticalLayout_5 = QVBoxLayout(self.DescriptionTextScrollAreaContents)
+        self.DescriptionScrollAreaContents = QWidget()
+        self.DescriptionScrollAreaContents.setObjectName(u"DescriptionScrollAreaContents")
+        self.DescriptionScrollAreaContents.setGeometry(QRect(0, 0, 1229, 69))
+        self.verticalLayout_5 = QVBoxLayout(self.DescriptionScrollAreaContents)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.DescriptionTextLabel = QLabel(self.DescriptionTextScrollAreaContents)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.DescriptionFrame = QFrame(self.DescriptionScrollAreaContents)
+        self.DescriptionFrame.setObjectName(u"DescriptionFrame")
+        self.DescriptionFrame.setFrameShape(QFrame.StyledPanel)
+        self.DescriptionFrame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_9 = QHBoxLayout(self.DescriptionFrame)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.DescriptionTextLabel = QLabel(self.DescriptionFrame)
         self.DescriptionTextLabel.setObjectName(u"DescriptionTextLabel")
         self.DescriptionTextLabel.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
 
-        self.verticalLayout_5.addWidget(self.DescriptionTextLabel)
+        self.horizontalLayout_9.addWidget(self.DescriptionTextLabel)
 
-        self.DescriptionScrollArea.setWidget(self.DescriptionTextScrollAreaContents)
+
+        self.verticalLayout_5.addWidget(self.DescriptionFrame)
+
+        self.DescriptionScrollArea.setWidget(self.DescriptionScrollAreaContents)
 
         self.verticalLayout_6.addWidget(self.DescriptionScrollArea)
 
@@ -204,7 +215,7 @@ class Ui_ProjectWindow(object):
         ProjectWindow.setWindowTitle(QCoreApplication.translate("ProjectWindow", u"Form", None))
         self.TitleLabel.setText(QCoreApplication.translate("ProjectWindow", u"Projects", None))
         self.SearchInput.setPlaceholderText(QCoreApplication.translate("ProjectWindow", u"Search...", None))
-        self.AddNewProjectBtn.setText(QCoreApplication.translate("ProjectWindow", u"+", None))
+        self.AddNewBtn.setText(QCoreApplication.translate("ProjectWindow", u"+", None))
         self.DescriptionLabel.setText(QCoreApplication.translate("ProjectWindow", u"Description:", None))
         self.DescriptionTextLabel.setText("")
     # retranslateUi

@@ -1,33 +1,29 @@
 from icecream import ic
-
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QMessageBox, QPushButton, QMenu
-from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QAction
 from functools import partial
 
+from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QMessageBox, QMenu
+from PySide6.QtCore import Qt, QEvent
 from UiViews.UiProjectWindow import Ui_ProjectWindow
-from Helpers.DataLabel import DataLabel
+from MyHelperLibrary.Helpers.DataLabel import DataLabel
+from MyHelperLibrary.Helpers.HelperMethods import clearLayout, createActionDictionary, addActionToMenu
 
 
+# ========================================================================================
+      
 
 # First view presented to user
 class ProjectView(QWidget):
 
     
-    def __init__(self, viewController, model):
+    def __init__(self, viewController):
         super().__init__()
         
         self.viewController = viewController
-        self.model = model
 
         # ---- SETUP UI -----
         self.window = Ui_ProjectWindow()
         self.window.setupUi(self)
-        
-        with open('QSS\ProjectViewStyle.qss', 'r') as file:
-             stylesheet = file.read()
-
-        self.setStyleSheet(stylesheet)
+        self.setStyle()
 
 
         # ------- Init --------
@@ -35,55 +31,49 @@ class ProjectView(QWidget):
         
         self.window.ProjectGridFrame.layout().setAlignment(Qt.AlignTop)
         self.window.SearchInput.textChanged.connect(self.search)
-        self.window.AddNewProjectBtn.clicked.connect(self.addNewProject)
+        self.window.AddNewBtn.clicked.connect(self.addNewProject)
 
         self.viewController.statusBar().showMessage("")
         
+        # -----
         
-        # -- Load Grid --
-        self.getModel()
-        self.loadGrid() 
+        # -- Start --
+        self.loadSelf()
         
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
+            
+
+    def setStyle(self):
+        self.setStyleSheet(self.viewController.qssController.getStandardStyle())
+
+
+    # ========================================================================================
+    
+    
+    def loadSelf(self):
+        
+        self.getModel()
+        
+        clearLayout(self.window.ProjectGridFrame.layout())
+        self.setupGrid()
+        self.populateData()  
      
+
+    # ========================================================================================
      
+
     def getModel(self):
         ic("getModel")
 
-        self.modelResults = self.model.getProjects(self.searchText)
+        self.modelResults = self.viewController.model.getProjects(self.searchText)
 
 
-    # ----------------------------------------------------------------------------------------
-        
-
-    def loadGrid(self):
-        ic("loadGrid")
-        
-        self.clearGrid()
-        self.setUpGrid()
-        self.populateData()
-        
-
-    # ----------------------------------------------------------------------------------------
-        
-
-    def clearGrid(self):
-        ic("clearGrid")
-        
-        grid = self.window.ProjectGridFrame.layout()
-        
-        while grid.count():
-            item = grid.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()      
-                
-
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
-    def setUpGrid(self):
-        ic("setUpGrid")
+    def setupGrid(self):
+        ic("setupGrid")
 
         self.projectHeaderColumnId = {}
         self.projectViewHeaders = {"projectName"    : "Project Name", 
@@ -100,7 +90,7 @@ class ProjectView(QWidget):
             self.projectHeaderColumnId[key] = index
      
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
     def populateData(self):
@@ -113,12 +103,11 @@ class ProjectView(QWidget):
                 
             self.addProjectToDisplay(project)            
 
-
         self.statusBarMessage = "Projects: " + str(len(self.modelResults))
         self.viewController.statusBar().showMessage(self.statusBarMessage)
         
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
     def addProjectToDisplay(self, project):
@@ -130,7 +119,7 @@ class ProjectView(QWidget):
             for header in self.projectViewHeaders:
                 
                 if key in self.projectViewHeaders:
-                    label = DataLabel(f'{value}', project, objectName="projectRow")
+                    label = DataLabel(f'{value}', project, objectName="row")
                 
                     if header == "projectName":
                         label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -141,23 +130,23 @@ class ProjectView(QWidget):
                     self.window.ProjectGridFrame.layout().addWidget(label, project["rowId"], self.projectHeaderColumnId[key])
                     labelRowList.append(label)             
           
-
         for label in labelRowList:
             label.enterEvent = (partial(self.hoverEnter, labelRowList, project["projectDescription"]))
             label.leaveEvent = (partial(self.hoverLeave, labelRowList))
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
     def rowClicked(self, projectId, event):
         ic("rowClicked")
         
         if event.button() == Qt.LeftButton:
-            self.viewController.displayProjectFeatureTaskIssueView(projectId)
+            self.viewController.stateController.projectId = projectId
+            self.viewController.displayView("ProjectFeatureTaskIssueView")
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     
     def hoverEnter(self, labelRowList, projectDescription, event):
@@ -165,10 +154,10 @@ class ProjectView(QWidget):
         self.window.DescriptionTextLabel.setText(projectDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.hoverEnterStyle)
+            label.setStyleSheet(self.viewController.qssController.hoverEnterStyle)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
        
 
     def hoverLeave(self, labelRowList, event): 
@@ -176,10 +165,10 @@ class ProjectView(QWidget):
         self.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.backgroundNormalStyle)
+            label.setStyleSheet(self.viewController.qssController.hoverLeaveStyle)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     
     def search(self):
@@ -187,20 +176,19 @@ class ProjectView(QWidget):
         
         self.searchText = self.window.SearchInput.text()
             
-        self.getModel()
-        self.loadGrid()
+        self.loadSelf()
     
         
-    # ---------------------------------------------------------------------------------------- 
+    # ======================================================================================== 
     
     
     def addNewProject(self):
         ic("addNewProject")
         
-        self.viewController.displayAddNewProjectView()
+        self.viewController.displayView("AddNewProjectView", newWindow=True)
         
 
-    # ---------------------------------------------------------------------------------------- 
+    # ======================================================================================== 
     
     
     def removeProject(self, projectId):
@@ -219,12 +207,13 @@ class ProjectView(QWidget):
             # Remove task from the database
             self.model.deleteProject(projectId)  
             
-            self.viewController.displayProjectView()
+            self.viewController.displayView("ProjectView")
             
 
-    # ---------------------------------------------------------------------------------------- 
+    # ======================================================================================== 
  
- 
+
+    # Add right click menus
     def eventFilter(self, obj, event):
 
         if event.type() == QEvent.ContextMenu:
@@ -232,22 +221,16 @@ class ProjectView(QWidget):
         
             rightMenu = QMenu(self)
 
-            # Adding actions to the context menu
-            
             # -- Edit Menu --
-            edit = QAction("Edit", self)
-            edit.triggered.connect(partial(self.rightMenuEdit, obj.data))
-            rightMenu.addAction(edit)
-            
-            rightMenu.addSeparator()
-
-            #---------------
+            editAction    = createActionDictionary("Edit", trigger=partial(self.editProject, obj.data))
             
             # -- Delete Menu --
-            delete = QAction("Delete", self)
-            delete.triggered.connect(partial(self.removeProject, obj.data["projectId"]))
-            rightMenu.addAction(delete)
-
+            deleteAction  = createActionDictionary("Delete", trigger=partial(self.removeProject, obj.data["projectId"]))
+            
+            #---------------
+            
+            actionList = [editAction, "separator", deleteAction]
+            addActionToMenu(rightMenu, actionList)
 
             # Show context menu
             rightMenu.exec(event.globalPos())
@@ -257,8 +240,14 @@ class ProjectView(QWidget):
         return super().eventFilter(obj, event)
     
     
-    # ---------------------------------------------------------------------------------------- 
+    # ======================================================================================== 
  
 
-    def rightMenuEdit(self, project):
+    def editProject(self, project):
         ic("right click")
+        
+        self.viewController.displayView("AddNewProjectView", project, editing=True, newWindow=True)
+        
+
+    # ======================================================================================== 
+ 

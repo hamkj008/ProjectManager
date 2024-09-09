@@ -1,8 +1,10 @@
 from PySide6.QtWidgets import QApplication
-from ViewController import ViewController
-from LogController import LogController
+from MainFiles.ViewController import ViewController
+from MainFiles.LogController import LogController
 from PySide6.QtCore import Qt
 from icecream import ic
+
+
 
 # Entry point of the program
 class Main:

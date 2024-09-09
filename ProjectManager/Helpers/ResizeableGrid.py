@@ -1,9 +1,11 @@
 from PySide6.QtWidgets import QWidget, QGridLayout
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QEvent
 from icecream import ic
 from functools import partial
 
 
+# ========================================================================================
+      
 
 class ResizeableGrid(QWidget):
     def __init__(self):
@@ -14,7 +16,8 @@ class ResizeableGrid(QWidget):
         self.grid.setContentsMargins(0,0,0,0)
         self.grid.setVerticalSpacing(0)
         self.setLayout(self.grid)
-        
+        self.frameIndexMap = {}
+
 
     # ---------------------------------------------------        
 
@@ -24,8 +27,12 @@ class ResizeableGrid(QWidget):
 
         # Add frames to the grid layout
         for i, frame in enumerate(self.frames):
+            
+            self.frameIndexMap[frame] = i   # Map the frames to their index 
+            frame.installEventFilter(self)  # The event filter will handle the mouse press event
+            
+            # frame.mousePressEvent = partial(self.mousePressEvent, i) # Avoid partial with mouse press events. Only expects the event otherwise error 
             frame.mouseMoveEvent = self.mouseMoveEvent
-            frame.mousePressEvent = partial(self.mousePressEvent, i)
             frame.mouseReleaseEvent = self.mouseReleaseEvent           
 
         # Track resizing state
@@ -53,11 +60,19 @@ class ResizeableGrid(QWidget):
         enableMouseTracking(self)
 
 
-    # ---------------------------------------------------------------------
+    # ========================================================================================   
+
+
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.MouseButtonPress:
+            
+            for frame in self.frames:
+                self.MousePressHandler(self.frameIndexMap[frame], event)
+                return True 
+        return super().eventFilter(obj, event)
     
-    
-    def mousePressEvent(self, frame_index, event):
-        
+                
+    def MousePressHandler(self, frame_index, event):
         for frame in self.frames:
             divider  = frame.geometry().right() - frame.geometry().left()
             if (event.pos().x() <= divider  and event.pos().x() >= divider - 20):     
@@ -65,9 +80,21 @@ class ResizeableGrid(QWidget):
                 self.startX = event.globalX()
                 self.resizingFrame = self.frames[frame_index]
                 self.start_width = self.resizingFrame.width()
+                
 
-
-    # ---------------------------------------------------------------------
+    # def mousePressEvent(self, frame_index, event):
+        
+    #     super().mousePressEvent(event)
+        
+    #     for frame in self.frames:
+    #         divider  = frame.geometry().right() - frame.geometry().left()
+    #         if (event.pos().x() <= divider  and event.pos().x() >= divider - 20):     
+    #             self.resizing = True
+    #             self.startX = event.globalX()
+    #             self.resizingFrame = self.frames[frame_index]
+    #             self.start_width = self.resizingFrame.width()
+            
+    # ========================================================================================   
     
     
     def mouseMoveEvent(self, event):
@@ -105,7 +132,7 @@ class ResizeableGrid(QWidget):
                 widget.setFixedWidth(max(minWidth, newWidth))  # ensure minimum width
 
 
-    # ---------------------------------------------------------------------
+    # ========================================================================================   
     
     
     def mouseReleaseEvent(self, event):
@@ -114,9 +141,11 @@ class ResizeableGrid(QWidget):
             self.resizingFrame = None
 
 
-    # ---------------------------------------------------------------------
+    # ========================================================================================   
     
+
     def getColumnWidgets(self, colNum):
+        
         widgets = []
         for row in range(self.grid.rowCount()):
             item = self.grid.itemAtPosition(row, colNum)
@@ -127,5 +156,5 @@ class ResizeableGrid(QWidget):
         return widgets
     
 
-    # ---------------------------------------------------------------------
+    # ========================================================================================   
            

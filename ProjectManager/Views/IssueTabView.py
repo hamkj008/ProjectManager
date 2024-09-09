@@ -1,13 +1,16 @@
 from icecream import ic
+from functools import partial
 
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QFrame, QPushButton, QMessageBox, QMenu
+from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QMessageBox, QMenu
 from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QAction
 from Helpers.ResizeableGrid import ResizeableGrid
 from Helpers.IssueDragDropLabel import IssueDragDropLabel
 from Helpers.IssueDropGridWithId import IssueDropGridWithId
-from functools import partial
+from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
 
+
+# ========================================================================================
+      
 
 class IssueTabView(QWidget):
 
@@ -35,14 +38,10 @@ class IssueTabView(QWidget):
         issueResizeableGrid.setFrames([self.parentView.window.IssueLabelFrame, self.parentView.window.IssueLeftFrame, 
                                   self.parentView.window.IssueCompletedLabelFrame, self.parentView.window.IssueRightFrame])
 
-
-        issueGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.model, objectName="issueGrid")
-        self.parentView.window.IssueScrollAreaContents.layout().addWidget(issueGrid)
-        
-        issueCompleteGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.model, 1, objectName="IssueCompleteGridFrame")
-        self.parentView.window.IssueCompleteScrollAreaContents.layout().addWidget(issueCompleteGrid)
-        
         issueResizeableGrid.enableMouseTrackingRecursive()
+
+        issueGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, objectName="issueGrid")
+        issueCompleteGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, 1, objectName="IssueCompleteGridFrame")
         
         self.issueGrids = {"issueGrid"          :   issueGrid, 
                           "issueCompleteGrid"   :   issueCompleteGrid}
@@ -50,17 +49,35 @@ class IssueTabView(QWidget):
 
         self.priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
 
-        # If an entry is being edited, add the finish button to the display
-        if self.editDict and self.editDict["isEditing"]:
-            finishEditBtn = QPushButton("Finish Editing", objectName="finishEditBtn")
-            finishEditBtn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            self.parentView.window.FinishEditFrame.layout().addWidget(finishEditBtn)
-            finishEditBtn.clicked.connect(self.editFinished)
-
+        # --- Start ----
+        self.loadSelf()
         
-        self.setUpIssueGrids()
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
+
+
+    def loadSelf(self):
+        self.getModel()
+        
+        # Clear the grid panels
+        clearLayout(self.parentView.window.IssueScrollAreaContents.layout())
+        clearLayout(self.parentView.window.IssueCompleteScrollAreaContents.layout())
+        # Re-Add
+        self.parentView.window.IssueScrollAreaContents.layout().addWidget(self.issueGrids["issueGrid"])
+        self.parentView.window.IssueCompleteScrollAreaContents.layout().addWidget(self.issueGrids["issueCompleteGrid"])
+
+        self.setUpIssueGrids()
+        self.populateIssueData()
+        
+
+    # ========================================================================================
+
+            
+    def getModel(self):
+        self.issueModelResults = self.parentView.viewController.model.getIssues(self.parentView.viewController.stateController.projectId)
+
+
+    # ========================================================================================
 
 
     def setUpIssueGrids(self):
@@ -84,9 +101,23 @@ class IssueTabView(QWidget):
                 self.issueHeaderColumnId[key] = index
     
             
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
-    
+
+    def populateIssueData(self):
+        ic("populateIssueData")
+
+        # -- Populate Data --
+        for rowIndex, issue in enumerate(self.issueModelResults):
+            
+            issue["rowId"] = rowIndex + 1
+                
+            self.addIssueToDisplay(issue)   
+       
+            
+    # ========================================================================================
+
+
     def addIssueToDisplay(self, issue):
         ic("addIssueToDisplay")
         
@@ -95,59 +126,33 @@ class IssueTabView(QWidget):
         
         for key, value in issue.items():
             if key in self.issueViewHeaders:
-                
+                           
                 if key == "priority":
                     priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
                     priority, color = priorityDict[value]["Priority"], priorityDict[value]["Color"]
                     
                     # Display the priority along with a representative color
-                    layout = QHBoxLayout()
-                    layout.setContentsMargins(0,0,0,0)
-                    layout.setSpacing(0)
-                    issueObjectLabel = QFrame()
-                    issueObjectLabel.setLayout(layout)
-                    
-                    # Used to control the size of the color frame
-                    colorMasterFrame = QFrame()
-                    colorMasterFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                    colorMasterLayout = QHBoxLayout()
-                    colorMasterLayout.setContentsMargins(0,0,0,0)
-                    colorMasterFrame.setLayout(colorMasterLayout)
+                    issueObjectLabel = createLayoutFrame(objectName= "taskLabel", margins=(0,0,0,0))
+                    issueObjectLabel.layout().setSpacing(0)
                     
                     # A frame, layout and placeholderlabel form the structure to hold the representative color 
-                    colorFrame = QFrame()
+                    colorFrame = createLayoutFrame(sizePolicy=("fixed", "fixed"), margins=(0,0,0,0))
                     colorFrame.setStyleSheet(f"background-color: {color};") # Color changes based on priority 
-                    colorFrame.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                    
-                    colorFrameLayout = QHBoxLayout()
-                    colorFrameLayout.setContentsMargins(0,0,0,0)
-                    colorFrame.setLayout(colorFrameLayout)
-                    placeholder = QLabel("", objectName="placeholder")
-                    placeholder.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-                    colorFrameLayout.addWidget(placeholder)
-                    
-                    colorMasterLayout.addWidget(colorFrame)
+                    colorFrame.setFixedSize(20, 20)
 
                     # The priority label
-                    priorityLabel = IssueDragDropLabel(priority, self, issue, objectName="taskObjectLabel")
+                    priorityLabel = IssueDragDropLabel(priority, self, issue, objectName="taskLabel")
                     labelList.append(priorityLabel)
-                    layout.addWidget(priorityLabel)
-                    layout.addWidget(colorMasterFrame)
+                    issueObjectLabel.layout().addWidget(priorityLabel)
+                    issueObjectLabel.layout().addWidget(colorFrame)
 
+                # Other keys
                 else:
-                    issueObjectLabel = IssueDragDropLabel(value, self, issue)
+                    issueObjectLabel = IssueDragDropLabel(value, self, issue, objectName="taskLabel")
                     labelList.append(issueObjectLabel)
                   
-                # taskObjectLabel used as name for QSS
-                issueObjectLabel.setObjectName("taskObjectLabel")
-
-                if issue["isComplete"] == "False":
-                    self.issueGrids["issueGrid"].layout().addWidget(issueObjectLabel, issue["rowId"], self.issueHeaderColumnId[key])                   
-                    
-                elif issue["isComplete"] == "True":
-                    self.issueGrids["issueCompleteGrid"].layout().addWidget(issueObjectLabel, issue["rowId"], self.issueHeaderColumnId[key])
-
-                # Add it to the row list
+                issueObjectLabel.installEventFilter(self)
+                self.addToGrid(issueObjectLabel, issue, key)                   
                 rowList.append(issueObjectLabel)
                 
         self.issueComplete(labelList, issue)
@@ -157,7 +162,19 @@ class IssueTabView(QWidget):
             widget.enterEvent = (partial(self.hoverEnter, rowList, issue["issueDescription"]))
             widget.leaveEvent = (partial(self.hoverLeave, rowList))  
 
-    # ----------------------------------------------------------------------------------------
+
+    # ========================================================================================
+
+
+    def addToGrid(self, label, issue, key):
+        if issue["isComplete"] == "False":
+            self.issueGrids["issueGrid"].layout().addWidget(label, issue["rowId"], self.issueHeaderColumnId[key])                   
+                    
+        elif issue["isComplete"] == "True":
+            self.issueGrids["issueCompleteGrid"].layout().addWidget(label, issue["rowId"], self.issueHeaderColumnId[key])
+
+
+    # ========================================================================================
 
 
     def rowClicked(self, issueDescription, event):   
@@ -165,7 +182,7 @@ class IssueTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText(issueDescription)
         
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
 
 
     def hoverEnter(self, labelRowList, issueDescription, event):
@@ -173,10 +190,10 @@ class IssueTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText(issueDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.hoverEnterStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverEnterStyle)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
        
 
     def hoverLeave(self, labelRowList, event): 
@@ -184,10 +201,10 @@ class IssueTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.backgroundNormalStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverLeaveStyle)
 
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
     
     def issueComplete(self, labelList, issue):
@@ -206,7 +223,7 @@ class IssueTabView(QWidget):
                 label.setText(f"{label.text()}")
          
                         
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
 
     def removeIssue(self, issueId):
@@ -222,37 +239,33 @@ class IssueTabView(QWidget):
         
         if ret == QMessageBox.Ok:
             # Remove issue from the database
-            self.parentView.model.deleteIssue(self.parentView.projectId, issueId)  
+            self.parentView.viewController.model.deleteIssue(issueId)  
 
             # Clear and redisplay issues in grid
-            self.parentView.viewController.displayProjectFeatureTaskIssueView(self.parentView.projectId, currentIndex=self.parentView.currentIndex)
+            self.parentView.setActiveWindow(self.tabId)
             
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
             
     
+    # Adding actions to the right-click context menu
     def eventFilter(self, obj, event):
 
         if event.type() == QEvent.ContextMenu:
             ic("contextMenu")
             
             rightMenu = QMenu(self)
-
-            # Adding actions to the context menu
             
             # -- Edit Menu --
-            edit = QAction("Edit", self)
-            edit.triggered.connect(partial(self.editIssue, obj.data))
-            rightMenu.addAction(edit)
-            
-            rightMenu.addSeparator()
-
-            #---------------
+            editAction = createActionDictionary("Edit", trigger=partial(self.editIssue, obj.data))
             
             # -- Delete Menu --
-            delete = QAction("Delete", self)
-            delete.triggered.connect(partial(self.removeIssue, obj.data["issueId"]))
-            rightMenu.addAction(delete)
+            deleteAction = createActionDictionary("Delete", trigger=partial(self.removeIssue, obj.data["issueId"]))
+            
+            actionList = [editAction, "separator", deleteAction]
+            addActionToMenu(rightMenu, actionList)
+
+            #---------------
 
             # Show context menu
             rightMenu.exec(event.globalPos())
@@ -262,38 +275,13 @@ class IssueTabView(QWidget):
         return super().eventFilter(obj, event)
     
 
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
     
 
     def editIssue(self, issue):
         ic("edit Issue")
 
-        self.editDict = {"issueId": issue["issueId"], "rowId": issue["rowId"], "tabId": self.tabId, "isEditing": True}
-
-        self.parentView.createIssueTabView(self.editDict)
+        self.parentView.viewController.displayView("AddNewView", self.parentView, self.tabId, issue, editing=True, newWindow=True)
 
 
-    # ----------------------------------------------------------------------------------------
-
-
-    def editFinished(self):
-        ic("editFinished")
-        
-        selection = 0
-
-        for key, value in self.priorityDict.items():
-            if self.prioritySelectionMenu.currentText() == value["Priority"]:
-                selection = key
-                break
-            
-        self.parentView.model.updateIssue(self.parentView.projectId, self.editDict["issueId"], self.issueNameInput.text(), selection)
-        self.editDict["isEditing"] = False
-
-        # Clear the finish edit button from the display
-        self.parentView.clearLayout(self.parentView.window.FinishEditFrame.layout())
-        
-        # Clear and redisplay tasks in grid
-        self.parentView.createIssueTabView(self.editDict)
-      
-        
-    # ----------------------------------------------------------------------------------------
+    # ========================================================================================
