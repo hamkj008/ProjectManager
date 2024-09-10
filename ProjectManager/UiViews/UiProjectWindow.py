@@ -42,6 +42,7 @@ class Ui_ProjectWindow(object):
         self.TitleFrame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_8 = QHBoxLayout(self.TitleFrame)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(0, 5, 0, 5)
         self.TitleLabel = QLabel(self.TitleFrame)
         self.TitleLabel.setObjectName(u"TitleLabel")
         self.TitleLabel.setAlignment(Qt.AlignCenter)
@@ -83,17 +84,12 @@ class Ui_ProjectWindow(object):
         self.HorizontalFrame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_11 = QHBoxLayout(self.HorizontalFrame)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.HorizontalFrame_2 = QFrame(self.HorizontalFrame)
-        self.HorizontalFrame_2.setObjectName(u"HorizontalFrame_2")
-        self.HorizontalFrame_2.setFrameShape(QFrame.StyledPanel)
-        self.HorizontalFrame_2.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_12 = QHBoxLayout(self.HorizontalFrame_2)
-        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_12.addItem(self.horizontalSpacer_2)
+        self.horizontalLayout_11.addItem(self.horizontalSpacer_2)
 
-        self.AddNewBtn = QPushButton(self.HorizontalFrame_2)
+        self.AddNewBtn = QPushButton(self.HorizontalFrame)
         self.AddNewBtn.setObjectName(u"AddNewBtn")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
@@ -101,10 +97,7 @@ class Ui_ProjectWindow(object):
         sizePolicy2.setHeightForWidth(self.AddNewBtn.sizePolicy().hasHeightForWidth())
         self.AddNewBtn.setSizePolicy(sizePolicy2)
 
-        self.horizontalLayout_12.addWidget(self.AddNewBtn)
-
-
-        self.horizontalLayout_11.addWidget(self.HorizontalFrame_2)
+        self.horizontalLayout_11.addWidget(self.AddNewBtn)
 
 
         self.horizontalLayout_10.addWidget(self.HorizontalFrame)
@@ -131,7 +124,7 @@ class Ui_ProjectWindow(object):
         self.ProjectScrollArea.setWidgetResizable(True)
         self.ProjectScrollAreaContents = QWidget()
         self.ProjectScrollAreaContents.setObjectName(u"ProjectScrollAreaContents")
-        self.ProjectScrollAreaContents.setGeometry(QRect(0, 0, 1229, 466))
+        self.ProjectScrollAreaContents.setGeometry(QRect(0, 0, 1229, 512))
         self.verticalLayout_4 = QVBoxLayout(self.ProjectScrollAreaContents)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)

@@ -131,7 +131,9 @@ class ViewController(QMainWindow):
     
 
     def displayAboutView(self):
-        self.viewList["aboutView"] = AboutView(self)
+        
+        versionNumber = self.stateController.getVersionNumber()
+        self.viewList["aboutView"] = AboutView(self, versionNumber)
         self.viewList["aboutView"].main()
     
     def closeAboutView(self):

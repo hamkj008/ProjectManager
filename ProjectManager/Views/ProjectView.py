@@ -205,7 +205,7 @@ class ProjectView(QWidget):
         
         if ret == QMessageBox.Ok:
             # Remove task from the database
-            self.model.deleteProject(projectId)  
+            self.viewController.model.deleteProject(projectId)  
             
             self.viewController.displayView("ProjectView")
             

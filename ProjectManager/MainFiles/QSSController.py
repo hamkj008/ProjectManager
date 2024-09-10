@@ -91,7 +91,7 @@ class QSSController:
                                 background-color: {self.modeSecondaryColor};    
                             }}
 
-                            #TitleFrame, #PreferencesTitle {{
+                            #TitleFrame, #PreferencesTitle, #AboutTitle {{
                                 background-color: {self.modeProgramTitleFrameColor};
                                 border: 3px solid {self.modeFrameBorderColor};
                             }}
@@ -102,7 +102,7 @@ class QSSController:
                                 color: white;
                             }}
                             
-                            #PreferencesGridFrame, #ProjectGridFrame, #DescriptionFrame {{
+                            #PreferencesGridFrame, #ProjectGridFrame, #DescriptionFrame, #AboutFrame {{
                                 background-color: {self.modePrimaryColor};
                             }}   
 
@@ -161,8 +161,8 @@ class QSSController:
                                 border-radius: 10px;
                                 border-style: outset;
                                 padding: 8px;
-                                min-width: 80px;
-                                min-height: 20px;
+                                min-width: 100px;
+                                min-height: 30px;
                             }}
 
                             #AddNewBtn:hover {{

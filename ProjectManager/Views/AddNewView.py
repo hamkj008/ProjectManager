@@ -33,6 +33,7 @@ class AddNewView(QMainWindow):
         self.window.DescriptionLabel.setAlignment(Qt.AlignTop)
         
         self.errorFrames = {"nameErrorFrame" : self.window.NameInputErrorFrame}
+        self.errorFrames["nameErrorFrame"].setVisible(False)
         
         # -- Configure --
         self.confDict = {"title"        : {0: "Feature",                1: "Task",             2: "Issue"},

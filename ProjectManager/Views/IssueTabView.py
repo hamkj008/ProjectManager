@@ -113,7 +113,9 @@ class IssueTabView(QWidget):
             issue["rowId"] = rowIndex + 1
                 
             self.addIssueToDisplay(issue)   
-       
+            
+        statusBarMessage = "Issues: " + str(len(self.issueModelResults))
+        self.parentView.viewController.statusBar().showMessage(statusBarMessage)
             
     # ========================================================================================
 

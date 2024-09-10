@@ -4,7 +4,7 @@ from UiViews.UiAddNewProjectWindow import Ui_AddNewProjectWindow
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Qt
 
-from MyHelperLibrary.Helpers.HelperMethods import createCustomDialog
+from MyHelperLibrary.Helpers.HelperMethods import createCustomDialog, showError, clearError
 
 
 # ========================================================================================
@@ -29,6 +29,9 @@ class AddNewProjectView(QMainWindow):
 
         self.window.DescriptionTextEdit.setAlignment(Qt.AlignTop)
         self.window.DescriptionLabel.setAlignment(Qt.AlignTop)
+        
+        self.errorFrames = {"nameErrorFrame" : self.window.NameInputErrorFrame}
+        self.errorFrames["nameErrorFrame"].setVisible(False)
 
         # -- Signals --
         self.window.AddNewBtn.clicked.connect(self.getProjectInfo)
@@ -77,10 +80,13 @@ class AddNewProjectView(QMainWindow):
 
     def getProjectInfo(self):
         
+        # clear any invalid format errors previously left
+        clearError(self.errorFrames)
+        
         # Retrieve the data from the form, arrange it into a dictionary, then send it back to the controller
-        projectName = self.window.NameInput.text()
-        projectDescription = self.window.DescriptionTextEdit.toPlainText()
-        dateCreated = datetime.datetime.now().date().strftime("%Y-%m-%d")
+        projectName         = self.window.NameInput.text()
+        projectDescription  = self.window.DescriptionTextEdit.toPlainText()
+        dateCreated         = datetime.datetime.now().date().strftime("%Y-%m-%d")
         
         if len(projectName) > 0:
             projectInfoDict = {"projectName"            :   projectName, 
@@ -97,7 +103,8 @@ class AddNewProjectView(QMainWindow):
             self.viewController.displayView("ProjectView")
             
         else:
-            createCustomDialog("Empty project details", "Enter the project details", 300, 300, self.viewController.qssController.dialogStyle)
+            showError(self.errorFrames["nameErrorFrame"])
+            createCustomDialog("Empty project details", "Enter the project details", 300, 300, self.viewController.qssController.getDialogStyle())
             
 
     # ========================================================================================
