@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\FeatureTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\FeatureTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\TaskTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\TaskTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\IssueTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\IssueTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\TaskTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\TaskTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\FeatureTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\FeatureTabView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectFeatureTaskIssueView.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
@@ -117,8 +117,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 2816,
-          "SelectedChildIndex": 17,
+          "DockedWidth": 2862,
+          "SelectedChildIndex": 18,
           "Children": [
             {
               "$type": "Bookmark",
@@ -162,8 +162,7 @@
               "RelativeToolTip": "ProjectManager\\MainFiles\\StateController.py",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-10T18:21:22.511Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-10T18:21:22.511Z"
             },
             {
               "$type": "Document",
@@ -187,8 +186,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\AboutView.py",
               "ViewState": "AQIAAA8AAAAAAAAAAAAAACAAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-08T11:31:22.366Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-08T11:31:22.366Z"
             },
             {
               "$type": "Document",
@@ -200,8 +198,7 @@
               "RelativeToolTip": "ProjectManager\\MainFiles\\ViewController.py",
               "ViewState": "AQIAAHcAAAAAAAAAAAAAAIYAAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T09:49:11.861Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T09:49:11.861Z"
             },
             {
               "$type": "Document",
@@ -213,8 +210,7 @@
               "RelativeToolTip": "ProjectManager\\MainFiles\\MenuController.py",
               "ViewState": "AQIAABMAAAAAAAAAAAAAwCcAAAB4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-08T08:03:48.39Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-08T08:03:48.39Z"
             },
             {
               "$type": "Document",
@@ -226,8 +222,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\ProjectFeatureTaskIssueView.py",
               "ViewState": "AQIAAFEAAAAAAAAAAAAAAAMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T07:04:01.465Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T07:04:01.465Z"
             },
             {
               "$type": "Document",
@@ -239,8 +234,7 @@
               "RelativeToolTip": "ProjectManager\\Models\\ModelCreator.py",
               "ViewState": "AQIAADcAAAAAAAAAAAAAABUAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-08-20T17:24:10.958Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-20T17:24:10.958Z"
             },
             {
               "$type": "Document",
@@ -252,8 +246,7 @@
               "RelativeToolTip": "ProjectManager\\MainFiles\\QSSController.py",
               "ViewState": "AQIAAFQAAAAAAAAAAAAAAF0AAABHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-08-20T17:04:43.397Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-20T17:04:43.397Z"
             },
             {
               "$type": "Document",
@@ -265,31 +258,29 @@
               "RelativeToolTip": "ProjectManager\\Views\\ProjectView.py",
               "ViewState": "AQIAALsAAAAAAAAAAAAAAM0AAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T06:54:15.62Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T06:54:15.62Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "FeatureTabView.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\FeatureTabView.py",
               "RelativeDocumentMoniker": "ProjectManager\\Views\\FeatureTabView.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\FeatureTabView.py",
               "RelativeToolTip": "ProjectManager\\Views\\FeatureTabView.py",
-              "ViewState": "AQIAAEEAAAAAAAAAAAAAAFQAAABQAAAA",
+              "ViewState": "AQIAAFwAAAAAAAAAAADgv2oAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T06:56:25.473Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T06:56:25.473Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "TaskTabView.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\TaskTabView.py",
               "RelativeDocumentMoniker": "ProjectManager\\Views\\TaskTabView.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\TaskTabView.py",
               "RelativeToolTip": "ProjectManager\\Views\\TaskTabView.py",
-              "ViewState": "AQIAAEYAAAAAAAAAAAAAAB8BAAAAAAAA",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAAAJcAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2024-07-11T07:12:38.799Z",
               "EditorCaption": ""
@@ -302,10 +293,9 @@
               "RelativeDocumentMoniker": "ProjectManager\\Views\\IssueTabView.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\IssueTabView.py",
               "RelativeToolTip": "ProjectManager\\Views\\IssueTabView.py",
-              "ViewState": "AQIAAGQAAAAAAAAAAAAAAHQAAABGAAAA",
+              "ViewState": "AQIAAH4AAAAAAAAAAADgv4wAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T14:36:41.532Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T14:36:41.532Z"
             },
             {
               "$type": "Document",
@@ -317,8 +307,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\AddNewView.py",
               "ViewState": "AQIAAHIAAAAAAAAAAAAAAJkAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-08-20T17:02:46.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-20T17:02:46.184Z"
             },
             {
               "$type": "Document",
@@ -330,8 +319,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\AddNewProjectView.py",
               "ViewState": "AQIAAEYAAAAAAAAAAAAAAGkAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-15T05:25:09.032Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-15T05:25:09.032Z"
             },
             {
               "$type": "Document",
@@ -391,8 +379,7 @@
               "RelativeToolTip": "ProjectManager\\Helpers\\ResizeableGrid.py",
               "ViewState": "AQIAABQAAAAAAAAAAAAAAJEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T08:47:20.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T08:47:20.682Z"
             },
             {
               "$type": "Document",
@@ -409,12 +396,25 @@
           ]
         },
         {
-          "DockedWidth": 228,
-          "SelectedChildIndex": 5,
+          "DockedWidth": 182,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "test_projectModel.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\tests\\models\\test_projectModel.py",
+              "RelativeDocumentMoniker": "ProjectManager\\tests\\models\\test_projectModel.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\tests\\models\\test_projectModel.py",
+              "RelativeToolTip": "ProjectManager\\tests\\models\\test_projectModel.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-09-09T06:26:02.039Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -463,19 +463,6 @@
               "ViewState": "AQIAAAMAAAAAAAAAAAAAACQAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2024-09-09T06:26:34.673Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "test_projectModel.py",
-              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\tests\\models\\test_projectModel.py",
-              "RelativeDocumentMoniker": "ProjectManager\\tests\\models\\test_projectModel.py",
-              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\tests\\models\\test_projectModel.py",
-              "RelativeToolTip": "ProjectManager\\tests\\models\\test_projectModel.py",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-09T06:26:02.039Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
