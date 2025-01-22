@@ -1,7 +1,6 @@
 from PySide6.QtWidgets import QWidget, QGridLayout
 from PySide6.QtCore import Qt, QEvent
 from icecream import ic
-from functools import partial
 
 
 # ========================================================================================

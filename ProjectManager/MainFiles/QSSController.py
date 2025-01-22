@@ -8,6 +8,7 @@ Facilitates a modular approach to presentation, enabling presentation modes.
 Also allows for absorbing qss files into final build"""
 
 class QSSController:
+
     def __init__(self):
         ic("qssController")
 
