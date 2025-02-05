@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\ResizeableGrid.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectView.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Views\\ProjectView.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\MainFiles\\StateController.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Helpers\\ResizeableGrid.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DragDropLabel.py||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -125,7 +125,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 2862,
+          "DockedWidth": 2820,
           "SelectedChildIndex": 18,
           "Children": [
             {
@@ -162,46 +162,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Main.py",
-              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Main.py",
-              "RelativeDocumentMoniker": "ProjectManager\\Main.py",
-              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Main.py",
-              "RelativeToolTip": "ProjectManager\\Main.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-01-10T06:44:34.04Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "style.qss",
-              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\QSS\\style.qss",
-              "RelativeDocumentMoniker": "ProjectManager\\QSS\\style.qss",
-              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\QSS\\style.qss",
-              "RelativeToolTip": "ProjectManager\\QSS\\style.qss",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-01-10T06:36:59.689Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "StateController.py",
-              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py",
-              "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\StateController.py",
-              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py",
-              "RelativeToolTip": "ProjectManager\\MainFiles\\StateController.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-10T18:21:22.511Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "AddTaskStyle.qss",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\QSS\\AddTaskStyle.qss",
               "RelativeDocumentMoniker": "ProjectManager\\QSS\\AddTaskStyle.qss",
@@ -209,12 +170,11 @@
               "RelativeToolTip": "ProjectManager\\QSS\\AddTaskStyle.qss",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-09-08T14:16:42.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-08T14:16:42.834Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "AboutView.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AboutView.py",
               "RelativeDocumentMoniker": "ProjectManager\\Views\\AboutView.py",
@@ -222,12 +182,11 @@
               "RelativeToolTip": "ProjectManager\\Views\\AboutView.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-08T11:31:22.366Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-08T11:31:22.366Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ViewController.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\ViewController.py",
               "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\ViewController.py",
@@ -235,8 +194,7 @@
               "RelativeToolTip": "ProjectManager\\MainFiles\\ViewController.py",
               "ViewState": "AgIAABcAAAAAAAAAAAAAAIYAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T09:49:11.861Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T09:49:11.861Z"
             },
             {
               "$type": "Document",
@@ -276,7 +234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "QSSController.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\QSSController.py",
               "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\QSSController.py",
@@ -284,21 +242,19 @@
               "RelativeToolTip": "ProjectManager\\MainFiles\\QSSController.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-08-20T17:04:43.397Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-20T17:04:43.397Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ProjectView.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectView.py",
               "RelativeDocumentMoniker": "ProjectManager\\Views\\ProjectView.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectView.py",
               "RelativeToolTip": "ProjectManager\\Views\\ProjectView.py",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAAAFcAAABRAAAAAAAAAA==",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAAAFcAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T06:54:15.62Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T06:54:15.62Z"
             },
             {
               "$type": "Document",
@@ -326,6 +282,55 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ResizeableGrid.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\ResizeableGrid.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py",
+              "RelativeToolTip": "ProjectManager\\Helpers\\ResizeableGrid.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-07-11T08:47:20.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StateController.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py",
+              "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\StateController.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py",
+              "RelativeToolTip": "ProjectManager\\MainFiles\\StateController.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-09-10T18:21:22.511Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "style.qss",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\QSS\\style.qss",
+              "RelativeDocumentMoniker": "ProjectManager\\QSS\\style.qss",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\QSS\\style.qss",
+              "RelativeToolTip": "ProjectManager\\QSS\\style.qss",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-01-10T06:36:59.689Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Main.py",
+              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Main.py",
+              "RelativeDocumentMoniker": "ProjectManager\\Main.py",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Main.py",
+              "RelativeToolTip": "ProjectManager\\Main.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-01-10T06:44:34.04Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 14,
               "Title": "IssueTabView.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\IssueTabView.py",
@@ -344,7 +349,7 @@
               "RelativeDocumentMoniker": "ProjectManager\\Views\\AddNewView.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\AddNewView.py",
               "RelativeToolTip": "ProjectManager\\Views\\AddNewView.py",
-              "ViewState": "AQIAAHIAAAAAAAAAAAAAAJkAAAAMAAAA",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAAAJkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2024-08-20T17:02:46.184Z"
             },
@@ -410,19 +415,6 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ResizeableGrid.py",
-              "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py",
-              "RelativeDocumentMoniker": "ProjectManager\\Helpers\\ResizeableGrid.py",
-              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\ResizeableGrid.py",
-              "RelativeToolTip": "ProjectManager\\Helpers\\ResizeableGrid.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T08:47:20.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 9,
               "Title": "DragDropLabel.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Helpers\\DragDropLabel.py",
@@ -436,12 +428,16 @@
           ]
         },
         {
-          "DockedWidth": 182,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 224,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
             },
             {
               "$type": "Document",
@@ -476,7 +472,7 @@
               "RelativeDocumentMoniker": "ProjectManager\\DebugTest\\DebugTestPlayground.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\DebugTest\\DebugTestPlayground.py",
               "RelativeToolTip": "ProjectManager\\DebugTest\\DebugTestPlayground.py",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAASAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2024-09-09T07:46:22.092Z"
             },
@@ -532,16 +528,6 @@
         },
         {
           "DockedWidth": 1065,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 762,
           "SelectedChildIndex": -1,
           "Children": [
             {

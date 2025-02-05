@@ -31,14 +31,14 @@ class ResizeableGrid(QWidget):
             frame.installEventFilter(self)  # The event filter will handle the mouse press event
             
             # frame.mousePressEvent = partial(self.mousePressEvent, i) # Avoid partial with mouse press events. Only expects the event otherwise error 
-            frame.mouseMoveEvent = self.mouseMoveEvent
+            frame.mouseMoveEvent    = self.mouseMoveEvent
             frame.mouseReleaseEvent = self.mouseReleaseEvent           
 
         # Track resizing state
-        self.resizing = False
-        self.resizingFrame = None
-        self.startX = 0
-        self.start_width = 0
+        self.resizing       = False
+        self.resizingFrame  = None
+        self.startX         = 0
+        self.startWidth    = 0
     
         
     # ---------------------------------------------------
@@ -63,11 +63,13 @@ class ResizeableGrid(QWidget):
 
 
     def eventFilter(self, obj, event):
+
         if event.type() == QEvent.MouseButtonPress:
             
             for frame in self.frames:
                 self.MousePressHandler(self.frameIndexMap[frame], event)
                 return True 
+
         return super().eventFilter(obj, event)
     
                 
@@ -78,11 +80,11 @@ class ResizeableGrid(QWidget):
                 self.resizing = True
                 self.startX = event.globalX()
                 self.resizingFrame = self.frames[frame_index]
-                self.start_width = self.resizingFrame.width()
+                self.startWidth = self.resizingFrame.width()
                 
 
     # def mousePressEvent(self, frame_index, event):
-        
+        # ic("mouse press")
     #     super().mousePressEvent(event)
         
     #     for frame in self.frames:
@@ -94,8 +96,7 @@ class ResizeableGrid(QWidget):
     #             self.start_width = self.resizingFrame.width()
             
     # ========================================================================================   
-    
-    
+
     def mouseMoveEvent(self, event):
         
         for frame in self.frames:
@@ -109,10 +110,10 @@ class ResizeableGrid(QWidget):
                 
 
         if self.resizing:
-            delta = event.globalX() - self.startX
-            newWidth = self.start_width + delta            
-            minWidth = 150
-            columnNumber = 0
+            delta           = event.globalX() - self.startX
+            newWidth        = self.startWidth + delta            
+            minWidth        = 150
+            columnNumber    = 0
             
             # Find the column number of the frame that is being moved to move all frames in the column at once
             for colNum in range(self.grid.columnCount()):
