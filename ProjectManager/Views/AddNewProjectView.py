@@ -3,6 +3,7 @@ import datetime
 from UiViews.UiAddNewProjectWindow import Ui_AddNewProjectWindow
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon, QPixmap
 
 from MyHelperLibrary.Helpers.HelperMethods import createCustomDialog, showError, clearError
 
@@ -26,6 +27,8 @@ class AddNewProjectView(QMainWindow):
         self.setStyle()
         
         # --------------------------
+
+        self.setWindowIcon(QIcon("icons/ProjectManagerIcon.png"))
 
         self.window.DescriptionTextEdit.setAlignment(Qt.AlignTop)
         self.window.DescriptionLabel.setAlignment(Qt.AlignTop)

@@ -39,13 +39,13 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>10</number>
+       <number>5</number>
       </property>
       <property name="leftMargin">
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -66,13 +66,13 @@
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>5</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>5</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QLabel" name="TitleLabel">
@@ -183,7 +183,11 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>+</string>
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../resource.qrc">
+                <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
               </property>
              </widget>
             </item>
@@ -237,7 +241,7 @@
               <x>0</x>
               <y>0</y>
               <width>1229</width>
-              <height>512</height>
+              <height>547</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -285,7 +289,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="BottomFrame">
+       <widget class="QFrame" name="DescriptionFrame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -349,7 +353,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="DescriptionFrame">
+              <widget class="QFrame" name="DescriptionTextFrame">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -394,6 +398,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -1,8 +1,6 @@
 from PySide6.QtWidgets import QApplication
+from PySide6.QtGui import QIcon
 from MainFiles.ViewController import ViewController
-from MainFiles.LogController import LogController
-from PySide6.QtCore import Qt
-from icecream import ic
 
 
 
@@ -11,13 +9,12 @@ class Main:
     
     def __init__(self):
         self.app = QApplication([])
-        self.logController = LogController()
-        self.viewController = ViewController(self, self.logController)
+        self.app.setWindowIcon(QIcon("icons/ProjectManagerIcon.png"))
+        self.viewController = ViewController(self)
         
 
     def main(self):
         self.viewController.main()
-        self.logController.main()
        
 
 

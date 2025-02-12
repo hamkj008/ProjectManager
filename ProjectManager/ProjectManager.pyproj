@@ -28,8 +28,6 @@
     <Compile Include="Helpers\DropGridWithId.py" />
     <Compile Include="Helpers\IssueDragDropLabel.py" />
     <Compile Include="Helpers\IssueDropGridWithId.py" />
-    <Compile Include="Helpers\ResizeableGrid.py" />
-    <Compile Include="MainFiles\LogController.py" />
     <Compile Include="Main.py" />
     <Compile Include="MainFiles\MenuController.py" />
     <Compile Include="MainFiles\QSSController.py" />
@@ -48,7 +46,7 @@
     <Compile Include="Views\AddNewProjectView.py" />
     <Compile Include="Views\FeatureTabView.py" />
     <Compile Include="Views\IssueTabView.py" />
-    <Compile Include="Views\LogView.py" />
+    <Compile Include="Views\PreferencesView.py" />
     <Compile Include="Views\ProjectFeatureTaskIssueView.py" />
     <Compile Include="Views\ProjectView.py" />
     <Compile Include="Views\TaskTabView.py" />
@@ -63,7 +61,6 @@
     <Folder Include="Models\__pycache__\" />
     <Folder Include="DebugTest\" />
     <Folder Include="tests\" />
-    <Folder Include="QSS\" />
     <Folder Include="tests\models\" />
     <Folder Include="tests\fixtures\" />
     <Folder Include="tests\views\" />
@@ -83,10 +80,6 @@
     <Content Include="Models\__pycache__\ProjectModel.cpython-310.pyc" />
     <Content Include="Models\__pycache__\TestModel.cpython-310.pyc" />
     <Content Include="Models\__pycache__\__init__.cpython-310.pyc" />
-    <Content Include="QSS\AddTaskStyle.qss" />
-    <Content Include="QSS\LogStyle.qss" />
-    <Content Include="QSS\ProjectFeatureTaskIssueStyle.qss" />
-    <Content Include="QSS\style.qss" />
     <Content Include="Views\__pycache__\AccountAddCategoryView.cpython-310.pyc" />
     <Content Include="Views\__pycache__\AccountDateRangeSelectView.cpython-310.pyc" />
     <Content Include="Views\__pycache__\AccountEditCategoriesView.cpython-310.pyc" />

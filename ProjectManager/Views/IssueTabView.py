@@ -3,7 +3,7 @@ from functools import partial
 
 from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QMessageBox, QMenu
 from PySide6.QtCore import Qt, QEvent
-from Helpers.ResizeableGrid import ResizeableGrid
+from MyHelperLibrary.Helpers.ResizableGrid import ResizeableGrid
 from Helpers.IssueDragDropLabel import IssueDragDropLabel
 from Helpers.IssueDropGridWithId import IssueDropGridWithId
 from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
@@ -22,30 +22,32 @@ class IssueTabView(QWidget):
         self.editDict = editDict
 
         layout = QHBoxLayout(self)
+        layout.setContentsMargins(0,0,0,0)
         self.setLayout(layout)
 
         # Create a resizeable grid layout
-        issueResizeableGrid = ResizeableGrid() 
+        dividers = [(self.parentView.window.IssueLabelFrame,    self.parentView.window.IssueCompletedLabelFrame),
+                    (self.parentView.window.IssueLeftFrame,     self.parentView.window.IssueRightFrame)] 
+
+        issueResizeableGrid = ResizeableGrid(dividers=dividers) 
         layout.addWidget(issueResizeableGrid)
         
         # Rebind the grid children to the new grid
-        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueLabelFrame, 0, 0, 1, 1)
-        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueCompletedLabelFrame, 0, 1, 1, 1)
-        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueLeftFrame, 1, 0, 1, 1)
-        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueRightFrame, 1, 1, 1, 1)
+        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueLabelFrame, 0, 0)
+        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueCompletedLabelFrame, 0, 1)
+        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueLeftFrame, 1, 0)
+        issueResizeableGrid.layout().addWidget(self.parentView.window.IssueRightFrame, 1, 1)
 
-        # Implement resizing event listeners
-        issueResizeableGrid.setFrames([self.parentView.window.IssueLabelFrame, self.parentView.window.IssueLeftFrame, 
-                                  self.parentView.window.IssueCompletedLabelFrame, self.parentView.window.IssueRightFrame])
-
-        issueResizeableGrid.enableMouseTrackingRecursive()
-
-        issueGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, objectName="issueGrid")
-        issueCompleteGrid = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, 1, objectName="IssueCompleteGridFrame")
+        issueGrid           = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, objectName="issueGrid")
+        issueCompleteGrid   = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, 1, objectName="IssueCompleteGridFrame")
         
         self.issueGrids = {"issueGrid"          :   issueGrid, 
                           "issueCompleteGrid"   :   issueCompleteGrid}
         
+        # Add the grids to the parent
+        self.parentView.window.IssueScrollAreaContents.layout().addWidget(self.issueGrids["issueGrid"])
+        self.parentView.window.IssueCompleteScrollAreaContents.layout().addWidget(self.issueGrids["issueCompleteGrid"])
+
 
         self.priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
 
@@ -57,14 +59,12 @@ class IssueTabView(QWidget):
 
 
     def loadSelf(self):
+
         self.getModel()
         
         # Clear the grid panels
-        clearLayout(self.parentView.window.IssueScrollAreaContents.layout())
-        clearLayout(self.parentView.window.IssueCompleteScrollAreaContents.layout())
-        # Re-Add
-        self.parentView.window.IssueScrollAreaContents.layout().addWidget(self.issueGrids["issueGrid"])
-        self.parentView.window.IssueCompleteScrollAreaContents.layout().addWidget(self.issueGrids["issueCompleteGrid"])
+        clearLayout(self.issueGrids["issueGrid"].layout())
+        clearLayout(self.issueGrids["issueCompleteGrid"].layout())
 
         self.setUpIssueGrids()
         self.populateIssueData()
@@ -83,10 +83,10 @@ class IssueTabView(QWidget):
     def setUpIssueGrids(self):
         ic("setUpIssueGrids")
 
-        self.issueHeaderColumnId = {}
-        self.issueViewHeaders = {"issueName"        :   "Issue Summary", 
-                                "dateIssueCreated"  :   "Date Created",
-                                "priority"          :   "Priority"}
+        self.issueHeaderColumnId    = {}
+        self.issueViewHeaders       = {"issueName"          :   "Issue Summary", 
+                                        "dateIssueCreated"  :   "Date Created",
+                                        "priority"          :   "Priority"}
 
         for gridValue in self.issueGrids.values():
                 
@@ -123,8 +123,8 @@ class IssueTabView(QWidget):
     def addIssueToDisplay(self, issue):
         ic("addIssueToDisplay")
         
-        rowList = []
-        labelList = []
+        rowList     = []
+        labelList   = []
         
         for key, value in issue.items():
             if key in self.issueViewHeaders:
@@ -139,7 +139,7 @@ class IssueTabView(QWidget):
                     
                     # A frame, layout and placeholderlabel form the structure to hold the representative color 
                     colorFrame = createLayoutFrame(sizePolicy=("fixed", "fixed"), margins=(0,0,0,0))
-                    colorFrame.setStyleSheet(f"background-color: {color};") # Color changes based on priority 
+                    colorFrame.setStyleSheet(f"background-color: {color}; border-radius: 10px;") # Color changes based on priority 
                     colorFrame.setFixedSize(20, 20)
 
                     # The priority label
@@ -169,18 +169,20 @@ class IssueTabView(QWidget):
 
 
     def addToGrid(self, label, issue, key):
-        if issue["isComplete"] == "False":
-            self.issueGrids["issueGrid"].layout().addWidget(label, issue["rowId"], self.issueHeaderColumnId[key])                   
-                    
-        elif issue["isComplete"] == "True":
+
+        isComplete = issue["isComplete"] == "True"      #convert sql boolean placeholder to actual truthy boolean
+        
+        if isComplete:
             self.issueGrids["issueCompleteGrid"].layout().addWidget(label, issue["rowId"], self.issueHeaderColumnId[key])
+        else:
+            self.issueGrids["issueGrid"].layout().addWidget(label, issue["rowId"], self.issueHeaderColumnId[key])          
 
 
     # ========================================================================================
 
 
     def rowClicked(self, issueDescription, event):   
-        ic("rowClicked")
+
         self.parentView.window.DescriptionTextLabel.setText(issueDescription)
         
 
@@ -192,7 +194,7 @@ class IssueTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText(issueDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.qssController.hoverEnterStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverEnter)
 
 
     # ========================================================================================
@@ -203,7 +205,7 @@ class IssueTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.qssController.hoverLeaveStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverLeave)
 
 
     # ========================================================================================

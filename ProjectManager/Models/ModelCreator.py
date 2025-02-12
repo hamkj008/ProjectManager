@@ -9,26 +9,39 @@ import sqlite3
 
 class ModelCreator:
    
-    def __init__(self):
+    def __init__(self, databaseName):
         ic("ModelCreator init")
         
-        self.connection = sqlite3.connect('projectManager.db')
+        self.connection = sqlite3.connect(databaseName)
         self.connection.execute("PRAGMA foreign_keys = ON")
         self.cursor = self.connection.cursor()
         
-
-        # Check if the database has any data.
-        self.cursor.execute("PRAGMA table_info({})".format("projects"))
-        query = self.cursor.fetchall()
+        self.checkDatabase()
 
 
-        # If the database does not exist, initialize first time install of the database
-        if len(query) > 0:
-            ic("database populated")
-            
-        else:  
+    # ======================================================================================== 
+    
+
+    def checkDatabase(self):
+
+
+        try:
+            # Check if the database has any data.
+            self.cursor.execute("SELECT COUNT(*) FROM projects")
+            count = self.cursor.fetchone()[0]
+            if count > 0:
+                ic("Database populated")
+                self.firstTimeDatabase = False
+                
+            # initialization logic has run
+            else:
+                self.firstTimeDatabase = True
+                self.firstTimeDatabaseInstall()  
+                
+        # Initialization logic has not run
+        except sqlite3.OperationalError:
+            self.firstTimeDatabase = True
             self.firstTimeDatabaseInstall()
-
 
     # ======================================================================================== 
     

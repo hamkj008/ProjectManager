@@ -1,8 +1,8 @@
 from icecream import ic
-from PySide6.QtWidgets import QMainWindow, QStatusBar
+from PySide6.QtWidgets import QWidget, QStatusBar
 from PySide6.QtCore import Qt
 
-from UiViews.UiMainWindow import Ui_MainWindow
+from UiViews.UiMainWidget import Ui_MainWidget
 from MainFiles.QSSController import QSSController
 from MainFiles.StateController import StateController
 from MainFiles.MenuController import MenuController
@@ -15,41 +15,48 @@ from Views.ProjectFeatureTaskIssueView import ProjectFeatureTaskIssueView
 from Views.AboutView import AboutView
 from Views.AddNewProjectView import AddNewProjectView
 from Views.AddNewView import AddNewView
+from Views.PreferencesView import PreferencesView
 
+from MyHelperLibrary.Helpers.CustomWindow import CustomWindow
 from MyHelperLibrary.Helpers.HelperMethods import clearStackedLayout
 
 # ========================================================================================
       
 
-class ViewController(QMainWindow):
+class ViewController(CustomWindow):
 
     
-    def __init__(self, main, logController):
-        super().__init__()
+    def __init__(self, main):
 
-        self.Main = main
-        self.logController = logController
+        iconPath = "E:/MyITstuff/ProgrammingIDEs/VisualStudio/Python/Projects/ProjectManager/ProjectManager/icons/ProjectManagerIcon.png"        # have to pass an absolute path
+        super().__init__("Project Manager", iconPath, True)
+        # ----------------------
         
-        self.stateController = StateController()
-        self.qssController = QSSController()
-        self.menuController = MenuController(self)
+        self.Main               = main
+        
+        self.stateController    = StateController()
+        self.qssController      = QSSController()
+        self.menuController     = MenuController(self)
        
-        self.modelCreator = ModelCreator()
-        self.model = ProjectModel(self.modelCreator.connection)
+        self.modelCreator       = ModelCreator(databaseName='projectManager.db')
+        self.model              = ProjectModel(self.modelCreator.connection)
         
-        self.viewList = {}
-        self.menuList = {}
+        self.viewList           = {}
+        self.menuList           = {}  
 
 
-        # --- Setup UI ---
-        self.window = Ui_MainWindow()
-        self.window.setupUi(self)
-        self.setWindowTitle("Project Manager")
+        # ----- Setup UI ----------------
+        self.container  = QWidget()
+        self.content    = Ui_MainWidget()
+        self.content.setupUi(self.container)
+        
+        self.setCentralWidget(self.container)
         self.setStyle()
-        # -------------------------------    
+        # -------------------------------  
+
+        self.setMinimumSize(700, 550)
 
         # -- Menu bar --
-        self.menubar = self.menuBar()
         self.menuController.setupMenus(self.menubar)
         
         # -- Status bar --
@@ -69,8 +76,7 @@ class ViewController(QMainWindow):
 
 
     def setStyle(self):
-        ic("setStyle")
-        
+
         self.setStyleSheet(self.qssController.getStandardStyle())
         
         for view in self.viewList.values():
@@ -91,16 +97,16 @@ class ViewController(QMainWindow):
     def displayView(self, viewToDisplay, *args, **kwargs):
         
         # Construct the method name
-        methodName = f"display{viewToDisplay}"
+        methodName  = f"display{viewToDisplay}"
         
         # Use getattr to get the appropriate method
-        method = getattr(self, methodName, None)
+        method      = getattr(self, methodName, None)
         
-        newWindow = kwargs.pop('newWindow', False)
+        newWindow   = kwargs.pop('newWindow', False)
         
         if method and callable(method):
             if not newWindow:
-                clearStackedLayout(self.viewList, self.window.stackedWidget)        # Clear the layout
+                clearStackedLayout(self.viewList, self.content.stackedWidget)        # Clear the layout
 
             method(*args, **kwargs)                                                 # display the view 
             # self.menuController.refreshContextMenus()       # refresh the menus for correct context
@@ -115,10 +121,10 @@ class ViewController(QMainWindow):
     def closeView(self, viewToDisplay):
         
         # Construct the method name
-        methodName = f"close{viewToDisplay}"
+        methodName  = f"close{viewToDisplay}"
         
         # Use getattr to get the appropriate method
-        method = getattr(self, methodName, None)
+        method      = getattr(self, methodName, None)
         
         if method and callable(method):
             method()                                   # display the view
@@ -147,9 +153,9 @@ class ViewController(QMainWindow):
         ic("displayProjectView")
         
         self.viewList["projectView"] = ProjectView(self)
-        self.window.stackedWidget.addWidget(self.viewList["projectView"])
-        self.window.stackedWidget.setCurrentWidget(self.viewList["projectView"])
-        
+        self.content.stackedWidget.addWidget(self.viewList["projectView"])
+        self.content.stackedWidget.setCurrentWidget(self.viewList["projectView"])
+        ic(self.content.stackedWidget.layout().count())
 
     # ========================================================================================
     
@@ -158,12 +164,21 @@ class ViewController(QMainWindow):
         ic("displayProjectFeatureTaskIssueView")
 
         self.viewList["projectFeatureTaskIssueView"] = ProjectFeatureTaskIssueView(self, search, currentIndex)
-        self.window.stackedWidget.addWidget(self.viewList["projectFeatureTaskIssueView"])
-        self.window.stackedWidget.setCurrentWidget(self.viewList["projectFeatureTaskIssueView"])
+        self.content.stackedWidget.addWidget(self.viewList["projectFeatureTaskIssueView"])
+        self.content.stackedWidget.setCurrentWidget(self.viewList["projectFeatureTaskIssueView"])
      
         
     # ========================================================================================
+     
+    def displayPreferencesView(self):
+        self.viewList["preferencesView"] = PreferencesView(self, self.qssController)
+        self.viewList["preferencesView"].main()
     
+    def closePreferencesView(self):
+        self.viewList["preferencesView"].close()
+        
+        
+    # ========================================================================================
 
     def displayAddNewProjectView(self, projectDict=None, editing=False):
         self.viewList["addNewProjectView"] = AddNewProjectView(self, projectDict, editing)

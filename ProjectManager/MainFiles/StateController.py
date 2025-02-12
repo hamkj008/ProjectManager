@@ -5,7 +5,8 @@ from MyHelperLibrary.Helpers.HelperMethods import readJSONData
 """ Stores the application wide states for various variables """
 class StateController:
     def __init__(self):
-        
+        ic("state controller")
+
         self.configData = readJSONData("JSON/config.json")
         
         self._projectId = None       

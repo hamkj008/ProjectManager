@@ -1,6 +1,6 @@
 from icecream import ic
 from functools import partial
-from MyHelperLibrary.Helpers.HelperMethods import createMenu, createActionDictionary, getAction, replaceActionTriggeredConnection
+from MyHelperLibrary.Helpers.HelperMethods import createMenu, createActionDictionary
 
 
 
@@ -10,8 +10,7 @@ class MenuController:
         ic("MenuController init")
         
         self.viewController = viewController
-
-        self.menuList = {}
+        self.menuList       = {}
 
 
     # ========================================================================================
@@ -21,7 +20,7 @@ class MenuController:
         actionList = []
         
         # ----- File Menu -----        
-        newAction       =   createActionDictionary("New", shortcut="Ctrl+N")
+        newAction       =   createActionDictionary("New", shortcut="Ctrl+N", trigger=self.getNew)
         exitAction      =   createActionDictionary("Exit", shortcut="Ctrl+Q", trigger=self.viewController.Main.exit)
         actionList      =   [newAction, "separator", exitAction]
         
@@ -29,16 +28,15 @@ class MenuController:
 
 
         # ----- Settings Menu -----
-        openPreferencesAction   =   createActionDictionary("Preferences", shortcut="Ctrl+P")
+        openPreferencesAction   =   createActionDictionary("Preferences", shortcut="Ctrl+P", trigger=partial(self.viewController.displayView, "PreferencesView", newWindow=True))
         actionList              =   [openPreferencesAction]
         
         self.menuList["settingsMenu"] = createMenu(menubar, "Settings", actionList)
 
 
         # ----- About Menu -----
-        readmeAction    =   createActionDictionary("View README")
         aboutAction     =   createActionDictionary("About", trigger=partial(self.viewController.displayView, "AboutView", newWindow=True))
-        actionList      =   [readmeAction, "separator", aboutAction]
+        actionList      =   [aboutAction]
         
         self.menuList["helpMenu"] = createMenu(menubar, "Help", actionList)
         
@@ -52,3 +50,11 @@ class MenuController:
 
 
     # ========================================================================================
+
+    # Quick and dirty way of calling a common method on different classes
+    def getNew(self):
+
+        for view in list(self.viewController.viewList.values()):
+            if view:
+                if hasattr(view, "addNew"):
+                    getattr(view, "addNew")()

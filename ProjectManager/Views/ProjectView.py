@@ -31,7 +31,7 @@ class ProjectView(QWidget):
         
         self.window.ProjectGridFrame.layout().setAlignment(Qt.AlignTop)
         self.window.SearchInput.textChanged.connect(self.search)
-        self.window.AddNewBtn.clicked.connect(self.addNewProject)
+        self.window.AddNewBtn.clicked.connect(self.addNew)
 
         self.viewController.statusBar().showMessage("")
         
@@ -45,6 +45,7 @@ class ProjectView(QWidget):
             
 
     def setStyle(self):
+        ic("projectssyle")
         self.setStyleSheet(self.viewController.qssController.getStandardStyle())
 
 
@@ -52,9 +53,8 @@ class ProjectView(QWidget):
     
     
     def loadSelf(self):
-        
-        self.getModel()
-        
+
+        self.getModel()       
         clearLayout(self.window.ProjectGridFrame.layout())
         self.setupGrid()
         self.populateData()  
@@ -81,9 +81,6 @@ class ProjectView(QWidget):
 
         for index, (key, value) in enumerate(self.projectViewHeaders.items()):
             columnTitle = QLabel(value, objectName="header")
-            
-            if key == "projectName":
-                columnTitle.setSizePolicy(QSizePolicy.Expanding, columnTitle.sizePolicy().verticalPolicy())
              
             self.window.ProjectGridFrame.layout().addWidget(columnTitle, 0, index)
             
@@ -116,19 +113,21 @@ class ProjectView(QWidget):
         labelRowList = []
         
         for key, value in project.items():
-            for header in self.projectViewHeaders:
                 
-                if key in self.projectViewHeaders:
-                    label = DataLabel(f'{value}', project, objectName="row")
+            if key in self.projectViewHeaders:
+                label = DataLabel(f'{value}', project, objectName="row")
                 
-                    if header == "projectName":
-                        label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+                if key == "projectName":
+                    label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+                if key == "dateCreated":
+                    label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
                     
-                    label.mousePressEvent = (partial(self.rowClicked, project["projectId"]))
-                    label.installEventFilter(self)
+                label.mousePressEvent = (partial(self.rowClicked, project["projectId"]))
+                label.installEventFilter(self)
                     
-                    self.window.ProjectGridFrame.layout().addWidget(label, project["rowId"], self.projectHeaderColumnId[key])
-                    labelRowList.append(label)             
+                self.window.ProjectGridFrame.layout().addWidget(label, project["rowId"], self.projectHeaderColumnId[key])
+                labelRowList.append(label)             
           
         for label in labelRowList:
             label.enterEvent = (partial(self.hoverEnter, labelRowList, project["projectDescription"]))
@@ -154,7 +153,7 @@ class ProjectView(QWidget):
         self.window.DescriptionTextLabel.setText(projectDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.qssController.hoverEnterStyle)
+            label.setStyleSheet(self.viewController.qssController.hoverEnter)
 
 
     # ========================================================================================
@@ -165,7 +164,7 @@ class ProjectView(QWidget):
         self.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.viewController.qssController.hoverLeaveStyle)
+            label.setStyleSheet(self.viewController.qssController.hoverLeave)
 
 
     # ========================================================================================
@@ -182,8 +181,8 @@ class ProjectView(QWidget):
     # ======================================================================================== 
     
     
-    def addNewProject(self):
-        ic("addNewProject")
+    def addNew(self):
+        ic("addNew")
         
         self.viewController.displayView("AddNewProjectView", newWindow=True)
         

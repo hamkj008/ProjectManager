@@ -6,7 +6,8 @@ from UiViews.UiProjectFeatureTaskIssueWindow import Ui_ProjectFeatureTaskIssueWi
 from Views.FeatureTabView import FeatureTabView
 from Views.TaskTabView import TaskTabView
 from Views.IssueTabView import IssueTabView
-from MyHelperLibrary.Helpers.HelperMethods import clearLayout, removeClassFromLayout
+from MyHelperLibrary.Helpers.ResizableGrid import Direction, ResizeableGrid
+
 
 # ========================================================================================
       
@@ -17,16 +18,28 @@ class ProjectFeatureTaskIssueView(QWidget):
         super().__init__()
         
         self.viewController = viewController
-        self.searchText = search 
-        self.currentIndex = currentIndex
+        self.searchText     = search 
+        self.currentIndex   = currentIndex
 
+        self.editing        = False
+        self.viewList       = {}
 
         # ----- Setup UI ------
         self.window = Ui_ProjectFeatureTaskIssueWindow()
         self.window.setupUi(self)
         self.setStyle()
         # ---------------------
-        
+       
+        dividers = [(self.window.ProjectTabFrame, self.window.DescriptionFrame)]
+        resizeableGrid = ResizeableGrid(dividers=dividers, direction=Direction.VERTICAL)
+
+        self.window.BottomFrame.layout().addWidget(resizeableGrid)
+
+        resizeableGrid.layout().addWidget(self.window.ProjectTabFrame, 0, 0)
+        resizeableGrid.layout().addWidget(self.window.DescriptionFrame, 1, 0)
+        resizeableGrid.layout().setVerticalSpacing(10)
+        self.window.ProjectTabFrame.setParent(resizeableGrid)
+        self.window.DescriptionFrame.setParent(resizeableGrid)
 
         # -- Signals ----
         self.window.tabWidget.setCurrentIndex(self.currentIndex)
@@ -35,11 +48,15 @@ class ProjectFeatureTaskIssueView(QWidget):
         self.window.AddNewBtn.clicked.connect(self.addNew)
         self.viewController.statusBar().showMessage("")
         
-        self.editing = False
-        self.viewList = {}
 
         self.getProjectName()       
-                
+           
+        # Create the child tab views
+        self.createFeatureTabView()
+        self.createTaskTabView()
+        self.createIssueTabView()
+
+
         self.tabChanged(self.currentIndex)
 
 
@@ -47,7 +64,7 @@ class ProjectFeatureTaskIssueView(QWidget):
     
 
     def setStyle(self):
-        
+
         styleSheet = self.viewController.qssController.getStandardStyle()
         styleSheet += self.viewController.qssController.getProjectFeatureTaskIssueStyle()
         self.setStyleSheet(styleSheet)
@@ -55,35 +72,27 @@ class ProjectFeatureTaskIssueView(QWidget):
 
     # ========================================================================================
     
+
+    def loadSelf(self):
+
+        self.setActiveWindow(self.currentIndex)
     
+
+    # # ========================================================================================
+    
+
     def setActiveWindow(self, index):
-        
-        # Clear the views and layout so only one view will be active at a time
-        for key in self.viewList.keys():
-            self.viewList[key] = None
-        
-        # --------
             
-        if index == 0:
-            clearLayout(self.window.FeaturesTab.layout())  # From helpers
-            self.createFeatureTabView()
+        if index    == 0:
+            self.viewList["featureView"].loadSelf()
             
-        # TasksTab and IssueTab have child structures from the parent so can't just be wiped
-        elif index == 1:
-            if self.window.TasksTab.layout().count() > 1:
-                # Remove all TaskTabViews from layout
-                removeClassFromLayout(self.window.TasksTab.layout(), TaskTabView)  # From helpers
-            self.createTaskTabView()
+        elif index  == 1:
+            self.viewList["taskView"].loadSelf()
             
-        elif index == 2:
-            if self.window.IssuesTab.layout().count() > 1:
-                # Remove all IssueTabViews from layout
-                removeClassFromLayout(self.window.IssuesTab.layout(), IssueTabView)  # From helpers
-            self.createIssueTabView()
+        elif index  == 2:
+            self.viewList["issueView"].loadSelf()
      
             
-        
-
     # ========================================================================================
 
 
@@ -98,7 +107,6 @@ class ProjectFeatureTaskIssueView(QWidget):
         
         self.viewList["taskView"] = TaskTabView(self, 1)
         self.window.TasksTab.layout().addWidget(self.viewList["taskView"]) 
-
 
     # -------- ISSUES TAB ----------------------------
     def createIssueTabView(self):

@@ -1,10 +1,10 @@
 from icecream import ic
 from functools import partial
 
-from PySide6.QtWidgets import QLineEdit, QWidget, QLabel, QHBoxLayout, QGridLayout, QMessageBox, QMenu, QComboBox
+from PySide6.QtWidgets import QSizePolicy, QWidget, QLabel, QGridLayout, QMessageBox, QMenu
 from PySide6.QtCore import Qt, QEvent
 from MyHelperLibrary.Helpers.DataLabel import DataLabel
-from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, createWidget, clearLayout
+from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
 
 
 # ========================================================================================
@@ -16,15 +16,15 @@ class FeatureTabView(QWidget):
         super().__init__()
         
         self.parentView = parentView
-        self.tabId = tabId
-        self.editDict = editDict
+        self.tabId      = tabId
+        self.editDict   = editDict
         
         # -----------
         
-        # Create a new grid layout because will the parent will be cleared each time
+        # Create a new grid layout because the parent will be cleared each time
         self.featureGrid = QGridLayout()
-        self.setLayout(self.featureGrid)
         self.featureGrid.setAlignment(Qt.AlignTop)
+        self.setLayout(self.featureGrid)
         
         # -----------
 
@@ -33,15 +33,17 @@ class FeatureTabView(QWidget):
         # -- Start --
         self.loadSelf()
 
+
     # ========================================================================================
 
 
     def loadSelf(self):
-        
+
         self.getModel()
         clearLayout(self.featureGrid)
         self.setupGrid()
         self.populateData()
+
 
     # ========================================================================================
 
@@ -56,10 +58,10 @@ class FeatureTabView(QWidget):
     def setupGrid(self):
         ic("setupGrid")
 
-        self.featureHeaderColumnId = {}
-        self.featureViewHeaders = {"featureName"            : "Feature Summary", 
-                                    "dateFeatureCreated"    : "Date Created",
-                                    "priority"              : "Priority"}
+        self.featureHeaderColumnId  = {}
+        self.featureViewHeaders     = {"featureName"            : "Feature Summary", 
+                                        "dateFeatureCreated"    : "Date Created",
+                                        "priority"              : "Priority"}
 
         for index, (key, value) in enumerate(self.featureViewHeaders.items()):
             columnTitle = QLabel(value, objectName="header")
@@ -105,7 +107,7 @@ class FeatureTabView(QWidget):
 
                     # A frame, layout and placeholderlabel form the structure to hold the representative color 
                     colorFrame = createLayoutFrame(sizePolicy=("fixed", "fixed"), margins=(0,0,0,0)) # The frame that holds the actual color
-                    colorFrame.setStyleSheet(f"background-color: {color};") # Color changes based on priority 
+                    colorFrame.setStyleSheet(f"background-color: {color}; border-radius: 10px;") # Color changes based on priority 
                     colorFrame.setFixedSize(20, 20)
 
                     priorityLabel = DataLabel(f'{priority}', feature, objectName="priorityLabel")
@@ -115,6 +117,11 @@ class FeatureTabView(QWidget):
                 # Labels other than the priority
                 else:
                     taskLabel = DataLabel(f'{value}', feature, objectName="taskLabel")
+
+                    if key == "featureName":
+                        taskLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+                    if key == "dateFeatureCreated":
+                        taskLabel.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
                         
                 taskLabel.installEventFilter(self)
                 taskLabel.mousePressEvent = (partial(self.rowClicked, feature["featureDescription"]))
@@ -143,7 +150,7 @@ class FeatureTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText(featureDescription)
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.qssController.hoverEnterStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverEnter)
 
 
     # ========================================================================================
@@ -154,7 +161,7 @@ class FeatureTabView(QWidget):
         self.parentView.window.DescriptionTextLabel.setText("")
         
         for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.qssController.hoverLeaveStyle)
+            label.setStyleSheet(self.parentView.viewController.qssController.hoverLeave)
 
 
     # ========================================================================================
