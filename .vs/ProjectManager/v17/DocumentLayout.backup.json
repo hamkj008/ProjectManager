@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\MainFiles\\QSSController.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Main.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Main.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\ViewController.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\MainFiles\\ViewController.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Main.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|solutionrelative:ProjectManager\\Main.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{821D24B9-0CE6-4D8C-A9DB-849730F689C7}|ProjectManager\\ProjectManager.pyproj|E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -160,7 +160,7 @@
               "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\QSSController.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\QSSController.py",
               "RelativeToolTip": "ProjectManager\\MainFiles\\QSSController.py",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAFQAAABYAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAHYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2024-08-20T17:04:43.397Z",
               "EditorCaption": ""
@@ -175,21 +175,19 @@
               "RelativeToolTip": "ProjectManager\\Views\\IssueTabView.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T14:36:41.532Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T14:36:41.532Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "ViewController.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\ViewController.py",
               "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\ViewController.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\ViewController.py",
               "RelativeToolTip": "ProjectManager\\MainFiles\\ViewController.py",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAADAAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADgAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T09:49:11.861Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T09:49:11.861Z"
             },
             {
               "$type": "Document",
@@ -201,8 +199,7 @@
               "RelativeToolTip": "ProjectManager\\MainFiles\\MenuController.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-08T08:03:48.39Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-08T08:03:48.39Z"
             },
             {
               "$type": "Document",
@@ -214,8 +211,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\AboutView.py",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-08T11:31:22.366Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-08T11:31:22.366Z"
             },
             {
               "$type": "Document",
@@ -227,8 +223,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\AddNewProjectView.py",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-15T05:25:09.032Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-15T05:25:09.032Z"
             },
             {
               "$type": "Document",
@@ -240,8 +235,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\FeatureTabView.py",
               "ViewState": "AgIAAFQAAAAAAAAAAAAAAD8AAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T06:56:25.473Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T06:56:25.473Z"
             },
             {
               "$type": "Document",
@@ -253,8 +247,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\ProjectView.py",
               "ViewState": "AgIAAOkAAAAAAAAAAAAmwPcAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T06:54:15.62Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T06:54:15.62Z"
             },
             {
               "$type": "Document",
@@ -266,12 +259,11 @@
               "RelativeToolTip": "ProjectManager\\Views\\TaskTabView.py",
               "ViewState": "AgIAACMBAAAAAAAAAAAAABIBAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T07:12:38.799Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T07:12:38.799Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Main.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Main.py",
               "RelativeDocumentMoniker": "ProjectManager\\Main.py",
@@ -279,8 +271,7 @@
               "RelativeToolTip": "ProjectManager\\Main.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-01-10T06:44:34.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-10T06:44:34.04Z"
             },
             {
               "$type": "Document",
@@ -292,8 +283,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\PreferencesView.py",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAAD4AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-02-11T18:26:38.01Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-11T18:26:38.01Z"
             },
             {
               "$type": "Document",
@@ -305,8 +295,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\ProjectFeatureTaskIssueView.py",
               "ViewState": "AgIAAJMAAAAAAAAAAAAAAFsAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T07:04:01.465Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T07:04:01.465Z"
             },
             {
               "$type": "Document",
@@ -314,12 +303,11 @@
               "Title": "StateController.py",
               "DocumentMoniker": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py",
               "RelativeDocumentMoniker": "ProjectManager\\MainFiles\\StateController.py",
-              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py*",
-              "RelativeToolTip": "ProjectManager\\MainFiles\\StateController.py*",
+              "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\MainFiles\\StateController.py",
+              "RelativeToolTip": "ProjectManager\\MainFiles\\StateController.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-10T18:21:22.511Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-10T18:21:22.511Z"
             },
             {
               "$type": "Document",
@@ -331,8 +319,7 @@
               "RelativeToolTip": "ProjectManager\\Views\\AddNewView.py",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAMAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-08-20T17:02:46.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-20T17:02:46.184Z"
             },
             {
               "$type": "Document",
@@ -344,8 +331,7 @@
               "RelativeToolTip": "ProjectManager\\Models\\ModelCreator.py",
               "ViewState": "AgIAAGMAAAAAAAAAAAAAAHUAAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-08-20T17:24:10.958Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-20T17:24:10.958Z"
             },
             {
               "$type": "Document",
@@ -357,8 +343,7 @@
               "RelativeToolTip": "ProjectManager\\Models\\ProjectModel.py",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAGoAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T15:47:38.881Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T15:47:38.881Z"
             },
             {
               "$type": "Document",
@@ -370,8 +355,7 @@
               "RelativeToolTip": "ProjectManager\\Helpers\\DropGridWithId.py",
               "ViewState": "AgIAACoAAAAAAAAAAIBJwEcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T14:40:02.818Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T14:40:02.818Z"
             },
             {
               "$type": "Document",
@@ -383,8 +367,7 @@
               "RelativeToolTip": "ProjectManager\\Helpers\\IssueDragDropLabel.py",
               "ViewState": "AgIAAAkAAAAAAAAAAIBJwAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T20:25:27.493Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T20:25:27.493Z"
             },
             {
               "$type": "Document",
@@ -396,8 +379,7 @@
               "RelativeToolTip": "ProjectManager\\Helpers\\IssueDropGridWithId.py",
               "ViewState": "AgIAADIAAAAAAAAAAAAkwEEAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T16:03:31.441Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T16:03:31.441Z"
             },
             {
               "$type": "Document",
@@ -409,8 +391,7 @@
               "RelativeToolTip": "ProjectManager\\Helpers\\DragDropLabel.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T07:13:03.452Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T07:13:03.452Z"
             }
           ]
         },
@@ -449,8 +430,7 @@
               "RelativeToolTip": "ProjectManager\\tests\\fixtures\\test_fixtures.py",
               "ViewState": "AgIAAAYAAAAAAAAAAIBJwBYAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-09T06:30:21.289Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T06:30:21.289Z"
             },
             {
               "$type": "Document",
@@ -462,8 +442,7 @@
               "RelativeToolTip": "ProjectManager\\DebugTest\\DebugTestPlayground.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-09T07:46:22.092Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T07:46:22.092Z"
             },
             {
               "$type": "Document",
@@ -475,8 +454,7 @@
               "RelativeToolTip": "ProjectManager\\DebugTest\\DebugTestSetup.py",
               "ViewState": "AgIAAAAAAAAAAAAAAIBJwKAAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-09T07:46:05.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T07:46:05.842Z"
             },
             {
               "$type": "Document",
@@ -488,8 +466,7 @@
               "RelativeToolTip": "ProjectManager\\tests\\views\\test_aboutView.py",
               "ViewState": "AgIAAAAAAAAAAAAAAIBJwCQAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-09T06:26:34.673Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T06:26:34.673Z"
             },
             {
               "$type": "Document",
@@ -501,8 +478,7 @@
               "RelativeToolTip": "ProjectManager\\tests\\fixtures\\fixture_databaseInit.py",
               "ViewState": "AgIAAHgAAAAAAAAAAIBJwI8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-09T06:20:31.424Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T06:20:31.424Z"
             },
             {
               "$type": "Document",
@@ -514,8 +490,7 @@
               "RelativeToolTip": "ProjectManager\\tests\\conftest.py",
               "ViewState": "AgIAADYAAAAAAAAAAIBJwE4AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-09-09T06:19:21.804Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T06:19:21.804Z"
             }
           ]
         },

@@ -54,7 +54,7 @@ class ViewController(CustomWindow):
         self.setStyle()
         # -------------------------------  
 
-        self.setMinimumSize(700, 550)
+        self.setMinimumSize(300, 200)
 
         # -- Menu bar --
         self.menuController.setupMenus(self.menubar)

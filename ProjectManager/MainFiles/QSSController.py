@@ -109,9 +109,6 @@ class QSSController:
                     background-color: {self.themes[self.currentTheme]["buttonHoverColor"]};
                 }}
 
-                QPushButton::icon {{
-                    color: green;
-                }}
                
                 /*  ------- Menu Bar ---------- */
 
