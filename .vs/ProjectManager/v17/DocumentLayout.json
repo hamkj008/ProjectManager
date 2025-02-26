@@ -208,7 +208,7 @@
               "RelativeDocumentMoniker": "ProjectManager\\Views\\ProjectView.py",
               "ToolTip": "E:\\MyITstuff\\ProgrammingIDEs\\VisualStudio\\Python\\Projects\\ProjectManager\\ProjectManager\\Views\\ProjectView.py",
               "RelativeToolTip": "ProjectManager\\Views\\ProjectView.py",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAAB8AAABHAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAB4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2024-07-11T06:54:15.62Z",
               "EditorCaption": ""
@@ -307,8 +307,7 @@
               "RelativeToolTip": "ProjectManager\\Models\\ProjectModel.py",
               "ViewState": "AgIAANYBAAAAAAAAAAAUwPIBAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2024-07-11T15:47:38.881Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T15:47:38.881Z"
             },
             {
               "$type": "Document",
