@@ -1,7 +1,7 @@
 from icecream import ic
 from functools import partial
 
-from PySide6.QtWidgets import QSizePolicy, QWidget, QLabel, QGridLayout, QMessageBox, QMenu
+from PySide6.QtWidgets import QSizePolicy, QWidget, QLabel, QGridLayout, QMessageBox, QMenu, QCheckBox
 from PySide6.QtCore import Qt, QEvent
 from MyHelperLibrary.Helpers.DataLabel import DataLabel
 from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
@@ -43,6 +43,7 @@ class FeatureTabView(QWidget):
         clearLayout(self.featureGrid)
         self.setupGrid()
         self.populateData()
+        self.retriggerStrikethrough()
 
 
     # ========================================================================================
@@ -59,7 +60,8 @@ class FeatureTabView(QWidget):
         ic("setupGrid")
 
         self.featureHeaderColumnId  = {}
-        self.featureViewHeaders     = {"featureName"            : "Feature Summary", 
+        self.featureViewHeaders     = {"completed"              : "Completed",
+                                        "featureName"           : "Feature Summary", 
                                         "dateFeatureCreated"    : "Date Created",
                                         "priority"              : "Priority"}
 
@@ -94,8 +96,18 @@ class FeatureTabView(QWidget):
         ic("addFeatureToDisplay")
                 
         rowList = []
+
+        # -- Complete Checkbox --
+        completeCheckbox = QCheckBox(objectName="completeCheckbox")
+        completeCheckbox.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)      
+        completeCheckbox.toggled.connect(partial(self.featureComplete, feature))
+
+        # if feature["isComplete"] == 'True':
+        #     completeCheckbox.setChecked(True)
+        self.featureGrid.addWidget(completeCheckbox, feature["rowId"], self.featureHeaderColumnId["completed"], alignment=Qt.AlignCenter)
         
-        for key, value in feature.items():           
+        for key, value in feature.items():              
+
             if key in self.featureViewHeaders:
 
                 if key == "priority":
@@ -187,7 +199,8 @@ class FeatureTabView(QWidget):
             
 
     # ========================================================================================
-            
+     
+    
     # Adding actions to the right-click context menu
     def eventFilter(self, obj, event):
 
@@ -225,3 +238,46 @@ class FeatureTabView(QWidget):
       
         
     # ========================================================================================
+
+
+    # If the task has been marked for completion, a strikethrough will be marked on the text
+    def featureComplete(self, feature, checked):
+
+        priority, color = self.priorityDict[feature["priority"]]["Priority"], self.priorityDict[feature["priority"]]["Color"]
+        frame = self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["priority"]).widget()
+        priorityLabel = frame.findChild(DataLabel, "priorityLabel")
+
+        if checked:
+            # Update database
+            self.parentView.viewController.model.updateCompleteFeature(feature["featureId"], True)
+
+            # Add the strikethrough to the task            
+            self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["featureName"]).widget().setText(f"<s>{feature['featureName']}</s>")
+            self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["dateFeatureCreated"]).widget().setText(f"<s>{feature['dateFeatureCreated']}</s>")
+            priorityLabel.setText(f"<s>{priority}</s>")
+   
+        else:
+            # Update database
+            self.parentView.viewController.model.updateCompleteFeature(feature["featureId"], False)
+            
+            # Unmark (remove strikethrough) the task
+            self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["featureName"]).widget().setText(f"{feature['featureName']}")
+            self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["dateFeatureCreated"]).widget().setText(f"{feature['dateFeatureCreated']}")
+            priorityLabel.setText(f"{priority}")
+
+
+    # =============================================================================================
+
+
+    def retriggerStrikethrough(self):
+        
+        # Retrigger the strikethrough if the task has been marked completed so it displays properly in the area
+        for feature in self.modelResults:
+            
+            if feature["featureCompleted"] == 'True':
+                checkbox = self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["completed"]).widget()
+                checkbox.setChecked(True)
+                self.featureComplete(feature, True)
+
+            
+    # =============================================================================================

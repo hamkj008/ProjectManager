@@ -116,7 +116,7 @@ class ProjectModel:
         ic("getProjects")
         
         query = """SELECT projectId, featureId, featureName, featureDescription, 
-                        dateFeatureCreated, priority 
+                        dateFeatureCreated, priority, featureCompleted
                         FROM projectFeatures WHERE projectId = (?)"""
         
         params = [projectId]
@@ -142,7 +142,7 @@ class ProjectModel:
         ic("getProjects")
         
         query = """SELECT projectId, featureId, featureName, featureDescription, 
-                            dateFeatureCreated, priority 
+                            dateFeatureCreated, priority, featureCompleted 
                             FROM projectFeatures WHERE featureId = (?)"""
         
         params = [featureId]
@@ -359,6 +359,25 @@ class ProjectModel:
         
 
     # ========================================================================================
+
+
+    def updateCompleteFeature(self, featureId, isComplete):
+        
+        complete = "True" if isComplete else "False"
+
+        query = f"UPDATE projectFeatures SET featureCompleted = ? WHERE featureId = ?"
+        params = [complete, featureId]
+        
+        try:
+            self.cursor.execute(query, params)
+            self.connection.commit()
+            
+        except sqlite3.Error as e:
+            ic(f"An error occurred updateCompleteFeature: {e}")
+            self.connection.rollback()
+        
+
+    # ========================================================================================
     
 
     def updateTask(self, taskDict):
@@ -383,8 +402,10 @@ class ProjectModel:
 
     def updateCompleteTask(self, taskId, isComplete):
         
-        query = f"UPDATE projectTasks SET isComplete = '{isComplete}' WHERE taskId = ?"   # the boolean is text
-        params = [taskId]
+        complete = "True" if isComplete else "False"
+
+        query = f"UPDATE projectTasks SET isComplete = ? WHERE taskId = ?"
+        params = [complete, taskId]
         
         try:
             self.cursor.execute(query, params)
@@ -420,8 +441,10 @@ class ProjectModel:
 
     def updateCompleteIssue(self, issueId, isComplete):
         
-        query = f"UPDATE projectIssues SET isComplete = '{isComplete}' WHERE issueId = ?"
-        params = [issueId]
+        complete = "True" if isComplete else "False"
+
+        query = f"UPDATE projectIssues SET isComplete = ? WHERE issueId = ?"
+        params = [complete, issueId]
 
         try:
             self.cursor.execute(query, params)

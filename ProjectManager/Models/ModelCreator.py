@@ -85,6 +85,7 @@ class ModelCreator:
                         projectFeatures(   
                             featureId INTEGER PRIMARY KEY,
                             projectId INTEGER NOT NULL,
+                            featureCompleted TEXT DEFAULT 'False' CHECK(featureCompleted IN('True', 'False')),
                             dateFeatureCreated TEXT NOT NULL,
                             featureName TEXT,
                             featureDescription TEXT,

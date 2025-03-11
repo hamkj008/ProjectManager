@@ -43,8 +43,6 @@ class PreferencesView(CustomWindow):
     def setStyle(self):
 
         stylesheet = self.qssController.getStandardStyle()
-        # stylesheet += self.qssController.getContentStyle()
-        # stylesheet += f"#MainWidget {{ border-bottom: 2px solid {self.qssController.borderColor}; }} #themeOptionsLabel {{ color: {self.qssController.titleBarText}; }} "
         self.setStyleSheet(stylesheet)
 
 

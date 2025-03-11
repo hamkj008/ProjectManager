@@ -109,6 +109,11 @@ class QSSController:
                     background-color: {self.themes[self.currentTheme]["buttonHoverColor"]};
                 }}
 
+
+                QCheckBox::indicator {{
+                    width: 15px;
+                    height: 15px;
+                }}
                
                 /*  ------- Menu Bar ---------- */
 
