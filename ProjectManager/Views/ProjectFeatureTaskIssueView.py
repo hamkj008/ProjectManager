@@ -6,7 +6,7 @@ from UiViews.UiProjectFeatureTaskIssueWindow import Ui_ProjectFeatureTaskIssueWi
 from Views.FeatureTabView import FeatureTabView
 from Views.TaskTabView import TaskTabView
 from Views.IssueTabView import IssueTabView
-from MyHelperLibrary.Helpers.ResizableGrid import Direction, ResizeableGrid
+from Helpers.ResizeableGrid import Direction, ResizeableGrid
 
 
 # ========================================================================================
@@ -31,7 +31,7 @@ class ProjectFeatureTaskIssueView(QWidget):
         # ---------------------
        
         dividers = [(self.window.ProjectTabFrame, self.window.DescriptionFrame)]
-        resizeableGrid = ResizeableGrid(dividers=dividers, direction=Direction.VERTICAL)
+        resizeableGrid = ResizeableGrid(dividers=dividers, direction=Direction.VERTICAL, customWindowParent=viewController)
 
         self.window.BottomFrame.layout().addWidget(resizeableGrid)
 
@@ -171,5 +171,7 @@ class ProjectFeatureTaskIssueView(QWidget):
     # ========================================================================================
     
 
-
+    # def resizeEvent(self, event):
+    #     ic("main resizeEvent")
+        # self.viewList["taskView"].taskResizeableGrid.resizeEvent(event)
     

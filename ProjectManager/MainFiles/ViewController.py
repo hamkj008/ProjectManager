@@ -17,7 +17,7 @@ from Views.AddNewProjectView import AddNewProjectView
 from Views.AddNewView import AddNewView
 from Views.PreferencesView import PreferencesView
 
-from MyHelperLibrary.Helpers.CustomWindow import CustomWindow
+from Helpers.CustomWindow import CustomWindow
 from MyHelperLibrary.Helpers.HelperMethods import clearStackedLayout
 
 # ========================================================================================
@@ -92,7 +92,8 @@ class ViewController(CustomWindow):
     """Dynamically calls a method to display a view.    
     @viewToDisplay: The name of the view to display (e.g., 'PreferencesView').
     @args: Positional arguments to pass to the display method.
-    @kwargs: Keyword arguments to pass to the display method."""
+    @kwargs: Keyword arguments to pass to the display method. 
+    Put 'newWindow' in kwargs for a new window to be opened instead of replacing current stacked widget view """
     
     def displayView(self, viewToDisplay, *args, **kwargs):
         
@@ -155,7 +156,6 @@ class ViewController(CustomWindow):
         self.viewList["projectView"] = ProjectView(self)
         self.content.stackedWidget.addWidget(self.viewList["projectView"])
         self.content.stackedWidget.setCurrentWidget(self.viewList["projectView"])
-        ic(self.content.stackedWidget.layout().count())
 
     # ========================================================================================
     

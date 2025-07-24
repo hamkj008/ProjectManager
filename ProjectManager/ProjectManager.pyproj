@@ -24,10 +24,12 @@
   <ItemGroup>
     <Compile Include="DebugTest\DebugTestPlayground.py" />
     <Compile Include="DebugTest\DebugTestSetup.py" />
+    <Compile Include="Helpers\CustomWindow.py" />
     <Compile Include="Helpers\DragDropLabel.py" />
     <Compile Include="Helpers\DropGridWithId.py" />
     <Compile Include="Helpers\IssueDragDropLabel.py" />
     <Compile Include="Helpers\IssueDropGridWithId.py" />
+    <Compile Include="Helpers\ResizeableGrid.py" />
     <Compile Include="Main.py" />
     <Compile Include="MainFiles\MenuController.py" />
     <Compile Include="MainFiles\QSSController.py" />

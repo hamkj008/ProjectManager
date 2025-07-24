@@ -12,7 +12,7 @@ class ProjectModel:
         ic("ProjectModel init")
         
         self.connection = connection
-        self.cursor = self.connection.cursor()
+        self.cursor     = self.connection.cursor()
 
 
     # ========================================================================================
@@ -20,8 +20,8 @@ class ProjectModel:
 
     def getProjectName(self, projectId):
         
-        query = "SELECT projectName FROM projects WHERE projectId = (?)"
-        params = [projectId]
+        query   = "SELECT projectName FROM projects WHERE projectId = (?)"
+        params  = [projectId]
         self.cursor.execute(query, params)
         
         return self.cursor.fetchone()[0]
@@ -57,7 +57,7 @@ class ProjectModel:
     def getProject(self, projectId):
         ic("getProject")
         
-        query = """SELECT projectId, projectName, projectDescription, dateCreated 
+        query  = """SELECT projectId, projectName, projectDescription, dateCreated 
                         FROM projects WHERE projectId = (?)"""
                         
         params = [projectId]
@@ -73,10 +73,10 @@ class ProjectModel:
     def addNewProject(self, projectInfo):
         
         params = [projectInfo["projectName"],
-                    projectInfo["projectDescription"],
-                    projectInfo["dateCreated"]]
+                  projectInfo["projectDescription"],
+                  projectInfo["dateCreated"]]
         
-        query = "INSERT INTO projects (projectName, projectDescription, dateCreated) VALUES (?,?,?)"
+        query  = "INSERT INTO projects (projectName, projectDescription, dateCreated) VALUES (?,?,?)"
         
         try:
             self.cursor.execute(query, params)
@@ -97,8 +97,8 @@ class ProjectModel:
 
         query = "UPDATE projects SET projectName = ?, projectDescription = ? WHERE projectId = ?"
         params = [projectDict["projectName"], 
-                projectDict["projectDescription"], 
-                projectDict["projectId"]]
+                  projectDict["projectDescription"], 
+                  projectDict["projectId"]]
         
         try:
             self.cursor.execute(query, params)
@@ -472,7 +472,7 @@ class ProjectModel:
         
     def deleteFeature(self, featureId):
 
-        query = "DELETE FROM projectFeatures WHERE featureId = (?)"
+        query  = "DELETE FROM projectFeatures WHERE featureId = (?)"
         params = [featureId]
         
         try:
@@ -489,7 +489,7 @@ class ProjectModel:
 
     def deleteTask(self, taskId):
         
-        query = "DELETE FROM projectTasks WHERE taskId = (?)"
+        query  = "DELETE FROM projectTasks WHERE taskId = (?)"
         params = [taskId]
         
         try:
@@ -506,7 +506,7 @@ class ProjectModel:
     
     def deleteIssue(self, issueId):
 
-        query = "DELETE FROM projectIssues WHERE issueId = (?)"
+        query  = "DELETE FROM projectIssues WHERE issueId = (?)"
         params = [issueId]
         
         try:

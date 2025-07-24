@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QHBoxLa
 from PySide6.QtCore import Qt, QEvent
 
 from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
-from MyHelperLibrary.Helpers.ResizableGrid import ResizeableGrid
+from Helpers.ResizeableGrid import ResizeableGrid
 from Helpers.DragDropLabel import DragDropLabel
 from Helpers.DropGridWithId import DropGridWithId
 
@@ -31,17 +31,16 @@ class TaskTabView(QWidget):
                     (self.parentView.window.TaskCentralFrame,           self.parentView.window.TaskRightFrame)]
 
         # Create a resizeable grid layout
-        taskResizeableGrid = ResizeableGrid(dividers=dividers) 
-        layout.addWidget(taskResizeableGrid)
+        self.taskResizeableGrid = ResizeableGrid(dividers=dividers, customWindowParent=parentView.viewController) 
+        layout.addWidget(self.taskResizeableGrid)
         
         # Rebind the grid children to the new grid
-        taskResizeableGrid.layout().addWidget(self.parentView.window.TasksLabelFrame, 0, 0)
-        taskResizeableGrid.layout().addWidget(self.parentView.window.TaskInProgressLabelFrame, 0, 1)
-        taskResizeableGrid.layout().addWidget(self.parentView.window.TaskCompletedLabelFrame, 0, 2)
-        taskResizeableGrid.layout().addWidget(self.parentView.window.TaskLeftFrame, 1, 0)
-        taskResizeableGrid.layout().addWidget(self.parentView.window.TaskCentralFrame, 1, 1)
-        taskResizeableGrid.layout().addWidget(self.parentView.window.TaskRightFrame, 1, 2)
-
+        self.taskResizeableGrid.layout().addWidget(self.parentView.window.TasksLabelFrame, 0, 0)
+        self.taskResizeableGrid.layout().addWidget(self.parentView.window.TaskInProgressLabelFrame, 0, 1)
+        self.taskResizeableGrid.layout().addWidget(self.parentView.window.TaskCompletedLabelFrame, 0, 2)
+        self.taskResizeableGrid.layout().addWidget(self.parentView.window.TaskLeftFrame, 1, 0)
+        self.taskResizeableGrid.layout().addWidget(self.parentView.window.TaskCentralFrame, 1, 1)
+        self.taskResizeableGrid.layout().addWidget(self.parentView.window.TaskRightFrame, 1, 2)
 
         # DropGridWithId allows the dragdrop labels to be dropped
         taskGrid            = DropGridWithId(self.parentView.viewController, self.parentView.viewController.model, objectName="TaskGrid")

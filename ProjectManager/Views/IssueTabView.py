@@ -3,7 +3,7 @@ from functools import partial
 
 from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QMessageBox, QMenu
 from PySide6.QtCore import Qt, QEvent
-from MyHelperLibrary.Helpers.ResizableGrid import ResizeableGrid
+from MyHelperLibrary.Helpers.ResizeableGrid import ResizeableGrid
 from Helpers.IssueDragDropLabel import IssueDragDropLabel
 from Helpers.IssueDropGridWithId import IssueDropGridWithId
 from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
