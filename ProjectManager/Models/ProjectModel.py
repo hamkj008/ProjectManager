@@ -1,80 +1,72 @@
 from icecream import ic
 import sqlite3
-from MyHelperLibrary.Helpers.HelperMethods import createDictionary, createSingleRecordDictionary
-
+from MyHelperLibrary.Helpers.HelperMethods import createDictionaryList, createSingleRecordDictionary, getCurrentFunction
 
 # ========================================================================================
-      
 
 class ProjectModel:
 
-    def __init__(self, connection=None):
-        ic("ProjectModel init")
+    def __init__(self, viewController, connection=None):
+        ic(__class__.__name__)
         
-        self.connection = connection
-        self.cursor     = self.connection.cursor()
-
+        self.viewController = viewController
+        self.connection     = connection
+        self.cursor         = self.connection.cursor()
 
     # ========================================================================================
 
+    def getProjectName(self, projectId: int) -> str:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def getProjectName(self, projectId):
-        
         query   = "SELECT projectName FROM projects WHERE projectId = (?)"
         params  = [projectId]
-        self.cursor.execute(query, params)
+        row     = self.cursor.execute(query, params).fetchone()
         
-        return self.cursor.fetchone()[0]
+        return row[0] if row else None
     
-
     # ========================================================================================
     
-
-    def getProjects(self, search=None):
-        ic("getProjects")
+    def getProjects(self, search: str=None) -> list:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query = "SELECT projectId, projectName, projectDescription, dateCreated FROM projects"
         
         if search:
             query += " WHERE projectName LIKE (?)"
-            
-            # The comma , in the search indicates that it is part of a tuple. Without it there is an error.
-            params = (f"%{search}%",)
+            params = [f"%{search}%"]
             self.cursor.execute(query, params)
             
         else:
             self.cursor.execute(query)
-                      
+        
         rows = self.cursor.fetchall()
-        resultsDictList = createDictionary(rows, self.cursor.description)
-
-        return resultsDictList
+        return createDictionaryList(rows, self.cursor.description)
     
-
     # ========================================================================================      
     
-
     def getProject(self, projectId):
-        ic("getProject")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query  = """SELECT projectId, projectName, projectDescription, dateCreated 
                         FROM projects WHERE projectId = (?)"""
                         
         params = [projectId]
-         
-        self.cursor.execute(query, params)
-        
-        record = self.cursor.fetchone()  
+        record = self.cursor.execute(query, params).fetchone()
+
         return createSingleRecordDictionary(record, self.cursor.description)
     
-
     # ========================================================================================      
     
-    def addNewProject(self, projectInfo):
-        
+    def addNewProject(self, projectInfo: dict) -> int:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
+
         params = [projectInfo["projectName"],
-                  projectInfo["projectDescription"],
-                  projectInfo["dateCreated"]]
+                projectInfo["projectDescription"],
+                projectInfo["dateCreated"]]
         
         query  = "INSERT INTO projects (projectName, projectDescription, dateCreated) VALUES (?,?,?)"
         
@@ -86,34 +78,33 @@ class ProjectModel:
             return self.cursor.fetchone()[0]
 
         except sqlite3.Error as e:
-            ic(f"An error occurred addNewProject: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-
 
     # ========================================================================================   
     
+    def updateProject(self, projectDict: dict):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def updateProject(self, projectDict):
-
-        query = "UPDATE projects SET projectName = ?, projectDescription = ? WHERE projectId = ?"
+        query  = "UPDATE projects SET projectName = ?, projectDescription = ? WHERE projectId = ?"
         params = [projectDict["projectName"], 
-                  projectDict["projectDescription"], 
-                  projectDict["projectId"]]
+                projectDict["projectDescription"], 
+                projectDict["projectId"]]
         
         try:
             self.cursor.execute(query, params)
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred updateProject: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-       
             
     # ========================================================================================   
     
-
-    def getFeatures(self, projectId, search=None):
-        ic("getProjects")
+    def getFeatures(self, projectId: int, search: str=None) -> list:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query = """SELECT projectId, featureId, featureName, featureDescription, 
                         dateFeatureCreated, priority, featureCompleted
@@ -128,18 +119,15 @@ class ProjectModel:
         query += f" ORDER BY priority" 
         
         self.cursor.execute(query, params)
-                      
         rows = self.cursor.fetchall()
-        resultsDictList = createDictionary(rows, self.cursor.description)
 
-        return resultsDictList
+        return createDictionaryList(rows, self.cursor.description)
     
-
     # ========================================================================================
     
-
-    def getFeature(self, featureId):
-        ic("getProjects")
+    def getFeature(self, featureId: int) -> dict:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query = """SELECT projectId, featureId, featureName, featureDescription, 
                             dateFeatureCreated, priority, featureCompleted 
@@ -147,26 +135,24 @@ class ProjectModel:
         
         params = [featureId]
         
-        self.cursor.execute(query, params)
-                      
-        record = self.cursor.fetchone()  
+        record = self.cursor.execute(query, params).fetchone()
         return createSingleRecordDictionary(record, self.cursor.description)
     
-
     # ========================================================================================
     
+    def addNewFeature(self, featureInfo: dict) -> int:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def addNewFeature(self, featureInfo):
-        
         query = """INSERT INTO projectFeatures (projectId, featureName, featureDescription, 
                                             dateFeatureCreated, priority) 
                                             VALUES (?,?,?,?,?)"""
                                             
         params = [featureInfo["projectId"],
-                    featureInfo["featureName"],
-                    featureInfo["featureDescription"],
-                    featureInfo["dateFeatureCreated"],
-                    featureInfo["priority"]]
+                featureInfo["featureName"],
+                featureInfo["featureDescription"],
+                featureInfo["dateFeatureCreated"],
+                featureInfo["priority"]]
         
         try:
             self.cursor.execute(query, params)
@@ -176,15 +162,14 @@ class ProjectModel:
             return self.cursor.fetchone()[0]
             
         except sqlite3.Error as e:
-            ic(f"An error occurred addNewFeature: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-
 
     # ========================================================================================   
     
-
-    def getTasks(self, projectId, search=None):
-        ic("getTasks")
+    def getTasks(self, projectId: int, search: str=None) -> list:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query = """SELECT projectId, taskId, taskName, taskDescription, dateTaskCreated, 
                     taskStatus, priority, isComplete 
@@ -196,38 +181,31 @@ class ProjectModel:
             query += f" AND taskName LIKE ?"            
             params.append(f"%{search}%")
             
-        query += f" ORDER BY priority" 
-            
-        self.cursor.execute(query, params)
-                      
-        rows = self.cursor.fetchall()
-        resultsDictList = createDictionary(rows, self.cursor.description)
+        query += f" ORDER BY priority"    
+        rows = self.cursor.execute(query, params).fetchall()
 
-        return resultsDictList
+        return createDictionaryList(rows, self.cursor.description)
     
-
     # ========================================================================================
     
-
-    def getTask(self, taskId):
-        ic("getTasks")
+    def getTask(self, taskId: int) -> dict:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query = """SELECT projectId, taskId, taskName, taskDescription, dateTaskCreated, 
                     taskStatus, priority, isComplete 
                     FROM projectTasks WHERE taskId = (?)"""
                     
         params = [taskId]
+        record = self.cursor.execute(query, params).fetchone() 
 
-        self.cursor.execute(query, params)
-                      
-        record = self.cursor.fetchone()  
         return createSingleRecordDictionary(record, self.cursor.description)
     
-
     # ========================================================================================
     
-
-    def addNewTask(self, taskInfo):
+    def addNewTask(self, taskInfo: dict) -> int:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         query = """INSERT INTO projectTasks (projectId, taskName, taskDescription, 
                                             dateTaskCreated, priority) 
@@ -247,15 +225,14 @@ class ProjectModel:
             return self.cursor.fetchone()[0]
             
         except sqlite3.Error as e:
-            ic(f"An error occurred addNewTask: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-
 
     # ========================================================================================   
     
-
-    def getIssues(self, projectId, search=None):
-        ic("getIssues")
+    def getIssues(self, projectId: int, search: str=None) -> list:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query = """SELECT projectId, issueId, issueName, issueDescription, 
                     dateIssueCreated, isComplete, priority 
@@ -268,46 +245,40 @@ class ProjectModel:
             params.append(f"%{search}%")
         
         query += f" ORDER BY priority"
-        
-        self.cursor.execute(query, params)
-                      
-        rows = self.cursor.fetchall()
-        resultsDictList = createDictionary(rows, self.cursor.description)
+        rows = self.cursor.execute(query, params).fetchall()
 
-        return resultsDictList
-    
+        return createDictionaryList(rows, self.cursor.description)
     
     # ========================================================================================
     
-    def getIssue(self, issueId):
-        ic("getIssues")
+    def getIssue(self, issueId: int) -> dict:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         query = """SELECT projectId, issueId, issueName, issueDescription, 
                             dateIssueCreated, isComplete, priority 
                             FROM projectIssues WHERE issueId = (?)"""
                             
         params = [issueId]
+        record = self.cursor.execute(query, params).fetchone() 
 
-        self.cursor.execute(query, params)
-           
-        record = self.cursor.fetchone()  
         return createSingleRecordDictionary(record, self.cursor.description)
-    
     
     # ========================================================================================
     
+    def addNewIssue(self, issueInfo: dict) -> int:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def addNewIssue(self, issueInfo):
-        
         query = """INSERT INTO projectIssues (projectId, issueName, issueDescription, 
                                                 dateIssueCreated, priority) 
                                                 VALUES (?,?,?,?,?)"""
                                                 
         params = [issueInfo["projectId"],
-                  issueInfo["issueName"],
-                  issueInfo["issueDescription"],
-                  issueInfo["dateIssueCreated"],
-                  issueInfo["priority"]]
+                issueInfo["issueName"],
+                issueInfo["issueDescription"],
+                issueInfo["dateIssueCreated"],
+                issueInfo["priority"]]
         
         try:
             self.cursor.execute(query, params)
@@ -317,15 +288,15 @@ class ProjectModel:
             return self.cursor.fetchone()[0]
             
         except sqlite3.Error as e:
-            ic(f"An error occurred addNewTask: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-
 
     # ========================================================================================   
 
+    def setTaskStatus(self, taskId: int, taskStatus):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def setTaskStatus(self, taskId, taskStatus):
-        
         query = "UPDATE projectTasks SET taskStatus = ? WHERE taskId = ?"
         params = [taskStatus, taskId]
         
@@ -334,14 +305,14 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred setTaskStatus: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-
 
     # ========================================================================================
     
-
-    def updateFeature(self, featureDict):
+    def updateFeature(self, featureDict: dict):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         query = "UPDATE projectFeatures SET featureName = ?, featureDescription = ?, priority = ? WHERE featureId = ?"
         params = [featureDict["featureName"], 
@@ -354,15 +325,15 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred updateFeature: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
         
-
     # ========================================================================================
 
+    def updateCompleteFeature(self, featureId: int, isComplete: bool):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def updateCompleteFeature(self, featureId, isComplete):
-        
         complete = "True" if isComplete else "False"
 
         query = f"UPDATE projectFeatures SET featureCompleted = ? WHERE featureId = ?"
@@ -373,35 +344,36 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred updateCompleteFeature: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
         
-
     # ========================================================================================
     
 
-    def updateTask(self, taskDict):
+    def updateTask(self, taskDict: dict):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-        query = "UPDATE projectTasks SET taskName = ?, taskDescription = ?, priority = ? WHERE taskId = ?"
+        query  = "UPDATE projectTasks SET taskName = ?, taskDescription = ?, priority = ? WHERE taskId = ?"
         params = [taskDict["taskName"], 
-                  taskDict["taskDescription"], 
-                  taskDict["priority"], 
-                  taskDict["taskId"]]
+                taskDict["taskDescription"], 
+                taskDict["priority"], 
+                taskDict["taskId"]]
         
         try:
             self.cursor.execute(query, params)
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred updateFeature: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
         
-
     # ========================================================================================
             
+    def updateCompleteTask(self, taskId: int, isComplete: bool):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def updateCompleteTask(self, taskId, isComplete):
-        
         complete = "True" if isComplete else "False"
 
         query = f"UPDATE projectTasks SET isComplete = ? WHERE taskId = ?"
@@ -412,35 +384,35 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred updateCompleteTask: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
         
-
     # ========================================================================================
     
+    def updateIssue(self, issueDict: dict):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def updateIssue(self, issueDict):
-
-        query = "UPDATE projectIssues SET issueName = ?, issueDescription = ?, priority = ? WHERE issueId = ?"
+        query  = "UPDATE projectIssues SET issueName = ?, issueDescription = ?, priority = ? WHERE issueId = ?"
         params = [issueDict["issueName"],
-                  issueDict["issueDescription"],
-                  issueDict["priority"], 
-                  issueDict["issueId"]]
+                issueDict["issueDescription"],
+                issueDict["priority"], 
+                issueDict["issueId"]]
         
         try:
             self.cursor.execute(query, params)
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred updateIssue: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
         
-
     # ========================================================================================
     
+    def updateCompleteIssue(self, issueId: int, isComplete: bool):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def updateCompleteIssue(self, issueId, isComplete):
-        
         complete = "True" if isComplete else "False"
 
         query = f"UPDATE projectIssues SET isComplete = ? WHERE issueId = ?"
@@ -451,26 +423,26 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred updateCompleteIssue: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-        
         
     # ========================================================================================
     
+    def deleteProject(self, projectId: int):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def deleteProject(self, projectId):
-        
         self.cursor.execute(f"DELETE FROM projectIssues WHERE projectId = '{projectId}'")
         self.cursor.execute(f"DELETE FROM projectTasks WHERE projectId = '{projectId}'")
         self.cursor.execute(f"DELETE FROM projectFeatures WHERE projectId = '{projectId}'")
         self.cursor.execute(f"DELETE FROM projects WHERE projectId = '{projectId}'")
         self.connection.commit()
         
-
     # ========================================================================================
-
         
-    def deleteFeature(self, featureId):
+    def deleteFeature(self, featureId: int):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         query  = "DELETE FROM projectFeatures WHERE featureId = (?)"
         params = [featureId]
@@ -480,15 +452,15 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred deleteTask: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-
 
     # ========================================================================================
         
+    def deleteTask(self, taskId: int):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
-    def deleteTask(self, taskId):
-        
         query  = "DELETE FROM projectTasks WHERE taskId = (?)"
         params = [taskId]
         
@@ -497,14 +469,14 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred deleteTask: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
-
 
     # ========================================================================================
     
-    
-    def deleteIssue(self, issueId):
+    def deleteIssue(self, issueId: int):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         query  = "DELETE FROM projectIssues WHERE issueId = (?)"
         params = [issueId]
@@ -514,9 +486,8 @@ class ProjectModel:
             self.connection.commit()
             
         except sqlite3.Error as e:
-            ic(f"An error occurred deleteIssue: {e}")
+            self.viewController.log(self.viewController.debug, f"An error occurred: {__class__.__name__}: {getCurrentFunction()}: {e}")
             self.connection.rollback()
             
-
     # ========================================================================================
     

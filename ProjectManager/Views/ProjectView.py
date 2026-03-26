@@ -1,22 +1,23 @@
 from icecream import ic
 from functools import partial
 
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QMessageBox, QMenu
+from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QMenu
 from PySide6.QtCore import Qt, QEvent
+
+from MainFiles.Mixins.Utility_Mixin import Interaction_Mixin
 from UiViews.UiProjectWindow import Ui_ProjectWindow
 from MyHelperLibrary.Helpers.DataLabel import DataLabel
-from MyHelperLibrary.Helpers.HelperMethods import clearLayout, createActionDictionary, addActionToMenu
+from MyHelperLibrary.Helpers.HelperMethods import clearLayout, createActionDictionary, addActionToMenu, getCurrentFunction, createCustomChoiceDialog
 
 
 # ========================================================================================
-      
 
 # First view presented to user
-class ProjectView(QWidget):
+class ProjectView(QWidget, Interaction_Mixin):
 
-    
     def __init__(self, viewController):
         super().__init__()
+        ic(__class__.__name__)
         
         self.viewController = viewController
 
@@ -40,17 +41,13 @@ class ProjectView(QWidget):
         # -- Start --
         self.loadSelf()
         
-
     # ========================================================================================
             
-
     def setStyle(self):
-        ic("projectssyle")
+        
         self.setStyleSheet(self.viewController.qssController.getStandardStyle())
 
-
     # ========================================================================================
-    
     
     def loadSelf(self):
 
@@ -58,22 +55,20 @@ class ProjectView(QWidget):
         clearLayout(self.window.ProjectGridFrame.layout())
         self.setupGrid()
         self.populateData()  
-     
 
     # ========================================================================================
-     
 
     def getModel(self):
-        ic("getModel")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         self.modelResults = self.viewController.model.getProjects(self.searchText)
 
-
     # ========================================================================================
 
-
     def setupGrid(self):
-        ic("setupGrid")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         self.projectHeaderColumnId = {}
         self.projectViewHeaders = {"projectName"    : "Project Name", 
@@ -81,17 +76,16 @@ class ProjectView(QWidget):
 
         for index, (key, value) in enumerate(self.projectViewHeaders.items()):
             columnTitle = QLabel(value, objectName="header")
-             
+            
             self.window.ProjectGridFrame.layout().addWidget(columnTitle, 0, index)
             
             self.projectHeaderColumnId[key] = index
-     
 
     # ========================================================================================
 
-
     def populateData(self):
-        ic("populateData")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         # -- Populate Data --
         for rowIndex, project in enumerate(self.modelResults):
@@ -106,9 +100,9 @@ class ProjectView(QWidget):
 
     # ========================================================================================
 
-
     def addProjectToDisplay(self, project):
-        ic("addProject")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         labelRowList = []
         
@@ -128,89 +122,53 @@ class ProjectView(QWidget):
                     
                 self.window.ProjectGridFrame.layout().addWidget(label, project["rowId"], self.projectHeaderColumnId[key])
                 labelRowList.append(label)             
-          
+        
         for label in labelRowList:
-            label.enterEvent = (partial(self.hoverEnter, labelRowList, project["projectDescription"]))
-            label.leaveEvent = (partial(self.hoverLeave, labelRowList))
-
+            label.enterEvent = (partial(self.hoverEnter, labelRowList, self.window.DescriptionTextLabel, project["projectDescription"]))
+            label.leaveEvent = (partial(self.hoverLeave, labelRowList, self.window.DescriptionTextLabel))
 
     # ========================================================================================
 
-
     def rowClicked(self, projectId, event):
-        ic("rowClicked")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         if event.button() == Qt.LeftButton:
             self.viewController.stateController.projectId = projectId
             self.viewController.displayView("ProjectFeatureTaskIssueView")
 
-
     # ========================================================================================
-    
-    
-    def hoverEnter(self, labelRowList, projectDescription, event):
-
-        self.window.DescriptionTextLabel.setText(projectDescription)
-        
-        for label in labelRowList:
-            label.setStyleSheet(self.viewController.qssController.hoverEnter)
-
-
-    # ========================================================================================
-       
-
-    def hoverLeave(self, labelRowList, event): 
-        
-        self.window.DescriptionTextLabel.setText("")
-        
-        for label in labelRowList:
-            label.setStyleSheet(self.viewController.qssController.hoverLeave)
-
-
-    # ========================================================================================
-    
     
     def search(self):
-        ic("search")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         self.searchText = self.window.SearchInput.text()
             
         self.loadSelf()
     
-        
     # ======================================================================================== 
     
-    
     def addNew(self):
-        ic("addNew")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         self.viewController.displayView("AddNewProjectView", newWindow=True)
         
-
     # ======================================================================================== 
     
-    
     def removeProject(self, projectId):
-        ic("remove project")
-        
-        messageBox = QMessageBox()
-        messageBox.setMinimumSize(200, 200)
-        messageBox.setWindowTitle("Delete Project?")
-        messageBox.setText("Are you sure you want to delete this project?")
-        messageBox.setIcon(QMessageBox.Warning)
-        messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        messageBox.setDefaultButton(QMessageBox.Cancel)
-        ret = messageBox.exec()   
-        
-        if ret == QMessageBox.Ok:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
+        if createCustomChoiceDialog("Delete Project?", 
+                                "Are you sure you want to delete this project?", 400, 300, self.viewController.qssController.getDialogStyle()):
+
             # Remove task from the database
             self.viewController.model.deleteProject(projectId)  
             
             self.viewController.displayView("ProjectView")
             
-
     # ======================================================================================== 
- 
 
     # Add right click menus
     def eventFilter(self, obj, event):
@@ -238,15 +196,13 @@ class ProjectView(QWidget):
         
         return super().eventFilter(obj, event)
     
-    
     # ======================================================================================== 
- 
 
     def editProject(self, project):
-        ic("right click")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         self.viewController.displayView("AddNewProjectView", project, editing=True, newWindow=True)
         
 
     # ======================================================================================== 
- 

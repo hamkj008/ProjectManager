@@ -10,19 +10,18 @@ from MyHelperLibrary.Helpers.HelperMethods import createCustomDialog, showError,
 
 
 # ========================================================================================
-      
 
 class AddNewView(QMainWindow):
     
-
-    def __init__(self, viewController, parentView, index, objectDict=None, editing=False):
+    def __init__(self, viewController, parentView, index, objectDict: dict=None, editing: bool=False):
         super().__init__()
+        ic(__class__.__name__)
         
-        self.viewController = viewController
-        self.parentView = parentView
-        self.index = index
-        self.objectDict = objectDict
-        self.editing = editing
+        self.viewController     = viewController
+        self.parentView         = parentView
+        self.index              = index
+        self.objectDict         = objectDict
+        self.editing            = editing
 
         # ----- Setup UI ---------
         self.window = Ui_AddNewWindow()
@@ -49,38 +48,32 @@ class AddNewView(QMainWindow):
         # -- Signals --
         self.window.AddNewBtn.clicked.connect(self.getInfo)
 
-
         # -- Drop Down Menu --
         self.priorityDict = self.parentView.getPriorityDict() 
-         
+        
         for value in self.priorityDict.values():
             self.window.PriorityComboBox.addItem(value["Priority"])
 
         self.window.PriorityComboBox.setCurrentIndex(2)
         
-
         # --- Editing ---
         self.isEditing(objectDict, editing)
 
     # ========================================================================================
     
-
     def main(self):
         self.show()
         
-
     # ========================================================================================
     
-
     def setStyle(self):
         
         styleSheet = self.viewController.qssController.getStandardStyle()
         styleSheet += self.viewController.qssController.getAddStyle()
         self.setStyleSheet(styleSheet)
 
-
     # ========================================================================================
-    
+
     def isEditing(self, objectDict, editing):
         
         if editing:
@@ -97,10 +90,8 @@ class AddNewView(QMainWindow):
             self.setWindowTitle(f"New {self.confDict['title'][self.index]}")
             self.window.AddNewBtn.setText(f"Add {self.confDict['title'][self.index]}")
 
-
     # ========================================================================================
     
-
     def getInfo(self):
         
         # clear any invalid format errors previously left
@@ -159,6 +150,5 @@ class AddNewView(QMainWindow):
             showError(self.errorFrames["nameErrorFrame"])
             createCustomDialog(f"Empty {self.confDict['dialog'][self.index]} details", f"Enter the {self.confDict['dialog'][self.index]} details", 300, 300, self.viewController.qssController.getDialogStyle())
             
-
     # ========================================================================================
 

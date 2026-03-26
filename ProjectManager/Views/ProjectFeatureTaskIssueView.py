@@ -6,16 +6,16 @@ from UiViews.UiProjectFeatureTaskIssueWindow import Ui_ProjectFeatureTaskIssueWi
 from Views.FeatureTabView import FeatureTabView
 from Views.TaskTabView import TaskTabView
 from Views.IssueTabView import IssueTabView
-from Helpers.ResizeableGrid import Direction, ResizeableGrid
-
+from MyHelperLibrary.Helpers.ResizeableGrid import Direction, ResizeableGrid
+from MyHelperLibrary.Helpers.HelperMethods import getCurrentFunction
 
 # ========================================================================================
-      
 
 class ProjectFeatureTaskIssueView(QWidget):
     
     def __init__(self, viewController, search=None, currentIndex=0):
         super().__init__()
+        ic(__class__.__name__)
         
         self.viewController = viewController
         self.searchText     = search 
@@ -29,7 +29,7 @@ class ProjectFeatureTaskIssueView(QWidget):
         self.window.setupUi(self)
         self.setStyle()
         # ---------------------
-       
+    
         dividers = [(self.window.ProjectTabFrame, self.window.DescriptionFrame)]
         resizeableGrid = ResizeableGrid(dividers=dividers, direction=Direction.VERTICAL, customWindowParent=viewController)
 
@@ -48,39 +48,31 @@ class ProjectFeatureTaskIssueView(QWidget):
         self.window.AddNewBtn.clicked.connect(self.addNew)
         self.viewController.statusBar().showMessage("")
         
-
         self.getProjectName()       
-           
+
         # Create the child tab views
         self.createFeatureTabView()
         self.createTaskTabView()
         self.createIssueTabView()
 
-
         self.tabChanged(self.currentIndex)
-
 
     # ========================================================================================
     
-
     def setStyle(self):
 
         styleSheet = self.viewController.qssController.getStandardStyle()
         styleSheet += self.viewController.qssController.getProjectFeatureTaskIssueStyle()
         self.setStyleSheet(styleSheet)
 
-
     # ========================================================================================
     
-
     def loadSelf(self):
 
         self.setActiveWindow(self.currentIndex)
     
-
-    # # ========================================================================================
+    # ========================================================================================
     
-
     def setActiveWindow(self, index):
             
         if index    == 0:
@@ -91,10 +83,8 @@ class ProjectFeatureTaskIssueView(QWidget):
             
         elif index  == 2:
             self.viewList["issueView"].loadSelf()
-     
             
     # ========================================================================================
-
 
     # -------- FEATURES TAB ----------------------------
     def createFeatureTabView(self):
@@ -114,27 +104,22 @@ class ProjectFeatureTaskIssueView(QWidget):
         self.viewList["issueView"] = IssueTabView(self, 2)
         self.window.IssuesTab.layout().addWidget(self.viewList["issueView"]) 
         
-
     # ========================================================================================
-    
     
     def getProjectName(self):
         
         projectName = self.viewController.model.getProjectName(self.viewController.stateController.projectId)
         self.window.TitleLabel.setText(projectName)
-     
 
     # ========================================================================================
 
-
     def goBack(self):
-        ic("goBack")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         self.viewController.displayView("ProjectView")
         
-
     # ======================================================================================== 
-    
     
     def getPriorityDict(self):
         
@@ -144,15 +129,13 @@ class ProjectFeatureTaskIssueView(QWidget):
                         3: {"Priority" : "Low",     "Color" : "green"},
                         4: {"Priority" : "Lowest",  "Color" : "white"}}
         
-
         return priorityDict
-
 
     # ======================================================================================== 
     
-
     def tabChanged(self, index):
-        ic("tabChanged")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         self.currentIndex = index
         self.setActiveWindow(index)
@@ -161,13 +144,12 @@ class ProjectFeatureTaskIssueView(QWidget):
 
     # ======================================================================================== 
 
-
     def addNew(self):
-        ic("addNew")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         self.viewController.displayView("AddNewView", self, self.currentIndex, newWindow=True)
         
-         
     # ========================================================================================
     
 

@@ -2,16 +2,14 @@ from icecream import ic
 from functools import partial
 from MyHelperLibrary.Helpers.HelperMethods import createMenu, createActionDictionary
 
-
+# ========================================================================================
 
 class MenuController:
-   
     def __init__(self, viewController):
         ic("MenuController init")
         
         self.viewController = viewController
         self.menuList       = {}
-
 
     # ========================================================================================
     
@@ -26,13 +24,11 @@ class MenuController:
         
         self.menuList["fileMenu"] = createMenu(menubar, "File", actionList)
 
-
         # ----- Settings Menu -----
         openPreferencesAction   =   createActionDictionary("Preferences", shortcut="Ctrl+P", trigger=partial(self.viewController.displayView, "PreferencesView", newWindow=True))
         actionList              =   [openPreferencesAction]
         
         self.menuList["settingsMenu"] = createMenu(menubar, "Settings", actionList)
-
 
         # ----- About Menu -----
         aboutAction     =   createActionDictionary("About", trigger=partial(self.viewController.displayView, "AboutView", newWindow=True))
@@ -43,11 +39,8 @@ class MenuController:
         
     # ========================================================================================
     
-
     def refreshContextMenus(self):
         ic("refreshContextMenus")
-
-
 
     # ========================================================================================
 

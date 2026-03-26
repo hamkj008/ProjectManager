@@ -1,1 +1,12 @@
-/TestResults
+.vs/
+TestResults/
+.pytest_cache
+__pycache__/
+*.pyc
+ProjectManager/__pycache__
+ProjectManager/.pytest_cache
+ProjectManager/build
+ProjectManager/dist
+ProjectManager/App_BuildRelease
+ProjectManager/App_Versions
+ProjectManager/Logs

@@ -2,14 +2,13 @@ from icecream import ic
 from enum import Enum, auto
 
 # ========================================================================================
-      
+
 class Theme(Enum):
 
     DARK    = auto()
     LIGHT   = auto()
     
 # =============================================================================================
-
 
 """ Class stores all presentation qss based information. 
 Facilitates a modular approach to presentation, enabling presentation modes. 
@@ -18,7 +17,7 @@ Also allows for absorbing qss files into final build"""
 class QSSController:
 
     def __init__(self):
-        ic("qssController")
+        ic(__class__.__name__)
 
         self.themes = {
             Theme.DARK: {
@@ -46,12 +45,9 @@ class QSSController:
             }
         }
 
-
         self.setTheme(Theme.DARK)
 
-
     # ========================================================================================
-      
 
     def createTheme(self, themeName, parent, overrides):
         if parent not in self.themes:
@@ -61,9 +57,7 @@ class QSSController:
         newTheme.update(overrides)
         self.themes[themeName] = newTheme
 
-
     # ========================================================================================
-     
 
     def setTheme(self, chosenTheme):
 
@@ -74,9 +68,7 @@ class QSSController:
         self.hoverEnter = f"""background-color: blue;"""
         self.hoverLeave = f"""background-color: {self.themes[self.currentTheme]["rowColor"]};"""
 
-   
     # ========================================================================================
-     
 
     def getStandardStyle(self):
 
@@ -94,7 +86,7 @@ class QSSController:
                 QLineEdit {{
                     border-radius: 10px;
                     border: 2px solid {self.themes[self.currentTheme]["borderColor"]};	
-	                color: {self.themes[self.currentTheme]["textColor"]};
+                    color: {self.themes[self.currentTheme]["textColor"]};
                     background-color: {self.themes[self.currentTheme]["secondaryColor"]};
                 }}
 
@@ -114,7 +106,7 @@ class QSSController:
                     width: 15px;
                     height: 15px;
                 }}
-               
+
                 /*  ------- Menu Bar ---------- */
 
                 QMenuBar {{
@@ -158,7 +150,6 @@ class QSSController:
 
                 /* ------------------------------------------------------------------------- */
 
-
                 #row {{
                     background-color: {self.themes[self.currentTheme]["rowColor"]};
                     border-radius: 10px;
@@ -183,7 +174,6 @@ class QSSController:
                     background-color: {self.themes[self.currentTheme]["buttonHoverColor"]};
                 }}
 
-
                 #MainFrame, #ProjectScrollAreaContents, #DescriptionScrollAreaContents {{
                     background-color: {self.themes[self.currentTheme]["primaryColor"]};    
                 }}
@@ -192,11 +182,10 @@ class QSSController:
                     border-radius: 10px;
                 }}
 
-
                 #TitleLabel, #PreferencesTitleLabel {{
                     font-weight: bold;
                 }}
-                           
+                
                 
                 #PreferencesGridFrame, #ProjectGridFrame, #DescriptionTextFrame, #AboutFrame {{
                     background-color: {self.themes[self.currentTheme]["tertiaryColor"]};
@@ -204,10 +193,8 @@ class QSSController:
                     
         """
 
-
     # ======================================================================================== 
     
-
     def getAddStyle(self):
         
         return f"""
@@ -219,7 +206,7 @@ class QSSController:
                     QTextEdit, QLineEdit {{
                         border-radius: 10px;
                     }}
- 
+
                     QTextEdit, QLineEdit {{
                         background-color: {self.themes[self.currentTheme]["tertiaryColor"]};
                         color: {self.themes[self.currentTheme]["textColor"]};
@@ -247,10 +234,8 @@ class QSSController:
 
                 """
     
-
     # ======================================================================================== 
     
-
     def getProjectFeatureTaskIssueStyle(self):
         
         return f"""
@@ -258,16 +243,13 @@ class QSSController:
                     background-color: lightgray; /* Set the background color of the tab widget */
                 }}
 
-
                 QTabBar::tab:selected {{
                     background-color: lightblue; /* Set the background color of the selected tab */
                 }}
 
-
                 QTabBar::tab:!selected {{
                     background-color: gray; /* Set the background color of unselected tabs */
                 }}
-
 
                 #IssuesTab, #FeaturesTab, #TasksTab,
                 #TaskScrollAreaContents, #TaskInProgressScrollAreaContents, #TaskCompleteScrollAreaContents, 
@@ -280,7 +262,6 @@ class QSSController:
                     background-color: {self.themes[self.currentTheme]["tertiaryColor"]};
                 }}
                                             
-
                 #FeaturesTab, #TasksLabelFrame, #TaskInProgressLabelFrame, #TaskCompletedLabelFrame,
                 #TaskLeftFrame, #TaskCentralFrame, #TaskRightFrame, 
                 #IssueLabelFrame, #IssueCompletedLabelFrame, 
@@ -288,8 +269,6 @@ class QSSController:
                     border: 1px solid {self.themes[self.currentTheme]["textColor"]};
                     border-radius: 0px;
                 }}
-
-
 
 
                 #taskLabel {{
@@ -304,10 +283,8 @@ class QSSController:
                 }}
             """
     
-
     # ======================================================================================== 
     
-
     def getDialogStyle(self):
         return f"""
                 QLabel {{

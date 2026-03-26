@@ -3,14 +3,12 @@ import sqlite3
 
 
 # ========================================================================================
-      
 
 # Creates the database 
 
 class ModelCreator:
-   
     def __init__(self, databaseName):
-        ic("ModelCreator init")
+        ic(__class__.__name__)
         
         self.connection = sqlite3.connect(databaseName)
         self.connection.execute("PRAGMA foreign_keys = ON")
@@ -18,12 +16,9 @@ class ModelCreator:
         
         self.checkDatabase()
 
-
     # ======================================================================================== 
     
-
     def checkDatabase(self):
-
 
         try:
             # Check if the database has any data.
@@ -45,17 +40,14 @@ class ModelCreator:
 
     # ======================================================================================== 
     
-    
     def firstTimeDatabaseInstall(self):
         ic("firstTimeDatabaseInstall")
 
         self.dropTables()
         self.createTables()
 
-
     # ========================================================================================
         
-
     def dropTables(self):
         ic("dropTables")
         
@@ -65,9 +57,7 @@ class ModelCreator:
         self.cursor.execute("DROP TABLE IF EXISTS projects")
         self.connection.commit()
 
-
     # ========================================================================================
-
 
     def createTables(self):
         ic("createTables")
@@ -80,7 +70,6 @@ class ModelCreator:
                             dateCreated TEXT NOT NULL
                         )""")
         
-
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS 
                         projectFeatures(   
                             featureId INTEGER PRIMARY KEY,
@@ -108,7 +97,6 @@ class ModelCreator:
                             FOREIGN KEY(projectId) REFERENCES projects(projectId)
                         )""")
         
-
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS 
                         projectIssues(   
                             issueId INTEGER PRIMARY KEY,
@@ -122,6 +110,5 @@ class ModelCreator:
                         )""")
         
         self.connection.commit()
-
 
     # ========================================================================================

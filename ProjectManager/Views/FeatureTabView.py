@@ -1,19 +1,21 @@
 from icecream import ic
 from functools import partial
 
-from PySide6.QtWidgets import QSizePolicy, QWidget, QLabel, QGridLayout, QMessageBox, QMenu, QCheckBox
+from PySide6.QtWidgets import QSizePolicy, QWidget, QLabel, QGridLayout, QMenu, QCheckBox
 from PySide6.QtCore import Qt, QEvent
+
+from MainFiles.Mixins.Utility_Mixin import Interaction_Mixin
 from MyHelperLibrary.Helpers.DataLabel import DataLabel
-from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
+from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout, getCurrentFunction, createCustomChoiceDialog
 
 
 # ========================================================================================
-   
 
-class FeatureTabView(QWidget):
+class FeatureTabView(QWidget, Interaction_Mixin):
 
-    def __init__(self, parentView, tabId, editDict=None):
+    def __init__(self, parentView, tabId: int, editDict: dict=None):
         super().__init__()
+        ic(__class__.__name__)
         
         self.parentView = parentView
         self.tabId      = tabId
@@ -33,9 +35,7 @@ class FeatureTabView(QWidget):
         # -- Start --
         self.loadSelf()
 
-
     # ========================================================================================
-
 
     def loadSelf(self):
 
@@ -45,19 +45,16 @@ class FeatureTabView(QWidget):
         self.populateData()
         self.retriggerStrikethrough()
 
-
     # ========================================================================================
-
 
     def getModel(self):
         self.modelResults = self.parentView.viewController.model.getFeatures(self.parentView.viewController.stateController.projectId)
 
-
     # ========================================================================================
 
-
     def setupGrid(self):
-        ic("setupGrid")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         self.featureHeaderColumnId  = {}
         self.featureViewHeaders     = {"completed"              : "Completed",
@@ -70,13 +67,12 @@ class FeatureTabView(QWidget):
             
             self.featureGrid.addWidget(columnTitle, 0, index)
             self.featureHeaderColumnId[key] = index
-   
             
     # ========================================================================================
 
-
     def populateData(self):
-        ic("populateData")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         # -- Populate Data --
         for rowIndex, feature in enumerate(self.modelResults):
@@ -88,12 +84,11 @@ class FeatureTabView(QWidget):
         statusBarMessage = "Features: " + str(len(self.modelResults))
         self.parentView.viewController.statusBar().showMessage(statusBarMessage)
 
-
     # ========================================================================================
-         
     
     def addFeatureToDisplay(self, feature):
-        ic("addFeatureToDisplay")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
                 
         rowList = []
 
@@ -142,64 +137,29 @@ class FeatureTabView(QWidget):
 
         # If hovering for one label, all of them will highlight
         for widget in rowList:
-            widget.enterEvent = (partial(self.hoverEnter, rowList, feature["featureDescription"]))
-            widget.leaveEvent = (partial(self.hoverLeave, rowList))  
+            widget.enterEvent = (partial(self.hoverEnter, rowList, self.parentView.window.DescriptionTextLabel, feature["featureDescription"]))
+            widget.leaveEvent = (partial(self.hoverLeave, rowList, self.parentView.window.DescriptionTextLabel))  
 
-            
     # ========================================================================================
     
-
     def rowClicked(self, featureDescription, event):   
         
         if event.button() == Qt.LeftButton:
             ic("rowClicked")
         
-
     # ========================================================================================
-
-    def hoverEnter(self, labelRowList, featureDescription, event):
-        
-        self.parentView.window.DescriptionTextLabel.setText(featureDescription)
-        
-        for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.qssController.hoverEnter)
-
-
-    # ========================================================================================
-       
-
-    def hoverLeave(self, labelRowList, event): 
-        
-        self.parentView.window.DescriptionTextLabel.setText("")
-        
-        for label in labelRowList:
-            label.setStyleSheet(self.parentView.viewController.qssController.hoverLeave)
-
-
-    # ========================================================================================
-    
     
     def removeFeature(self, featureId):
-        
-        messageBox = QMessageBox()
-        messageBox.setMinimumSize(200, 200)
-        messageBox.setWindowTitle("Delete Feature?")
-        messageBox.setText("Are you sure you want to delete this feature?")
-        messageBox.setIcon(QMessageBox.Warning)
-        messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        messageBox.setDefaultButton(QMessageBox.Cancel)
-        ret = messageBox.exec()
-        
-        if ret == QMessageBox.Ok:
+        if createCustomChoiceDialog("Delete Feature?", 
+                                "Are you sure you want to delete this feature?", 400, 300, self.viewController.qssController.getDialogStyle()):
+
             # Remove task from the database
             self.parentView.viewController.model.deleteFeature(featureId)  
 
             # Clear and redisplay tasks in grid
             self.parentView.setActiveWindow(self.tabId)
             
-
     # ========================================================================================
-     
     
     # Adding actions to the right-click context menu
     def eventFilter(self, obj, event):
@@ -227,25 +187,24 @@ class FeatureTabView(QWidget):
         
         return super().eventFilter(obj, event)
 
-
     # ========================================================================================
-    
     
     def editFeature(self, feature):
-        ic("right click")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         self.parentView.viewController.displayView("AddNewView", self.parentView, self.tabId, feature, editing=True, newWindow=True)
-      
         
     # ========================================================================================
-
 
     # If the task has been marked for completion, a strikethrough will be marked on the text
     def featureComplete(self, feature, checked):
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         priority, color = self.priorityDict[feature["priority"]]["Priority"], self.priorityDict[feature["priority"]]["Color"]
-        frame = self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["priority"]).widget()
-        priorityLabel = frame.findChild(DataLabel, "priorityLabel")
+        frame           = self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["priority"]).widget()
+        priorityLabel   = frame.findChild(DataLabel, "priorityLabel")
 
         if checked:
             # Update database
@@ -255,7 +214,7 @@ class FeatureTabView(QWidget):
             self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["featureName"]).widget().setText(f"<s>{feature['featureName']}</s>")
             self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["dateFeatureCreated"]).widget().setText(f"<s>{feature['dateFeatureCreated']}</s>")
             priorityLabel.setText(f"<s>{priority}</s>")
-   
+
         else:
             # Update database
             self.parentView.viewController.model.updateCompleteFeature(feature["featureId"], False)
@@ -265,9 +224,7 @@ class FeatureTabView(QWidget):
             self.featureGrid.itemAtPosition(feature["rowId"], self.featureHeaderColumnId["dateFeatureCreated"]).widget().setText(f"{feature['dateFeatureCreated']}")
             priorityLabel.setText(f"{priority}")
 
-
     # =============================================================================================
-
 
     def retriggerStrikethrough(self):
         
@@ -279,5 +236,4 @@ class FeatureTabView(QWidget):
                 checkbox.setChecked(True)
                 self.featureComplete(feature, True)
 
-            
     # =============================================================================================

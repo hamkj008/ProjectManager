@@ -5,7 +5,7 @@ from UiViews.UiPreferencesView import Ui_MainWidget
 from MyHelperLibrary.Helpers.CustomWindow import CustomWindow
 from MainFiles.QSSController import Theme
 
-
+# =============================================================================================
 
 class PreferencesView(CustomWindow):
 
@@ -31,30 +31,24 @@ class PreferencesView(CustomWindow):
         for option in Theme:
             self.content.themeOptionsComboBox.addItem(option.name)
 
-        self.content.themeOptionsComboBox.adjustSize()     # Ensures that the combo box’s size is updated to accommodate the contents of its items
+        self.content.themeOptionsComboBox.adjustSize()     # Ensures that the combo boxï¿½s size is updated to accommodate the contents of its items
         self.content.themeOptionsComboBox.setCurrentIndex((Theme(self.qssController.currentTheme).value) -1)
         self.content.themeOptionsComboBox.currentIndexChanged.connect(self.changeTheme)
         
 
-
     # =============================================================================================
-
 
     def setStyle(self):
 
         stylesheet = self.qssController.getStandardStyle()
         self.setStyleSheet(stylesheet)
 
-
     # =============================================================================================
-
 
     def main(self):
         self.show()
-
         
     # =============================================================================================
-
 
     def changeTheme(self, value):
 

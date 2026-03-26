@@ -1,25 +1,27 @@
 from icecream import ic
 from functools import partial
 
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QMessageBox, QMenu
-from PySide6.QtCore import Qt, QEvent
+from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QMenu
+from PySide6.QtCore import QEvent
+
+from MainFiles.Mixins.Utility_Mixin import Interaction_Mixin
 from MyHelperLibrary.Helpers.ResizeableGrid import ResizeableGrid
 from Helpers.IssueDragDropLabel import IssueDragDropLabel
 from Helpers.IssueDropGridWithId import IssueDropGridWithId
-from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout
+from MyHelperLibrary.Helpers.HelperMethods import createActionDictionary, addActionToMenu, createLayoutFrame, clearLayout, getCurrentFunction, createCustomChoiceDialog
 
 
 # ========================================================================================
-      
 
-class IssueTabView(QWidget):
+class IssueTabView(QWidget, Interaction_Mixin):
 
     def __init__(self, parentView, tabId, editDict=None):
         super().__init__()
+        ic(__class__.__name__)
         
         self.parentView = parentView
-        self.tabId = tabId
-        self.editDict = editDict
+        self.tabId      = tabId
+        self.editDict   = editDict
 
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0,0,0,0)
@@ -41,8 +43,8 @@ class IssueTabView(QWidget):
         issueGrid           = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, objectName="issueGrid")
         issueCompleteGrid   = IssueDropGridWithId(self.parentView.viewController, self.parentView.viewController.model, 1, objectName="IssueCompleteGridFrame")
         
-        self.issueGrids = {"issueGrid"          :   issueGrid, 
-                          "issueCompleteGrid"   :   issueCompleteGrid}
+        self.issueGrids = {"issueGrid"        :   issueGrid, 
+                        "issueCompleteGrid"   :   issueCompleteGrid}
         
         # Add the grids to the parent
         self.parentView.window.IssueScrollAreaContents.layout().addWidget(self.issueGrids["issueGrid"])
@@ -54,9 +56,7 @@ class IssueTabView(QWidget):
         # --- Start ----
         self.loadSelf()
         
-
     # ========================================================================================
-
 
     def loadSelf(self):
 
@@ -69,19 +69,16 @@ class IssueTabView(QWidget):
         self.setUpIssueGrids()
         self.populateIssueData()
         
-
     # ========================================================================================
-
             
     def getModel(self):
         self.issueModelResults = self.parentView.viewController.model.getIssues(self.parentView.viewController.stateController.projectId)
 
-
     # ========================================================================================
 
-
     def setUpIssueGrids(self):
-        ic("setUpIssueGrids")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         self.issueHeaderColumnId    = {}
         self.issueViewHeaders       = {"issueName"          :   "Issue Summary", 
@@ -95,17 +92,16 @@ class IssueTabView(QWidget):
                 
                 if key == "issueName":
                     columnTitle.setSizePolicy(QSizePolicy.Expanding, columnTitle.sizePolicy().verticalPolicy())
-         
+        
                 gridValue.layout().addWidget(columnTitle, 0, index)
             
                 self.issueHeaderColumnId[key] = index
-    
             
     # ========================================================================================
 
-
     def populateIssueData(self):
-        ic("populateIssueData")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         # -- Populate Data --
         for rowIndex, issue in enumerate(self.issueModelResults):
@@ -119,16 +115,16 @@ class IssueTabView(QWidget):
             
     # ========================================================================================
 
-
     def addIssueToDisplay(self, issue):
-        ic("addIssueToDisplay")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
         
         rowList     = []
         labelList   = []
         
         for key, value in issue.items():
             if key in self.issueViewHeaders:
-                           
+                
                 if key == "priority":
                     priorityDict = self.parentView.getPriorityDict() #from ProjectFeatureTaskIssueView
                     priority, color = priorityDict[value]["Priority"], priorityDict[value]["Color"]
@@ -152,7 +148,7 @@ class IssueTabView(QWidget):
                 else:
                     issueObjectLabel = IssueDragDropLabel(value, self, issue, objectName="taskLabel")
                     labelList.append(issueObjectLabel)
-                  
+                
                 issueObjectLabel.installEventFilter(self)
                 self.addToGrid(issueObjectLabel, issue, key)                   
                 rowList.append(issueObjectLabel)
@@ -164,9 +160,7 @@ class IssueTabView(QWidget):
             widget.enterEvent = (partial(self.hoverEnter, rowList, issue["issueDescription"]))
             widget.leaveEvent = (partial(self.hoverLeave, rowList))  
 
-
     # ========================================================================================
-
 
     def addToGrid(self, label, issue, key):
 
@@ -177,17 +171,13 @@ class IssueTabView(QWidget):
         else:
             self.issueGrids["issueGrid"].layout().addWidget(label, issue["rowId"], self.issueHeaderColumnId[key])          
 
-
     # ========================================================================================
-
 
     def rowClicked(self, issueDescription, event):   
 
         self.parentView.window.DescriptionTextLabel.setText(issueDescription)
         
-
     # ========================================================================================
-
 
     def hoverEnter(self, labelRowList, issueDescription, event):
         
@@ -196,9 +186,7 @@ class IssueTabView(QWidget):
         for label in labelRowList:
             label.setStyleSheet(self.parentView.viewController.qssController.hoverEnter)
 
-
     # ========================================================================================
-       
 
     def hoverLeave(self, labelRowList, event): 
         
@@ -207,12 +195,12 @@ class IssueTabView(QWidget):
         for label in labelRowList:
             label.setStyleSheet(self.parentView.viewController.qssController.hoverLeave)
 
-
     # ========================================================================================
     
-    
     def issueComplete(self, labelList, issue):
-        
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
+
         # If the task has been marked for completion, a strikethrough will be marked on the text
         if issue["isComplete"] == "True":
             
@@ -225,33 +213,24 @@ class IssueTabView(QWidget):
             # remove the strikethrough
             for label in labelList:
                 label.setText(f"{label.text()}")
-         
                         
     # ========================================================================================
     
-
     def removeIssue(self, issueId):
-        
-        messageBox = QMessageBox()
-        messageBox.setMinimumSize(200, 200)
-        messageBox.setWindowTitle("Delete Issue?")
-        messageBox.setText("Are you sure you want to delete this issue?")
-        messageBox.setIcon(QMessageBox.Warning)
-        messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        messageBox.setDefaultButton(QMessageBox.Cancel)
-        ret = messageBox.exec()
-        
-        if ret == QMessageBox.Ok:
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
+
+        if createCustomChoiceDialog("Delete Issue?", 
+                                "Are you sure you want to delete this issue?", 400, 300, self.viewController.qssController.getDialogStyle()):
+
             # Remove issue from the database
             self.parentView.viewController.model.deleteIssue(issueId)  
 
             # Clear and redisplay issues in grid
             self.parentView.setActiveWindow(self.tabId)
             
-
     # ========================================================================================
             
-    
     # Adding actions to the right-click context menu
     def eventFilter(self, obj, event):
 
@@ -278,14 +257,12 @@ class IssueTabView(QWidget):
         
         return super().eventFilter(obj, event)
     
-
     # ========================================================================================
     
-
     def editIssue(self, issue):
-        ic("edit Issue")
+        self.viewController.log(self.viewController.debug, getCurrentFunction())
+        # - - - - - - - - - - - - - - - -
 
         self.parentView.viewController.displayView("AddNewView", self.parentView, self.tabId, issue, editing=True, newWindow=True)
-
 
     # ========================================================================================

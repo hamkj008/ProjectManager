@@ -4,8 +4,7 @@ from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect
 from PySide6.QtCore import Qt
 from UiViews.UiAboutWindow import Ui_AboutWindow
 
-
-
+# =============================================================================================
 
 class AboutView(QMainWindow):
 
@@ -13,7 +12,6 @@ class AboutView(QMainWindow):
         super().__init__()
         self.viewController = viewController
         
-
         # ----- Setup UI -----
         self.window = Ui_AboutWindow()
         self.window.setupUi(self)
@@ -36,23 +34,21 @@ class AboutView(QMainWindow):
 
     # ========================================================================================
             
-
     def main(self):
         self.show()
 
-
     # ======================================================================================== 
     
-
     def setStyle(self):
         
         stylesheet = self.viewController.qssController.getStandardStyle()
         self.setStyleSheet(stylesheet)
 
-
     # ========================================================================================
     
-
     def closeView(self):
         
         self.viewController.closeView("AboutView")
+
+    # ========================================================================================
+    

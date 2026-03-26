@@ -1,0 +1,28 @@
+{
+  "workbench.colorCustomizations": {
+    "editorBracketHighlight.foreground1": "#e254fb",
+    "editorBracketHighlight.foreground2": "#a20efe",
+    "editorBracketHighlight.foreground3": "#3267fb",
+    "editorBracketHighlight.foreground4": "#02fcd6",
+    "editorBracketHighlight.foreground5": "#118d21",
+    "editorBracketHighlight.unexpectedBracket.foreground": "#ff0000",
+    "editorLineNumber.foreground": "#267700",
+    "editor.background": "#121111",
+    "activityBar.background": "#3F0181",
+    "titleBar.activeBackground": "#5801B4",
+    "titleBar.activeForeground": "#FBF8FF",
+    "titleBar.inactiveBackground": "#3F0181",
+    "titleBar.inactiveForeground": "#FBF8FF",
+    "statusBar.background": "#3F0181",
+    "statusBar.foreground": "#FBF8FF",
+    "statusBar.debuggingBackground": "#3F0181",
+    "statusBar.debuggingForeground": "#FBF8FF",
+    "statusBar.noFolderBackground": "#3F0181",
+    "statusBar.noFolderForeground": "#FBF8FF"
+  },
+  "python.testing.pytestArgs": [
+    "."
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}
